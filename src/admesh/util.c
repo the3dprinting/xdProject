@@ -27,6 +27,8 @@
 
 #include "stl.h"
 
+const M_PI=3.141592653589793238;
+
 static void stl_rotate(float *x, float *y, float angle);
 static float get_area(stl_facet *facet);
 static float get_volume(stl_file *stl);
