@@ -27,7 +27,7 @@ HEADERS += \
     xdlib/polygon.h \
     xdlib/encapsulationClipper.h \
     xdlib/boundingBox.h \
-    xdlib/expolygon.h
+    xdlib/exPolygon.h
 
 
 SOURCES += \
@@ -49,8 +49,9 @@ SOURCES += \
     xdlib/geometry.cpp \
     xdlib/polygon.cpp \
     xdlib/multiPoint.cpp \
-    xdlib/boundingbox.cpp \
-    xdlib/polyline.cpp
+    xdlib/polyline.cpp \
+    xdlib/boundingBox.cpp \
+    xdlib/expolygon.cpp
 
 
 
