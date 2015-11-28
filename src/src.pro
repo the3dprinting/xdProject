@@ -21,7 +21,13 @@ HEADERS += \
     xdlib/point.h \
     xdlib/constdefine.h \
     xdlib/line.h \
-    xdlib/multipoint.h
+    xdlib/polyline.h \
+    xdlib/geometry.h \
+    xdlib/multiPoint.h \
+    xdlib/polygon.h \
+    xdlib/encapsulationClipper.h \
+    xdlib/boundingBox.h \
+    xdlib/expolygon.h
 
 
 SOURCES += \
@@ -38,7 +44,13 @@ SOURCES += \
     poly2tri/sweep/sweep_context.cc \
     poly2tri/common/shapes.cc \
     polypartition/polypartition.cpp \
-    xdlib/point.cpp
+    xdlib/point.cpp \
+    xdlib/line.cpp \
+    xdlib/geometry.cpp \
+    xdlib/polygon.cpp \
+    xdlib/multiPoint.cpp \
+    xdlib/boundingbox.cpp \
+    xdlib/polyline.cpp
 
 
 

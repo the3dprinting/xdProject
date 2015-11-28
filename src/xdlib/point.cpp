@@ -2,7 +2,7 @@
 #include <cmath>
 #include "point.h"
 #include "line.h"
-#include "multipoint.h"
+#include "multiPoint.h"
 
 namespace xd {
 
@@ -81,7 +81,7 @@ int
 Point::nearest_point_index(const PointConstPtrs &points) const
 {
     int idx = -1;
-    double distance = -1;  // double because long is limited to 2147483647 on some platforms and it's not enough
+    double distance = -1;  // 双精度，因为单精度限制在2147483647 在某些平台上不够用
 
     for (PointConstPtrs::const_iterator it = points.begin(); it != points.end(); ++it) {
         /* If the X distance of the candidate is > than the total distance of the
@@ -343,46 +343,6 @@ Pointf::vector_to(const Pointf &point) const
 {
     return Vectorf(point.x - this->x, point.y - this->y);
 }
-
-#ifdef SLIC3RXS
-
-REGISTER_CLASS(Pointf, "Pointf");
-
-SV*
-Pointf::to_SV_pureperl() const {
-    AV* av = newAV();
-    av_fill(av, 1);
-    av_store(av, 0, newSVnv(this->x));
-    av_store(av, 1, newSVnv(this->y));
-    return newRV_noinc((SV*)av);
-}
-
-bool
-Pointf::from_SV(SV* point_sv)
-{
-    AV* point_av = (AV*)SvRV(point_sv);
-    SV* sv_x = *av_fetch(point_av, 0, 0);
-    SV* sv_y = *av_fetch(point_av, 1, 0);
-    if (!looks_like_number(sv_x) || !looks_like_number(sv_y)) return false;
-
-    this->x = SvNV(sv_x);
-    this->y = SvNV(sv_y);
-    return true;
-}
-
-bool
-Pointf::from_SV_check(SV* point_sv)
-{
-    if (sv_isobject(point_sv) && (SvTYPE(SvRV(point_sv)) == SVt_PVMG)) {
-        if (!sv_isa(point_sv, perl_class_name(this)) && !sv_isa(point_sv, perl_class_name_ref(this)))
-            CONFESS("Not a valid %s object (got %s)", perl_class_name(this), HvNAME(SvSTASH(SvRV(point_sv))));
-        *this = *(Pointf*)SvIV((SV*)SvRV( point_sv ));
-        return true;
-    } else {
-        return this->from_SV(point_sv);
-    }
-}
-#endif
 
 void
 Pointf3::scale(double factor)
