@@ -41,8 +41,111 @@ class ExPolygon  //真正意义上的多边形，有一个外轮廓，若干个洞组成的
     Lines lines() const;  //将带洞多边形所有点转换为lines类来返回，即一个带洞多边形的所有边
 
 };
+}  //结束xd命名空间
 
-}
+//开始Boost
+#include "../boost/polygon/polygon.hpp"
+namespace boost { namespace polygon {
+    template <>
+        struct polygon_traits<xd::ExPolygon> {
+        typedef coord_t coordinate_type;
+        typedef xd::Points::const_iterator iterator_type;
+        typedef xd::Point point_type;
+
+        // Get the begin iterator
+        static inline iterator_type begin_points(const xd::ExPolygon& t) {
+            return t.contour.points.begin();
+        }
+
+        // Get the end iterator
+        static inline iterator_type end_points(const xd::ExPolygon& t) {
+            return t.contour.points.end();
+        }
+
+        // Get the number of sides of the polygon
+        static inline std::size_t size(const xd::ExPolygon& t) {
+            return t.contour.points.size();
+        }
+
+        // Get the winding direction of the polygon
+        static inline winding_direction winding(const xd::ExPolygon& t) {
+            return unknown_winding;
+        }
+    };
+
+    template <>
+    struct polygon_mutable_traits<xd::ExPolygon> {
+        //expects stl style iterators
+        template <typename iT>
+        static inline xd::ExPolygon& set_points(xd::ExPolygon& expolygon, iT input_begin, iT input_end) {
+            expolygon.contour.points.assign(input_begin, input_end);
+            //忽略最后一个点，因为Boost将会设置last point = first point
+            expolygon.contour.points.pop_back();
+            return expolygon;
+        }
+    };
+
+
+    template <>
+    struct geometry_concept<xd::ExPolygon> { typedef polygon_with_holes_concept type; };
+
+    template <>
+    struct polygon_with_holes_traits<xd::ExPolygon> {
+        typedef xd::Polygons::const_iterator iterator_holes_type;
+        typedef xd::Polygon hole_type;
+        static inline iterator_holes_type begin_holes(const xd::ExPolygon& t) {
+            return t.holes.begin();
+        }
+        static inline iterator_holes_type end_holes(const xd::ExPolygon& t) {
+            return t.holes.end();
+        }
+        static inline unsigned int size_holes(const xd::ExPolygon& t) {
+            return t.holes.size();
+        }
+    };
+
+    template <>
+    struct polygon_with_holes_mutable_traits<xd::ExPolygon> {
+         template <typename iT>
+         static inline xd::ExPolygon& set_holes(xd::ExPolygon& t, iT inputBegin, iT inputEnd) {
+              t.holes.assign(inputBegin, inputEnd);
+              return t;
+         }
+    };
+
+    //first we register CPolygonSet as a polygon set
+    template <>
+    struct geometry_concept<xd::ExPolygons> { typedef polygon_set_concept type; };
+
+    //next we map to the concept through traits
+    template <>
+    struct polygon_set_traits<xd::ExPolygons> {
+        typedef coord_t coordinate_type;
+        typedef xd::ExPolygons::const_iterator iterator_type;
+        typedef xd::ExPolygons operator_arg_type;
+
+        static inline iterator_type begin(const xd::ExPolygons& polygon_set) {
+            return polygon_set.begin();
+        }
+
+        static inline iterator_type end(const xd::ExPolygons& polygon_set) {
+            return polygon_set.end();
+        }
+
+        //don't worry about these, just return false from them
+        static inline bool clean(const xd::ExPolygons& polygon_set) { return false; }
+        static inline bool sorted(const xd::ExPolygons& polygon_set) { return false; }
+    };
+
+    template <>
+    struct polygon_set_mutable_traits<xd::ExPolygons> {
+        template <typename input_iterator_type>
+        static inline void set(xd::ExPolygons& expolygons, input_iterator_type input_begin, input_iterator_type input_end) {
+            expolygons.assign(input_begin, input_end);
+        }
+    };
+} }
+//结束boost
 
 #endif // EXPOLYGON_H
 

@@ -4,6 +4,9 @@
 #include "boundingBox.h"
 #include "polygon.h"
 #include "polyline.h"
+#include "../boost/polygon/voronoi.hpp"
+using boost::polygon::voronoi_builder;
+using boost::polygon::voronoi_diagram;
 
 namespace xd { namespace Geometry {  //此处又开辟一个命名空间，估计有一些全局函数在里面
 
@@ -35,7 +38,24 @@ class ArrangeItemIndex {
 double linint(double value, double oldmin, double oldmax, double newmin, double newmax);
 Pointfs arrange(size_t total_parts, Pointf part, coordf_t dist, const BoundingBoxf &bb = BoundingBoxf());
 
+class MedialAxis {
+    public:
+    Points points;
+    Lines lines;
+    double max_width;
+    double min_width;
+    MedialAxis(double _max_width, double _min_width) : max_width(_max_width), min_width(_min_width) {};
+    void build(Polylines* polylines);
 
+    private:
+    typedef voronoi_diagram<double> VD;
+    VD vd;
+    std::set<const VD::edge_type*> edges;
+    Line edge_to_line(const VD::edge_type &edge) const;
+    void process_edge_neighbors(const voronoi_diagram<double>::edge_type& edge, Points* points);
+    bool is_valid_edge(const voronoi_diagram<double>::edge_type& edge) const;
+    const Line& retrieve_segment(const voronoi_diagram<double>::cell_type& cell) const;
+};
 
 }}
 #endif // GEOMETRY

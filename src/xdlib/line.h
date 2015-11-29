@@ -62,8 +62,25 @@ class Linef3   //建立double型3维线段
     void scale(double factor);  //线段两个端点的坐标都放大factor倍
 
 };
+}  //结束命名空间xd
 
-}
+// 开始Boost，注册line的类型
+#include <boost/polygon/polygon.hpp>
+namespace boost { namespace polygon {
+    template <>
+    struct geometry_concept<xd::Line> { typedef segment_concept type; };
+
+    template <>
+    struct segment_traits<xd::Line> {
+        typedef coord_t coordinate_type;
+        typedef xd::Point point_type;
+
+        static inline point_type get(const xd::Line& line, direction_1d dir) {
+            return dir.to_int() ? line.b : line.a;
+        }
+    };
+} }
+// 结束Boost
 
 #endif // LINE_H
 

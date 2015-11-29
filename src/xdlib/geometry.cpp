@@ -283,8 +283,232 @@ arrange(size_t total_parts, Pointf part, coordf_t dist, const BoundingBoxf &bb)
     return positions;
 }
 
+//以下使用boost库voronoi里面的函数可以参考网址：http://www.boost.org/doc/libs/1_58_0/libs/polygon/doc/voronoi_diagram.htm
+Line
+MedialAxis::edge_to_line(const VD::edge_type &edge) const
+{
+    Line line;
+    line.a.x = edge.vertex0()->x();
+    line.a.y = edge.vertex0()->y();
+    line.b.x = edge.vertex1()->x();
+    line.b.y = edge.vertex1()->y();
+    return line;
+}
 
+void
+MedialAxis::build(Polylines* polylines)
+{
+    /*
+    // build bounding box (we use it for clipping infinite segments)
+    // --> we have no infinite segments
+    this->bb = BoundingBox(this->lines);
+    */
 
+    construct_voronoi(this->lines.begin(), this->lines.end(), &this->vd);//使用本类中的所有线段构建voronoi图
 
+    /*
+    // DEBUG: dump all Voronoi edges
+    {
+        for (VD::const_edge_iterator edge = this->vd.edges().begin(); edge != this->vd.edges().end(); ++edge) {
+            if (edge->is_infinite()) continue;
+
+            Polyline polyline;
+            polyline.points.push_back(Point( edge->vertex0()->x(), edge->vertex0()->y() ));
+            polyline.points.push_back(Point( edge->vertex1()->x(), edge->vertex1()->y() ));
+            polylines->push_back(polyline);
+        }
+        return;
+    }
+    */
+
+    typedef const VD::vertex_type vert_t;   //boost库中定义的voronoi图的点类型
+    typedef const VD::edge_type   edge_t;   //boost库中定义的voronoi图的边类型
+
+    // collect valid edges (i.e. prune those not belonging to MAT)
+    // note: this keeps twins, so it inserts twice the number of the valid edges
+    this->edges.clear();
+    for (VD::const_edge_iterator edge = this->vd.edges().begin(); edge != this->vd.edges().end(); ++edge) {
+        // if we only process segments representing closed loops, none if the
+        // infinite edges (if any) would be part of our MAT anyway
+        if (edge->is_secondary() || edge->is_infinite()) continue;  //对于多边形内部的voronoi图来说，无限边和次要边都无效，所以舍去
+        this->edges.insert(&*edge);
+    }
+
+    // count valid segments for each vertex   下面定义的map又是点指针→集合，常用指针做键值么？学习一下！
+    std::map< vert_t*,std::set<edge_t*> > vertex_edges;  // collects edges connected for each vertex
+    std::set<vert_t*> startpoints;                       // collects all vertices having a single starting edge
+    for (VD::const_vertex_iterator it = this->vd.vertices().begin(); it != this->vd.vertices().end(); ++it) {//遍历的是生成的voronoi图的交点
+        vert_t* vertex = &*it;  //这里的键值要用&*来初始化指针it！！
+
+        // loop through all edges originating from this vertex
+        // starting from a random one
+        edge_t* edge = vertex->incident_edge();
+        do {
+            // if this edge was not pruned by our filter above,
+            // add it to vertex_edges
+            if (this->edges.count(edge) > 0)   //set.count()用来查找set中某个某个键值出现的次数，这里判断说明遍历的点此时遍历的这个边是有效边
+                vertex_edges[vertex].insert(edge);  //插入的边都是以此点为起点的边
+
+            // continue looping next edge originating from this vertex
+            edge = edge->rot_next(); //逆时针围绕这个点的下一个边
+        } while (edge != vertex->incident_edge());  //直到围绕到初始边为止
+
+        // if there's only one edge starting at this vertex then it's an endpoint
+        if (vertex_edges[vertex].size() == 1) {  //这个点对于环绕边数（不包括无限边和次要边）只有一个时
+            startpoints.insert(vertex);  //说明是一个终点
+        }
+    }
+    //上面挑出来的点，总体来说是由边限制的！这样就使得挑出的所有点集合附带的边都是效voronoi图的有效边
+    // prune startpoints recursively if extreme segments are not valid
+    while (!startpoints.empty()) {
+        // get a random entry node
+        vert_t* v = *startpoints.begin();
+
+        // get edge starting from v
+        assert(vertex_edges[v].size() == 1);
+        edge_t* edge = *vertex_edges[v].begin();
+
+        if (!this->is_valid_edge(*edge)) {//是否有效的定义见本类的私有成员函数，倒数第二个函数！
+            // if edge is not valid, erase it and its twin from edge list
+            (void)this->edges.erase(edge);
+            (void)this->edges.erase(edge->twin());
+
+            // decrement edge counters for the affected nodes  同时也把
+            vert_t* v1 = edge->vertex1();  //vertex1指这条边的终点
+            (void)vertex_edges[v].erase(edge);  //先删除本身点上对于的这条边
+            (void)vertex_edges[v1].erase(edge->twin());  //再删除这条边终点存储的这条边
+
+            // also, check whether the end vertex is a new leaf
+            if (vertex_edges[v1].size() == 1) {
+                startpoints.insert(v1);  //删除了一个边后此点的环绕边数目为1说明此点变成了一个终点，即需要加入startpoints
+            } else if (vertex_edges[v1].empty()) {
+                startpoints.erase(v1);  //删除了一个边后此点的环绕边数目空了说明原来startpoints里面有这个点，可以删除
+            }
+        }
+
+        // remove node from the set to prevent it from being visited again
+        startpoints.erase(v);  //v点处理过了，当然需要删除，保证while循环有终止
+    }
+
+    // iterate through the valid edges to build polylines   最后留下在edges中的边，就是挑选出的voronoi边
+    while (!this->edges.empty()) {
+        edge_t &edge = **this->edges.begin();
+
+        // start a polyline
+        Polyline polyline;
+        polyline.points.push_back(Point( edge.vertex0()->x(), edge.vertex0()->y() ));
+        polyline.points.push_back(Point( edge.vertex1()->x(), edge.vertex1()->y() ));
+
+        // remove this edge and its twin from the available edges  一条边只能选取一次，因此要把twin也删除
+        (void)this->edges.erase(&edge);
+        (void)this->edges.erase(edge.twin());
+
+        // get next points
+        this->process_edge_neighbors(edge, &polyline.points);
+
+        // get previous points
+        {
+            Points pp;
+            this->process_edge_neighbors(*edge.twin(), &pp);
+            polyline.points.insert(polyline.points.begin(), pp.rbegin(), pp.rend());
+        }
+
+        // append polyline to result
+        polylines->push_back(polyline);  //这里加入有效边的形式是：一堆polyline，但是有分叉就截断的polyline！
+    }
+}
+
+void
+MedialAxis::process_edge_neighbors(const VD::edge_type& edge, Points* points)
+{
+    // Since rot_next() works on the edge starting point but we want
+    // to find neighbors on the ending point, we just swap edge with
+    // its twin.
+    const VD::edge_type& twin = *edge.twin();
+
+    // count neighbors for this edge
+    std::vector<const VD::edge_type*> neighbors;
+    for (const VD::edge_type* neighbor = twin.rot_next(); neighbor != &twin; neighbor = neighbor->rot_next()) {
+        if (this->edges.count(neighbor) > 0) neighbors.push_back(neighbor);
+    }
+
+    // if we have a single neighbor then we can continue recursively  只有环绕次边除了本身外只有一条边的情况，才会加入points，并从edges删除
+    if (neighbors.size() == 1) {
+        const VD::edge_type& neighbor = *neighbors.front();
+        points->push_back(Point( neighbor.vertex1()->x(), neighbor.vertex1()->y() ));
+        (void)this->edges.erase(&neighbor);
+        (void)this->edges.erase(neighbor.twin());
+        this->process_edge_neighbors(neighbor, points);
+    }
+}
+
+bool
+MedialAxis::is_valid_edge(const VD::edge_type& edge) const
+{
+    /* If the cells sharing this edge have a common vertex, we're not interested
+       in this edge. Why? Because it means that the edge lies on the bisector of
+       two contiguous input lines and it was included in the Voronoi graph because
+       it's the locus of centers of circles tangent to both vertices. Due to the
+       "thin" nature of our input, these edges will be very short and not part of
+       our wanted output. */
+
+    // retrieve the original line segments which generated the edge we're checking
+    const VD::cell_type &cell1 = *edge.cell();
+    const VD::cell_type &cell2 = *edge.twin()->cell();
+    if (!cell1.contains_segment() || !cell2.contains_segment()) return false;
+    const Line &segment1 = this->retrieve_segment(cell1);
+    const Line &segment2 = this->retrieve_segment(cell2);
+
+    // calculate the relative angle between the two boundary segments
+    double angle = fabs(segment2.orientation() - segment1.orientation());
+
+    // fabs(angle) ranges from 0 (collinear, same direction) to PI (collinear, opposite direction)
+    // we're interested only in segments close to the second case (facing segments)
+    // so we allow some tolerance.
+    // this filter ensures that we're dealing with a narrow/oriented area (longer than thick)
+    if (fabs(angle - PI) > PI/5) {
+        return false;
+    }
+
+    // each edge vertex is equidistant to both cell segments
+    // but such distance might differ between the two vertices;
+    // in this case it means the shape is getting narrow (like a corner)
+    // and we might need to skip the edge since it's not really part of
+    // our skeleton
+
+    // get perpendicular distance of each edge vertex to the segment(s)
+    double dist0 = segment1.a.distance_to(segment2.b);
+    double dist1 = segment1.b.distance_to(segment2.a);
+
+    /*
+    Line line = this->edge_to_line(edge);
+    double diff = fabs(dist1 - dist0);
+    double dist_between_segments1 = segment1.a.distance_to(segment2);
+    double dist_between_segments2 = segment1.b.distance_to(segment2);
+    printf("w = %f/%f, dist0 = %f, dist1 = %f, diff = %f, seg1len = %f, seg2len = %f, edgelen = %f, s2s = %f / %f\n",
+        unscale(this->max_width), unscale(this->min_width),
+        unscale(dist0), unscale(dist1), unscale(diff),
+        unscale(segment1.length()), unscale(segment2.length()),
+        unscale(line.length()),
+        unscale(dist_between_segments1), unscale(dist_between_segments2)
+        );
+    */
+
+    // if this edge is the centerline for a very thin area, we might want to skip it
+    // in case the area is too thin
+    if (dist0 < this->min_width && dist1 < this->min_width) {//这里说明有效边必须是构建它的两个原始边距离要大于输入的min_width
+        //printf(" => too thin, skipping\n");
+        return false;
+    }
+
+    return true;
+}
+
+const Line&
+MedialAxis::retrieve_segment(const VD::cell_type& cell) const
+{
+    VD::cell_type::source_index_type index = cell.source_index() - this->points.size();  //首先计算（cell所包含的源线段的索引-输入源点的个数），得到的即次线段在lines中的索引号
+    return this->lines[index];  //以line的形式返回找到的线段
+}
 
 }}

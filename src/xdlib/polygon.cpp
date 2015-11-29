@@ -266,6 +266,4 @@ Polygon::convex_points(double angle) const
 
     return points;
 }
-
-
 }

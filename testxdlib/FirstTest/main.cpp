@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "clipper.hpp"
+#include "../../src/clipper/clipper.hpp"
 //#include "point.h"
 
 int main(int argc, char *argv[])

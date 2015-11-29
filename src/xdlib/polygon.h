@@ -43,8 +43,90 @@ class Polygon : public MultiPoint {
     Points convex_points(double angle = PI) const;  //找出所有凸顶点
 
 };
+}  //结束xd命名空间
 
-}
+//开始Boost，注册polygon类型
+#include"../boost/polygon/polygon.hpp"
+namespace boost { namespace polygon {
+    template <>
+    struct geometry_concept<xd::Polygon>{ typedef polygon_concept type; };
+
+    template <>
+    struct polygon_traits<xd::Polygon> {
+        typedef coord_t coordinate_type;
+        typedef xd::Points::const_iterator iterator_type;
+        typedef xd::Point point_type;
+
+        // Get the begin iterator
+        static inline iterator_type begin_points(const xd::Polygon& t) {
+            return t.points.begin();
+        }
+
+        // Get the end iterator
+        static inline iterator_type end_points(const xd::Polygon& t) {
+            return t.points.end();
+        }
+
+        // Get the number of sides of the polygon
+        static inline std::size_t size(const xd::Polygon& t) {
+            return t.points.size();
+        }
+
+        // Get the winding direction of the polygon
+        static inline winding_direction winding(const xd::Polygon& t) {
+            return unknown_winding;
+        }
+    };
+
+    template <>
+    struct polygon_mutable_traits<xd::Polygon> {
+        // expects stl style iterators
+        template <typename iT>
+        static inline xd::Polygon& set_points(xd::Polygon& polygon, iT input_begin, iT input_end) {
+            polygon.points.clear();
+            while (input_begin != input_end) {
+                polygon.points.push_back(xd::Point());    //这里调用point的构造函数，加上一个空点，没有意义？
+                boost::polygon::assign(polygon.points.back(), *input_begin);
+                ++input_begin;
+            }
+            // skip last point since Boost will set last point = first point
+            polygon.points.pop_back();
+            return polygon;
+        }
+    };
+
+    template <>
+    struct geometry_concept<xd::Polygons> { typedef polygon_set_concept type; };
+
+    //next we map to the concept through traits
+    template <>
+    struct polygon_set_traits<xd::Polygons> {
+        typedef coord_t coordinate_type;
+        typedef xd::Polygons::const_iterator iterator_type;
+        typedef xd::Polygons operator_arg_type;
+
+        static inline iterator_type begin(const xd::Polygons& polygon_set) {
+            return polygon_set.begin();
+        }
+
+        static inline iterator_type end(const xd::Polygons& polygon_set) {
+            return polygon_set.end();
+        }
+
+        //别担心，返回会错误即可，推测以后不会用这两个属性
+        static inline bool clean(const xd::Polygons& polygon_set) { return false; }
+        static inline bool sorted(const xd::Polygons& polygon_set) { return false; }
+    };
+
+    template <>
+    struct polygon_set_mutable_traits<xd::Polygons> {
+        template <typename input_iterator_type>
+        static inline void set(xd::Polygons& polygons, input_iterator_type input_begin, input_iterator_type input_end) {
+          polygons.assign(input_begin, input_end);
+        }
+    };
+} }
+//结束 Boost
 
 #endif // POLYGON_H
 

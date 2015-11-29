@@ -110,8 +110,54 @@ class Pointf3 : public Pointf
     Pointf3 negative() const;   //返回点的负值
     Vectorf3 vector_to(const Pointf3 &point) const;  //返回this到point的向量值，也是pointf类型
 };
+}   //xd命名空间结束
 
-}
+// 开始Boost，下面是注册点类型，boost使用必须的步骤
+#include "../boost/polygon/polygon.hpp"
+namespace boost { namespace polygon {
+    template <>
+    struct geometry_concept<coord_t> { typedef coordinate_concept type; };
+
+    template <>
+    struct coordinate_traits<coord_t> {
+        typedef coord_t coordinate_type;
+        typedef long double area_type;
+        typedef long long manhattan_area_type;
+        typedef unsigned long long unsigned_area_type;
+        typedef long long coordinate_difference;
+        typedef long double coordinate_distance;
+    };
+
+    template <>
+    struct geometry_concept<xd::Point> { typedef point_concept type; };
+
+    template <>
+    struct point_traits<xd::Point> {
+        typedef coord_t coordinate_type;
+
+        static inline coordinate_type get(const xd::Point& point, orientation_2d orient) {
+            return (orient == HORIZONTAL) ? point.x : point.y;
+        }
+    };
+
+    template <>
+    struct point_mutable_traits<xd::Point> {
+        typedef coord_t coordinate_type;
+        static inline void set(xd::Point& point, orientation_2d orient, coord_t value) {
+            if (orient == HORIZONTAL)
+                point.x = value;
+            else
+                point.y = value;
+        }
+        static inline xd::Point construct(coord_t x_value, coord_t y_value) {
+            xd::Point retval;
+            retval.x = x_value;
+            retval.y = y_value;
+            return retval;
+        }
+    };
+} }
+// 结束Boost
 
 #endif // POINT_H
 

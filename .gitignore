@@ -1,0 +1,13 @@
+*.vcxproj
+*.tlog
+*.pdb
+*.obj
+*.sln
+*.sdf
+*.ilk
+*.exe
+bin/AllLib.lib
+*.suo
+*.log
+*.user
+*.filters
