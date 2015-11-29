@@ -51,7 +51,8 @@ SOURCES += \
     xdlib/multiPoint.cpp \
     xdlib/polyline.cpp \
     xdlib/boundingBox.cpp \
-    xdlib/expolygon.cpp
+    xdlib/expolygon.cpp \
+    xdlib/encapsulationclipper.cpp
 
 
 

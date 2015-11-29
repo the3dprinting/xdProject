@@ -9,7 +9,11 @@ namespace xd { namespace Geometry {  //´Ë´¦ÓÖ¿ª±ÙÒ»¸öÃüÃû¿Õ¼ä£¬¹À¼ÆÓĞÒ»Ğ©È«¾Öº¯Ê
 
 Polygon convex_hull(Points points);   //Éú³ÉÀëÉ¢µãµÄÍ¹°ü
 Polygon convex_hull(const Polygons &polygons);   //Éú³É¶à¸ö¶à±ßĞÎµÄ×ÜµÄÍ¹°ü
+void chained_path(const Points &points, std::vector<Points::size_type> &retval, Point start_near); //´Óstart_nearµã¿ªÊ¼£¬ÒÀ´ÎÑ°ÕÒpointsÖĞ¾àÀëÇ°Ò»¸öµã×î½üµÄµãÔÚpoints½Ç±êÖµ£¬¼ÇÂ¼ÔÚretvalÖĞ
+void chained_path(const Points &points, std::vector<Points::size_type> &retval); //Í¬ÉÏ£¬Ö»²»¹ıµÚÒ»¸öµãÊ±points.front()
+template<class T> void chained_path_items(Points &points, T &items, T &retval);   //retval·µ»Ø½«pointsÅÅĞòºó½Ç±ê¶ÔÓ¦itemsµÄÖµ£¬²»Àí½â£¿
 bool directions_parallel(double angle1, double angle2, double max_diff = 0);  //·µ»ØÁ½¸ö½Ç¶ÈÖ®²îÊÇ·ñÔÚÎó²îÔÊĞíµÄ·¶Î§ÄÚÎª0¶È»ò180¶È£¬¼´Æ½ĞĞ
+
 
 }}
 #endif // GEOMETRY
