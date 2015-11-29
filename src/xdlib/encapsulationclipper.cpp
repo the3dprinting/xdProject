@@ -103,14 +103,14 @@ void
 offset(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // read input
+    // 读取输入
     ClipperLib::Paths input;
     xdMultiPoints_to_ClipperPaths(polygons, &input);
 
-    // scale input
+    // 放大输入
     scaleClipperPolygons(input, scale);
 
-    // perform offset
+    // 进行偏置
     ClipperLib::ClipperOffset co;
     if (joinType == jtRound) {
         co.ArcTolerance = miterLimit;
@@ -120,7 +120,7 @@ offset(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float delt
     co.AddPaths(input, joinType, ClipperLib::etClosedPolygon);
     co.Execute(*retval, (delta*scale));
 
-    // unscale output
+    // 缩小输出
     scaleClipperPolygons(*retval, 1/scale);
 }
 
@@ -128,11 +128,11 @@ void
 offset(const xd::Polygons &polygons, xd::Polygons* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // perform offset
+    // 进行偏置
     ClipperLib::Paths output;
     offset(polygons, &output, delta, scale, joinType, miterLimit);
 
-    // convert into ExPolygons
+    // 转换成ExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 //偏置Polylines
@@ -140,14 +140,14 @@ void
 offset(const xd::Polylines &polylines, ClipperLib::Paths* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // read input
+    // 读取输入
     ClipperLib::Paths input;
     xdMultiPoints_to_ClipperPaths(polylines, &input);
 
-    // scale input
+    // 放大输入
     scaleClipperPolygons(input, scale);
 
-    // perform offset
+    // 进行偏置
     ClipperLib::ClipperOffset co;
     if (joinType == jtRound) {
         co.ArcTolerance = miterLimit;
@@ -157,7 +157,7 @@ offset(const xd::Polylines &polylines, ClipperLib::Paths* retval, const float de
     co.AddPaths(input, joinType, ClipperLib::etOpenButt);
     co.Execute(*retval, (delta*scale));
 
-    // unscale output
+    // 缩小输出
     scaleClipperPolygons(*retval, 1/scale);
 }
 
@@ -165,11 +165,11 @@ void
 offset(const xd::Polylines &polylines, xd::Polygons* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // perform offset
+    // 进行偏置
     ClipperLib::Paths output;
     offset(polylines, &output, delta, scale, joinType, miterLimit);
 
-    // convert into ExPolygons
+    // 转换成ExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 
@@ -177,11 +177,11 @@ void
 offset(const xd::Polygons &polygons, xd::ExPolygons* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // perform offset
+    // 进行偏置
     ClipperLib::Paths output;
     offset(polygons, &output, delta, scale, joinType, miterLimit);
 
-    // convert into ExPolygons
+    // 转换成ExPolygons
     ClipperPaths_to_xdExPolygons(output, retval);
 }
 
@@ -189,14 +189,14 @@ void
 offset2(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float delta1,
     const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
-    // read input
+    // 读取输入
     ClipperLib::Paths input;
    xdMultiPoints_to_ClipperPaths(polygons, &input);
 
-    // scale input
+    // 放大输入
     scaleClipperPolygons(input, scale);
 
-    // prepare ClipperOffset object
+    // 准备ClipperOffset对象
     ClipperLib::ClipperOffset co;
     if (joinType == jtRound) {
         co.ArcTolerance = miterLimit;
@@ -204,17 +204,17 @@ offset2(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float del
         co.MiterLimit = miterLimit;
     }
 
-    // perform first offset
+    // 进行第一次偏置
     ClipperLib::Paths output1;
     co.AddPaths(input, joinType, ClipperLib::etClosedPolygon);
     co.Execute(output1, (delta1*scale));
 
-    // perform second offset
+    // 进行第二次偏置
     co.Clear();
     co.AddPaths(output1, joinType, ClipperLib::etClosedPolygon);
     co.Execute(*retval, (delta2*scale));
 
-    // unscale output
+    //缩小输出
     scaleClipperPolygons(*retval, 1/scale);
 }
 
@@ -222,11 +222,11 @@ void
 offset2(const xd::Polygons &polygons, xd::Polygons* retval, const float delta1,
     const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
-    // perform offset
+    //进行偏置
     ClipperLib::Paths output;
     offset2(polygons, &output, delta1, delta2, scale, joinType, miterLimit);
 
-    // convert into ExPolygons
+    //转换成 ExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 
@@ -234,11 +234,11 @@ void
 offset2(const xd::Polygons &polygons, xd::ExPolygons* retval, const float delta1,
     const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
-    // perform offset
+    //进行偏置
     ClipperLib::Paths output;
     offset2(polygons, &output, delta1, delta2, scale, joinType, miterLimit);
 
-    // convert into ExPolygons
+    //转换成ExPolygons
     ClipperPaths_to_xdExPolygons(output, retval);
 }
 //下面是布尔差运算的函数封装
@@ -246,12 +246,12 @@ template <class T>
 void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polygons &subject,
     const xd::Polygons &clip, T* retval, const ClipperLib::PolyFillType fillType, const bool safety_offset_)
 {
-    // read input
+    //读取输入
     ClipperLib::Paths input_subject, input_clip;
     xdMultiPoints_to_ClipperPaths(subject, &input_subject);
     xdMultiPoints_to_ClipperPaths(clip,    &input_clip);
 
-    // perform safety offset
+    //进行安全偏置
     if (safety_offset_) {
         if (clipType == ClipperLib::ctUnion) {
             safety_offset(&input_subject);
@@ -564,4 +564,5 @@ void safety_offset(ClipperLib::Paths* paths)    //表示将一个路径偏置10.0的距离。
     // unscale output
     scaleClipperPolygons(*paths, 1.0/CLIPPER_OFFSET_SCALE);
 }
+
 }

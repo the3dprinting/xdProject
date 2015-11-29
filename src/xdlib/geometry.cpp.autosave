@@ -282,9 +282,7 @@ arrange(size_t total_parts, Pointf part, coordf_t dist, const BoundingBoxf &bb)
     }
     return positions;
 }
-
-
-
+ 
 
 
 }}
