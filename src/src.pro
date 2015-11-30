@@ -27,7 +27,14 @@ HEADERS += \
     xdlib/polygon.h \
     xdlib/encapsulationClipper.h \
     xdlib/boundingBox.h \
-    xdlib/exPolygon.h
+    xdlib/exPolygon.h \
+    xdlib/readSlice.h \
+    xdlib/exPolygonGather.h \
+    xdlib/planMotion.h \
+    xdlib/polylineGather.h \
+    xdlib/detectBridge.h \
+    xdlib/surface.h \
+    xdlib/surfaceGather.h
 
 
 SOURCES += \
@@ -51,8 +58,15 @@ SOURCES += \
     xdlib/multiPoint.cpp \
     xdlib/polyline.cpp \
     xdlib/boundingBox.cpp \
-    xdlib/expolygon.cpp \
-    xdlib/encapsulationclipper.cpp
+    xdlib/encapsulationClipper.cpp \
+    xdlib/exPolygon.cpp \
+    xdlib/readSlice.cpp \
+    xdlib/exPolygonGather.cpp \
+    xdlib/planMotion.cpp \
+    xdlib/polylineGather.cpp \
+    xdlib/detectBridge.cpp \
+    xdlib/surface.cpp \
+    xdlib/surfaceGather.cpp
 
 
 
