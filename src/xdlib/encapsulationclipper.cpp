@@ -172,6 +172,24 @@ offset(const xd::Polylines &polylines, xd::Polygons* retval, const float delta,
     // 转换成ExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
+//偏置surface
+void
+offset(const xd::Surface &surface, xd::Surfaces* retval, const float delta,
+    double scale, ClipperLib::JoinType joinType, double miterLimit)
+{
+    // 进行偏置
+    xd::ExPolygons expp;
+    offset(surface.expolygon, &expp, delta, scale, joinType, miterLimit);
+
+    // 为每一个我们得到的每一个expolygon克隆输出为surface
+    retval->clear();
+    retval->reserve(expp.size());
+    for (ExPolygons::iterator it = expp.begin(); it != expp.end(); ++it) {
+        Surface s = surface;  // clone
+        s.expolygon = *it;
+        retval->push_back(s);
+    }
+}
 
 void
 offset(const xd::Polygons &polygons, xd::ExPolygons* retval, const float delta,
@@ -260,15 +278,15 @@ void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polygons &subjec
         }
     }
 
-    // init Clipper
+    //初始化Clipper
     ClipperLib::Clipper clipper;
     clipper.Clear();
 
-    // add polygons
+    //增加polygons
     clipper.AddPaths(input_subject, ClipperLib::ptSubject, true);
     clipper.AddPaths(input_clip, ClipperLib::ptClip, true);
 
-    // perform operation
+    //进行操作
     clipper.Execute(clipType, *retval, fillType, fillType);
 }
 
@@ -276,7 +294,7 @@ void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polylines &subje
     const xd::Polygons &clip, ClipperLib::PolyTree* retval, const ClipperLib::PolyFillType fillType,
     const bool safety_offset_)
 {
-    // read input
+    //读取输入
     ClipperLib::Paths input_subject, input_clip;
     xdMultiPoints_to_ClipperPaths(subject, &input_subject);
     xdMultiPoints_to_ClipperPaths(clip,    &input_clip);
@@ -284,26 +302,26 @@ void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polylines &subje
     // perform safety offset
     if (safety_offset_) safety_offset(&input_clip);
 
-    // init Clipper
+    //初始化Clipper
     ClipperLib::Clipper clipper;
     clipper.Clear();
 
-    // add polygons
+    //增加polygons
     clipper.AddPaths(input_subject, ClipperLib::ptSubject, false);
     clipper.AddPaths(input_clip,    ClipperLib::ptClip,    true);
 
-    // perform operation
+    //进行操作
     clipper.Execute(clipType, *retval, fillType, fillType);
 }
 
 void _clipper(ClipperLib::ClipType clipType, const xd::Polygons &subject,
     const xd::Polygons &clip, xd::Polygons* retval, bool safety_offset_)
 {
-    // perform operation
+    //进行操作
     ClipperLib::Paths output;
     _clipper_do<ClipperLib::Paths>(clipType, subject, clip, &output, ClipperLib::pftNonZero, safety_offset_);
 
-    // convert into Polygons
+    //转换成Polygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 

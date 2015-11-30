@@ -2,8 +2,8 @@
 #include "encapsulationClipper.h"
 #include "exPolygon.h"
 #include "line.h"
-//#include "PolylineCollection.hpp"
-#include "clipper.hpp"
+#include "polylinegather.h"
+#include "../clipper/clipper.hpp"
 #include <algorithm>
 #include <cmath>
 #include <list>

@@ -1,7 +1,7 @@
 #ifndef READSLICE_H
 #define READSLICE_H
 
-#include <../admesh/stl.h>
+#include "../admesh/stl.h"
 #include <vector>
 #include "boundingBox.h"
 #include "line.h"
@@ -88,8 +88,8 @@ class TriangleMeshSlicer
     TriangleMesh* mesh;
     TriangleMeshSlicer(TriangleMesh* _mesh);  //构造函数，将v_scaled_shared和facets_edges装满
     ~TriangleMeshSlicer();  //释放v_scaled_shared
-    void slice(const std::vector<float> &z, std::vector<Polygons>* layers);
-    void slice(const std::vector<float> &z, std::vector<ExPolygons>* layers);
+    void slice(const std::vector<float> &z, std::vector<Polygons>* layers);  //根据传入的一系列z值切片，回到layers
+    void slice(const std::vector<float> &z, std::vector<ExPolygons>* layers);  //根据传入的一系列z值切片，回到layers
     void slice_facet(float slice_z, const stl_facet &facet, const int &facet_idx, const float &min_z, const float &max_z, std::vector<IntersectionLine>* lines) const;
     void cut(float z, TriangleMesh* upper, TriangleMesh* lower);   //将stl分成两个，分别存放在两个TriangleMesh类里面
 

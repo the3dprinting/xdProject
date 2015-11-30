@@ -70,5 +70,6 @@ SOURCES += \
 
 
 
-INCLUDEPATH +=\
-    $$PWD/clipper
+INCLUDEPATH += $$PWD
+
+DEPENDPATH += $$INCLUDEPATH

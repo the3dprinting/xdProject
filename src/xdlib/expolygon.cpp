@@ -169,17 +169,17 @@ ExPolygon::simplify(double tolerance, ExPolygons &expolygons) const
 void
 ExPolygon::medial_axis(double max_width, double min_width, Polylines* polylines) const
 {
-    // init helper object
+    // 初始化几何文件里面的MediaAxis对象
     xd::Geometry::MedialAxis ma(max_width, min_width);
 
-    // populate list of segments for the Voronoi diagram
+    // 植入Voronoi图线段的链表
     ma.lines = this->contour.lines();
     for (Polygons::const_iterator hole = this->holes.begin(); hole != this->holes.end(); ++hole) {
         Lines lines = hole->lines();
         ma.lines.insert(ma.lines.end(), lines.begin(), lines.end());
     }
 
-    // compute the Voronoi diagram
+    //计算Voronoi图
     ma.build(polylines);  //生成有效voronoi图的边，放在polylines里面。根据输入的min_width舍去了一些边
 
     // clip segments to our expolygon area

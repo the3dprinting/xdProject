@@ -2,10 +2,10 @@
 #define ENCAPSULATIONCLIPPER
 
 #include "constdefine.h"
-#include "clipper.hpp"
+#include "../clipper/clipper.hpp"
 #include "exPolygon.h"
 #include "polygon.h"
-//#include "Surface.hpp"
+#include "surface.h"
 
 // import these wherever we're included
 using ClipperLib::jtMiter;  //偏置时仅尖的地方变为两个点
@@ -47,9 +47,10 @@ void offset(const xd::Polylines &polylines, ClipperLib::Paths* retval, const flo
 void offset(const xd::Polylines &polylines, xd::Polygons* retval, const float delta,
     double scale = 100000, ClipperLib::JoinType joinType = ClipperLib::jtSquare,
     double miterLimit = 3);  //同上，只是输出结果类型为Polygons类
-//void offset(const Slic3r::Surface &surface, Slic3r::Surfaces* retval, const float delta,
-//    double scale = 100000, ClipperLib::JoinType joinType = ClipperLib::jtSquare,
-//    double miterLimit = 3);  //这个等看完surface再说！！！！！！！！！！！！！
+//偏置surface
+void offset(const xd::Surface &surface, xd::Surfaces* retval, const float delta,
+    double scale = 100000, ClipperLib::JoinType joinType = ClipperLib::jtSquare,
+    double miterLimit = 3);  //同上，只是输出结果类型为Polygons类
 
 void offset(const xd::Polygons &polygons, xd::ExPolygons* retval, const float delta,
     double scale = 100000, ClipperLib::JoinType joinType = ClipperLib::jtMiter,

@@ -23,5 +23,6 @@ DESTDIR = $$OUT_PWD/../../bin
 
 unix|win32: LIBS += -L$$DESTDIR -lAllLib
 
-INCLUDEPATH += $$PWD/../../src/clipper\$$PWD/../../src/xdlib
+INCLUDEPATH += $$PWD/../../src
+
 DEPENDPATH += $$INCLUDEPATH
