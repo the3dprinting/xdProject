@@ -52,12 +52,12 @@ namespace boost { namespace polygon {
         typedef xd::Points::const_iterator iterator_type;
         typedef xd::Point point_type;
 
-        // Get the begin iterator
+        // 得到开始iterator
         static inline iterator_type begin_points(const xd::ExPolygon& t) {
             return t.contour.points.begin();
         }
 
-        // Get the end iterator
+        // 得到结束iterator
         static inline iterator_type end_points(const xd::ExPolygon& t) {
             return t.contour.points.end();
         }

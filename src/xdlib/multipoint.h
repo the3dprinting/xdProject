@@ -38,7 +38,7 @@ class MultiPoint  //定义多重点类，包含一个Point类组成的向量Points
     void append(const Points::const_iterator &begin, const Points::const_iterator &end);  //以指针的形式加上好多点
 
     static Points _douglas_peucker(const Points &points, const double tolerance);  //在满足弦高误差的情况下化简多点线段。
-
+                                                                                   //参考https://en.wikipedia.org/wiki/Ramer–Douglas–Peucker_algorithm
 };
 
 }

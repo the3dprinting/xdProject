@@ -87,13 +87,13 @@ ExPolygon::contains(const Line &line) const
     return this->contains((Polyline)line);
 }
 
-//bool
-//ExPolygon::contains(const Polyline &polyline) const
-//{
-//    Polylines pl_out;
-//    diff((Polylines)polyline, *this, &pl_out);  //这里调用了ClipperUtils里面封装了clipper库的函数diff，表示布尔差
-//    return pl_out.empty(); //*this剪完了Polyline如果没有东西了，说明polyline全都在*this里面
-//}
+bool
+ExPolygon::contains(const Polyline &polyline) const
+{
+    Polylines pl_out;
+    diff((Polylines)polyline, *this, &pl_out);  //这里调用了ClipperUtils里面封装了clipper库的函数diff，表示布尔差
+    return pl_out.empty(); //*this剪完了Polyline如果没有东西了，说明polyline全都在*this里面
+}
 
 bool
 ExPolygon::contains(const Point &point) const

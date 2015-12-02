@@ -37,7 +37,7 @@ class Polygon : public MultiPoint {
     Polygons simplify(double tolerance) const;  //按弦高小于tolerance简化多边形类里的points，最后的到Polygons
     void simplify(double tolerance, Polygons &polygons) const;  //在polygons后加入本身类中points以tolerance简化后的多边形
     void triangulate_convex(Polygons* polygons) const;  //将自身points第一个点和其余依次两点组成的三角形加入到polygons里面（逆时针才会加入）
-    Point centroid() const;  //返回多边形质心，平均密度也就是就是形心——参考：http://en.wikipedia.org/wiki/Centroid#Centroid_of_polygon
+    Point centroid() const;  //返回多边形质心，密度平均也就是就是形心——参考：http://en.wikipedia.org/wiki/Centroid#Centroid_of_polygon
     std::string wkt() const;  //以POLYGON((x1 y1,x2 y2,...xn yn))形式的字符串返回
     Points concave_points(double angle = PI) const;  //找出所有凹顶点   实在不懂为啥！
     Points convex_points(double angle = PI) const;  //找出所有凸顶点
