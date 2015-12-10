@@ -113,7 +113,7 @@ namespace boost { namespace polygon {
             return polygon_set.end();
         }
 
-        //别担心，返回会错误即可，推测以后不会用这两个属性
+        //别担心，返回错误即可，推测以后不会用这两个属性
         static inline bool clean(const xd::Polygons& polygon_set) { return false; }
         static inline bool sorted(const xd::Polygons& polygon_set) { return false; }
     };

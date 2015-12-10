@@ -15,13 +15,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    glwidget.cpp
+    centralwidget.cpp
 
 HEADERS  += mainwindow.h \
-    glwidget.h
+    centralwidget.h
 
-FORMS    += mainwindow.ui \
-    glwidget.ui
+FORMS    += mainwindow.ui
 
 DESTDIR = $$OUT_PWD/../../bin
 
