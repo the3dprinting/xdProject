@@ -41,7 +41,7 @@ class BoundingBox3Base : public BoundingBoxBase<PointClass>
     void merge(const PointClass &point);  //同二维，多了z
     void merge(const std::vector<PointClass> &points);  //同二维，多了z
     void merge(const BoundingBox3Base<PointClass> &bb);  //同二维，多了z
-    PointClass size() const;    ////返回包围盒总长，宽，高组成的PointClass类，肯是一个点
+    PointClass size() const;    //返回包围盒总长，宽，高组成的PointClass类，肯是一个点
     void translate(coordf_t x, coordf_t y, coordf_t z);   //同二维，多了z
     void offset(coordf_t delta);  //同二维，多了z
     PointClass center() const;    //同二维，多了z

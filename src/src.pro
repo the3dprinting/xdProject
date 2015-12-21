@@ -34,7 +34,9 @@ HEADERS += \
     xdlib/polylineGather.h \
     xdlib/detectBridge.h \
     xdlib/surface.h \
-    xdlib/surfaceGather.h
+    xdlib/surfaceGather.h \
+    xdlib/config.h \
+    xdlib/pringconfig.h
 
 
 SOURCES += \
@@ -66,7 +68,9 @@ SOURCES += \
     xdlib/polylineGather.cpp \
     xdlib/detectBridge.cpp \
     xdlib/surface.cpp \
-    xdlib/surfaceGather.cpp
+    xdlib/surfaceGather.cpp \
+    xdlib/config.cpp \
+    xdlib/printConfig.cpp
 
 
 

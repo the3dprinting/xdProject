@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->cw = new centralwidget;
+    this->triangleMesh = new xd::TriangleMesh;   //这里必须先要声明，否则后面函数不能使用它！
     setCentralWidget(cw);
 }
 
@@ -24,13 +25,13 @@ void MainWindow::on_actionOpen_triggered()
     if(fileName.length()==0)
         return;
     char *FN;
-    FN=new char[fileName.length()+1];
-    memset(FN,'\0',(fileName.length()+1)*sizeof(char));
+    FN=new char[fileName.length()];
+    memset(FN,'\0',(fileName.length())*sizeof(char));
     strcpy(FN,fileName.c_str());
     this->triangleMesh->ReadSTLFile(FN);
     qDebug()<<"facet Number is:" <<triangleMesh->facets_count()<<'\n'
-            <<"needed repair?"<<triangleMesh->needed_repair();
-    delete []FN;
+            <<"needed repair："<<triangleMesh->needed_repair();
+    //delete []FN;
 }
 
 

@@ -10,7 +10,7 @@ namespace xd {
 class ExPolygon;
 typedef std::vector<ExPolygon> ExPolygons;
 
-class ExPolygon  //真正意义上的多边形，有一个外轮廓，若干个洞组成的
+class ExPolygon  //真正意义上的多边形，由一个外轮廓，若干个洞组成的
 {
     public:
     Polygon contour;

@@ -71,7 +71,7 @@ int
 MultiPoint::find_point(const Point &point) const
 {
     for (Points::const_iterator it = this->points.begin(); it != this->points.end(); ++it) {
-        if (it->coincides_with(point)) return it - this->points.begin();
+        if (it->coincides_with(point)) return it - this->points.begin();  //这里必须减去this->points.begin()才能返回为int类型
     }
     return -1;  // 没找到的话
 }
