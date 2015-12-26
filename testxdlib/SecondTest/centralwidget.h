@@ -23,16 +23,19 @@ public:
     std::vector<xd::Polygons> * trToDraw;
 
 public slots:
-
-    void centering();
     void generate_media_axis();
     void generate_trapezoids(double angle);
     void generate_trapezoids2(double angle);
     void generate_triangulate();
     void generate_triangulate_pp();
     void generate_triangulate_p2t();
+    void insertItem();
 protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
+    //void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
+    //void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
+    //void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
+
     void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);

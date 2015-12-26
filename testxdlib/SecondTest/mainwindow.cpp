@@ -11,13 +11,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(720,540);
-    //this->cw = new centralwidget(this);
+    this->cw = new centralwidget(this);
     this->triangleMesh = new xd::TriangleMesh;   //这里必须先要声明，否则后面函数不能使用它！
     this->layers = new std::vector<xd::ExPolygons>;
     this->dw = new dockwidget(this);
     addDockWidget(Qt::LeftDockWidgetArea,dw);
+    setCentralWidget(cw);
     connect((QObject*)dw->SliceThicknessButton,SIGNAL(clicked()),this,SLOT(on_sliceButton_clicked()));  //这个需要强制转换
     connect(this,SIGNAL(changeLayerNumRange(int)),dw,SLOT(setLayerRange(int)));
+    connect((QObject*)dw->LayerNum,SIGNAL(valueChanged(int)),this,SLOT(layerNumChanged(int)));
     this->triangleMesh = new xd::TriangleMesh;   //这里必须先要声明，否则后面函数不能使用它！
     this->layers = new std::vector<xd::ExPolygons>;
 }
@@ -64,4 +66,13 @@ void MainWindow::on_sliceButton_clicked()
     slicer.slice(z,this->layers);
     QMessageBox::information(NULL, "remind", "slice finished", QMessageBox::Yes, QMessageBox::Yes);
     changeLayerNumRange(z.size());
+}
+
+void MainWindow::layerNumChanged(int i)
+{
+    //this->cw->polygonsToDraw->clear();
+    this->cw->trToDraw->clear();
+    this->cw->medialAxisToDraw->clear();
+    this->cw->polygonsToDraw = & this->layers->operator [](i-1) ;
+    this->cw->insertItem();
 }

@@ -24,6 +24,7 @@ signals:
 private slots:
     void on_actionOpen_triggered();
     void on_sliceButton_clicked();
+    void layerNumChanged(int i);
 
 private:
     Ui::MainWindow *ui;

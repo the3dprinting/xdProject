@@ -42,15 +42,16 @@ void _drawPolygons(QPainter *p, const xd::Polygons & PG)
 }
 
 //开始类的定义************************************************//
-expolygonitem::expolygonitem(xd::ExPolygons * ex)
+expolygonitem::expolygonitem(xd::ExPolygons * e)
 {
-    exPolygonToDraw = ex;
-
+    exPolygonToDraw = e;
+    medialAxisToDraw = new std::vector<xd::Polylines>;
+    trToDraw= new std::vector<xd::Polygons>;
 }
 
 QRectF expolygonitem::boundingRect() const
 {
-    if (!exPolygonToDraw)
+    if (exPolygonToDraw->empty())
         return QRectF();
     qreal penWidth = 1;
     qreal extra = penWidth / 2.0;
@@ -69,7 +70,7 @@ QRectF expolygonitem::boundingRect() const
 
 void expolygonitem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-     if (!exPolygonToDraw)
+     if (exPolygonToDraw->empty())
         return;
      for(xd::ExPolygons::const_iterator i=this->exPolygonToDraw->begin() ; i!=this->exPolygonToDraw->end() ; ++i)
     {
@@ -84,3 +85,5 @@ void expolygonitem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         _drawPolygons(painter,*i);
     }
 }
+
+

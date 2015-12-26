@@ -7,7 +7,7 @@
 class expolygonitem : public QGraphicsItem
 {
 public:
-    expolygonitem(xd::ExPolygons * ex);
+    expolygonitem(xd::ExPolygons * e);
 
     enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
@@ -15,6 +15,8 @@ public:
 protected:
     QRectF boundingRect() const Q_DECL_OVERRIDE;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE;
+
+public slots:
 
 
 private:

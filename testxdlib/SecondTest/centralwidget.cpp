@@ -6,7 +6,7 @@
 #include "xdlib/exPolygon.h"
 #include "xdlib/line.h"
 #include "xdlib/constdefine.h"
-
+#include "expolygonitem.h"
 
 void _drawArrow(QPainter *p, const QPointF & A, const QPointF & B)  //根据传入线段的端点画箭头
 {
@@ -109,8 +109,7 @@ centralwidget::centralwidget(QWidget *parent)
     this->polygonsToDraw = new xd::ExPolygons;
     this->medialAxisToDraw = new std::vector<xd::Polylines>;
     this->trToDraw = new std::vector<xd::Polygons>;
-//    moveX=this->width()/2*devicePixelRatio();
-//    moveY=this->height()/2*devicePixelRatio();
+
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
     this->Scale = 1; //开始系数为1
@@ -124,41 +123,6 @@ QSize centralwidget::minimumSizeHint() const
 QSize centralwidget::sizeHint() const
 {
     return QSize(800, 400);
-}
-
-void centralwidget::centering()
-{
-    moveX=this->width()/2*devicePixelRatio();
-    moveY=this->height()/2*devicePixelRatio();
-    update();
-}
-
-void centralwidget::paintEvent(QPaintEvent * /* event */)
-{
-    QPainter painter(this);
-    /*
-    int side = qMin(width(), height());
-    int x = (width() - side / 2);
-    int y = (height() - side / 2);
-    painter.setViewport(x, y, side, side);  //将屏幕坐标系和物理坐标系对应
-    */
-    painter.setPen(pen);
-    painter.setBrush(brush);
-    painter.translate(moveX,moveY);
-    //painter.rotate(-90);  //坐标屏幕翻转
-    _drawAxis(&painter);
-    for(xd::ExPolygons::const_iterator i=this->polygonsToDraw->begin() ; i!=this->polygonsToDraw->end() ; ++i)
-    {
-        _drawExPolygon(&painter,*i,this->Scale);
-    }
-    for(std::vector<xd::Polylines>::const_iterator i=this->medialAxisToDraw->begin() ; i!=this->medialAxisToDraw->end() ; ++i)
-    {
-        _drawPolylines(&painter,*i,this->Scale);
-    }
-    for(std::vector<xd::Polygons>::const_iterator i=this->trToDraw->begin() ; i!=this->trToDraw->end() ; ++i)
-    {
-        _drawPolygons(&painter,*i,this->Scale);
-    }   
 }
 
 void centralwidget::wheelEvent(QWheelEvent *event)
@@ -182,21 +146,14 @@ void centralwidget::mousePressEvent(QMouseEvent *e)
 
 void centralwidget::mouseMoveEvent(QMouseEvent *e)
 {
-    qreal dx = qreal(e->x() - lastPos.x())/devicePixelRatio() ;
-    qreal dy = qreal(e->y() - lastPos.y())/devicePixelRatio() ;
+    qreal dx = qreal(e->x() - lastPos.x()) ;
+    qreal dy = qreal(e->y() - lastPos.y()) ;
     if (e->buttons() & Qt::LeftButton) {
-        moveX+=dx;
-        moveY+=dy;
-        update();
+        translate(dx,dy);
     } else if (e->buttons() & Qt::RightButton) {
 
         moveX+=dx*10;
         moveY+=dy*10;
-        update();
-    }
-    else if(e->buttons() & Qt::MidButton)
-    {
-
         update();
     }
     lastPos = e->pos();
@@ -287,4 +244,14 @@ void centralwidget::generate_triangulate_p2t()
         this->trToDraw->push_back(tp);
     }
     update();
+}
+
+void centralwidget::insertItem()
+{
+    if(this->polygonsToDraw->empty())
+        return;
+    scene->clear();
+    expolygonitem *ei = new expolygonitem(this->polygonsToDraw);
+    scene->addItem(ei);
+    ei->setPos(0,0);
 }
