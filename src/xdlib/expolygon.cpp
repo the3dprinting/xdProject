@@ -414,5 +414,15 @@ ExPolygon::lines() const
     return lines;
 }
 
+Points
+ExPolygon::points() const
+{
+    Points points = this->contour.points;
+    for (Polygons::const_iterator h = this->holes.begin(); h != this->holes.end(); ++h) {
+        Points hole_points = h->points;
+        points.insert(points.end(), hole_points.begin(), hole_points.end());
+    }
+    return points;
+}
 
 }

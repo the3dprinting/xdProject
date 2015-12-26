@@ -1,4 +1,4 @@
-#include "pringconfig.h"
+#include "printconfig.h"
 
 namespace xd {//G代码所有配置都在这里！
 

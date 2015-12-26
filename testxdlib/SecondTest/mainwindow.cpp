@@ -11,27 +11,23 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(720,540);
-    this->cw = new centralwidget(this);
-    this->dw = new dockwidget(this);
+    //this->cw = new centralwidget(this);
     this->triangleMesh = new xd::TriangleMesh;   //这里必须先要声明，否则后面函数不能使用它！
     this->layers = new std::vector<xd::ExPolygons>;
-    setCentralWidget(cw);
+    this->dw = new dockwidget(this);
     addDockWidget(Qt::LeftDockWidgetArea,dw);
     connect((QObject*)dw->SliceThicknessButton,SIGNAL(clicked()),this,SLOT(on_sliceButton_clicked()));  //这个需要强制转换
-    connect((QObject*)dw->centerButton,SIGNAL(clicked()),this,SLOT(on_centerButton_clicked()));
-    connect((QObject*)dw->LayerNum,SIGNAL(valueChanged(int)),this,SLOT(layerNumChanged(int)));
-    connect((QObject*)dw->triangulateButton,SIGNAL(clicked()),this->cw,SLOT(generate_triangulate()));
-    connect((QObject*)dw->triangulate_ppButton,SIGNAL(clicked()),this->cw,SLOT(generate_triangulate_pp()));
-    connect((QObject*)dw->triangulate_p2tButton,SIGNAL(clicked()),this->cw,SLOT(generate_triangulate_p2t()));
-    connect((QObject*)dw->medialAxisButton,SIGNAL(clicked()),this->cw,SLOT(generate_media_axis()));
     connect(this,SIGNAL(changeLayerNumRange(int)),dw,SLOT(setLayerRange(int)));
+    this->triangleMesh = new xd::TriangleMesh;   //这里必须先要声明，否则后面函数不能使用它！
+    this->layers = new std::vector<xd::ExPolygons>;
 }
 
 MainWindow::~MainWindow()
 {
-    //delete triangleMesh;
     delete ui;
+
 }
+
 
 void MainWindow::on_actionOpen_triggered()
 {
@@ -69,18 +65,3 @@ void MainWindow::on_sliceButton_clicked()
     QMessageBox::information(NULL, "remind", "slice finished", QMessageBox::Yes, QMessageBox::Yes);
     changeLayerNumRange(z.size());
 }
-
-void MainWindow::on_centerButton_clicked()
-{
-    this->cw->centering();
-}
-
-void MainWindow::layerNumChanged(int i)
-{
-    //this->cw->polygonsToDraw->clear();
-    this->cw->trToDraw->clear();
-    this->cw->medialAxisToDraw->clear();
-    this->cw->polygonsToDraw = & this->layers->operator [](i-1) ;
-    this->cw->update();
-}
-

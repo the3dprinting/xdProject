@@ -39,7 +39,7 @@ class ExPolygon  //真正意义上的多边形，由一个外轮廓，若干个洞组成的
     void triangulate_pp(Polygons* polygons) const;  //https://github.com/ivanfratric/polypartition里面的Triangulate_MONO三角化
     void triangulate_p2t(Polygons* polygons) const;   //http://code.google.com/p/poly2tri/里的三角化方法进行三角化
     Lines lines() const;  //将带洞多边形所有点转换为lines类来返回，即一个带洞多边形的所有边
-
+    Points points() const;  //将本身所有点返回，自己写的函数
 };
 }  //结束xd命名空间
 

@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += opengl
+QT       += widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,10 +16,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    centralwidget.cpp
+    centralwidget.cpp \
+    dockwidget.cpp
 
 HEADERS  += mainwindow.h \
-    centralwidget.h
+    centralwidget.h \
+    dockwidget.h
 
 FORMS    += mainwindow.ui
 

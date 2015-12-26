@@ -36,7 +36,7 @@ HEADERS += \
     xdlib/surface.h \
     xdlib/surfaceGather.h \
     xdlib/config.h \
-    xdlib/pringconfig.h
+    xdlib/printconfig.h
 
 
 SOURCES += \
@@ -70,7 +70,7 @@ SOURCES += \
     xdlib/surface.cpp \
     xdlib/surfaceGather.cpp \
     xdlib/config.cpp \
-    xdlib/printConfig.cpp
+    xdlib/printconfig.cpp
 
 
 

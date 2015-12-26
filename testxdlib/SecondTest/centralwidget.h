@@ -4,10 +4,10 @@
 #include <QBrush>
 #include <QPen>
 #include <QPixmap>
-#include <QWidget>
+#include <QGraphicsView>
 #include "xdlib/exPolygon.h"
 
-class centralwidget : public QWidget
+class centralwidget : public QGraphicsView
 {
     Q_OBJECT
 
@@ -17,7 +17,7 @@ public:
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //定义本身widget的最小尺寸
     QSize sizeHint() const Q_DECL_OVERRIDE;   //返回本身widget的推荐值
     xd::ExPolygons * polygonsToDraw;   //共有为了让主窗口访问
-    qreal scale; //放缩系数暂时放这里
+    qreal Scale; //放缩系数暂时放这里
 
     std::vector<xd::Polylines> * medialAxisToDraw;
     std::vector<xd::Polygons> * trToDraw;
@@ -33,12 +33,13 @@ public slots:
     void generate_triangulate_p2t();
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
-    void wheelEvent(QWheelEvent *e);
+    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
+    void scaleView(qreal scaleFactor);
 
 private:
-
+    QGraphicsScene *scene;
     QPointF lastPos;
     qreal moveX;
     qreal moveY;

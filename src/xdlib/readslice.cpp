@@ -442,7 +442,8 @@ TriangleMeshSlicer::slice(const std::vector<float> &z, std::vector<Polygons>* la
         // find facet extents   找到面片z方向的最大值和最小值
         float min_z = fminf(facet->vertex[0].z, fminf(facet->vertex[1].z, facet->vertex[2].z));
         float max_z = fmaxf(facet->vertex[0].z, fmaxf(facet->vertex[1].z, facet->vertex[2].z));
-
+//      if(min_z==max_z)
+//          int tem=1;
         #ifdef SLIC3R_DEBUG
         printf("\n==> FACET %d (%f,%f,%f - %f,%f,%f - %f,%f,%f):\n", facet_idx,
             facet->vertex[0].x, facet->vertex[0].y, facet->vertex[0].z,
@@ -454,11 +455,13 @@ TriangleMeshSlicer::slice(const std::vector<float> &z, std::vector<Polygons>* la
         // find layer extents   找到z方向切片的面在该三角面片上的范围指针
         std::vector<float>::const_iterator min_layer, max_layer;
         min_layer = std::lower_bound(z.begin(), z.end(), min_z); // first layer whose slice_z is >= min_z   lower_bound超级好的函数
+        //注意：下面这个函数如果使用C++调试器会出现错误，g++没事，很奇怪！！
         max_layer = std::upper_bound(z.begin() + (min_layer - z.begin()), z.end(), max_z) - 1; // last layer whose slice_z is <= max_z
         #ifdef SLIC3R_DEBUG
         printf("layers: min = %d, max = %d\n", (int)(min_layer - z.begin()), (int)(max_layer - z.begin()));
         #endif
 
+        //printf("layers: min = %d, max = %d\n", (int)(min_layer - z.begin()), (int)(max_layer - z.begin()));
         for (std::vector<float>::const_iterator it = min_layer; it != max_layer + 1; ++it) {
             std::vector<float>::size_type layer_idx = it - z.begin();  //size_type 相当于 unsigned int类型使用size_type 主要是为了适应不同的平台int类型大小会根据不同平台而不同,所以应该是size_type比int好！
             this->slice_facet(*it / SCALING_FACTOR, *facet, facet_idx, min_z, max_z, &lines[layer_idx]);  //裁剪一个面的函数，结果放在对应z角标编号的lines里
@@ -660,7 +663,7 @@ TriangleMeshSlicer::make_loops(std::vector<IntersectionLine> &lines, Polygons* l
         if (line->a_id != -1) by_a_id[line->a_id].push_back(&(*line));
     }
 
-    CYCLE: while (1) {
+    CYCLE: while (1) {   //这里是一个goto语句的开始部分
         // take first spare line and start a new loop
         IntersectionLine* first_line = NULL;
         for (IntersectionLines::iterator line = lines.begin(); line != lines.end(); ++line) {

@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    FirstTest
+    FirstTest \
+    SecondTest
 
 INCLUDEPATH += $$PWD/../src
 
