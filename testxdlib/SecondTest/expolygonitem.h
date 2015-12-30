@@ -7,8 +7,10 @@
 class expolygonitem : public QGraphicsItem
 {
 public:
+    //enum drawType{exPolygon,mediaAxis,tri};
     expolygonitem(xd::ExPolygons * e);
-
+    expolygonitem(std::vector<xd::Polylines> *e);
+    expolygonitem(std::vector<xd::Polygons> *e);
     enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
 

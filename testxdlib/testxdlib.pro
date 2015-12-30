@@ -2,8 +2,9 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     FirstTest \
-    SecondTest
+    SecondTest \
+    testXJRP
 
-INCLUDEPATH += $$PWD/../src
+#INCLUDEPATH += $$PWD/../src
 
-DEPENDPATH += $$INCLUDEPATH
+#DEPENDPATH += $$INCLUDEPATH

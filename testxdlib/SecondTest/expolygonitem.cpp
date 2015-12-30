@@ -49,6 +49,20 @@ expolygonitem::expolygonitem(xd::ExPolygons * e)
     trToDraw= new std::vector<xd::Polygons>;
 }
 
+expolygonitem::expolygonitem(std::vector<xd::Polylines> *e)
+{
+    exPolygonToDraw = new xd::ExPolygons;
+    medialAxisToDraw = e;
+    trToDraw= new std::vector<xd::Polygons>;
+}
+
+expolygonitem::expolygonitem(std::vector<xd::Polygons> *e)
+{
+    exPolygonToDraw = new xd::ExPolygons;
+    medialAxisToDraw = new std::vector<xd::Polylines>;
+    trToDraw= e;
+}
+
 QRectF expolygonitem::boundingRect() const
 {
     if (exPolygonToDraw->empty())
@@ -70,8 +84,6 @@ QRectF expolygonitem::boundingRect() const
 
 void expolygonitem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-     if (exPolygonToDraw->empty())
-        return;
      for(xd::ExPolygons::const_iterator i=this->exPolygonToDraw->begin() ; i!=this->exPolygonToDraw->end() ; ++i)
     {
         _drawExPolygon(painter,*i);

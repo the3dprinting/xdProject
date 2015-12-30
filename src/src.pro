@@ -2,7 +2,7 @@ TEMPLATE = lib
 CONFIG += static
 TARGET = AllLib
 #QT     -= gui
-#CONFIG += c++11
+CONFIG += c++11
 #LIBS   -= -lQtGui -lGL
 
 DESTDIR = $$OUT_PWD/../bin
@@ -36,7 +36,17 @@ HEADERS += \
     xdlib/surface.h \
     xdlib/surfaceGather.h \
     xdlib/config.h \
-    xdlib/printconfig.h
+    xdlib/printconfig.h \
+    xdlib/generate_line.h \
+    xjrp/xjboundary.h \
+    xjrp/xjlayer.h \
+    xjrp/xjmath.hpp \
+    xjrp/xjpoint.h \
+    xjrp/xjpolygon.h \
+    xjrp/xjslcmodel.h
+
+
+
 
 
 SOURCES += \
@@ -70,7 +80,13 @@ SOURCES += \
     xdlib/surface.cpp \
     xdlib/surfaceGather.cpp \
     xdlib/config.cpp \
-    xdlib/printconfig.cpp
+    xdlib/printconfig.cpp \
+    xdlib/generate_line.cpp \   
+    xjrp/xjboundary.cpp \
+    xjrp/xjlayer.cpp \
+    xjrp/xjpoint.cpp \
+    xjrp/xjpolygon.cpp \
+    xjrp/xjslcmodel.cpp
 
 
 

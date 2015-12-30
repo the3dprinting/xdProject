@@ -243,7 +243,10 @@ void centralwidget::generate_triangulate_p2t()
         i->triangulate_p2t(&tp);
         this->trToDraw->push_back(tp);
     }
-    update();
+    expolygonitem *ee = new expolygonitem(this->trToDraw);
+    scene->addItem(ee);
+    ee->setPos(0,0);
+    scene->update();
 }
 
 void centralwidget::insertItem()
@@ -254,4 +257,5 @@ void centralwidget::insertItem()
     expolygonitem *ei = new expolygonitem(this->polygonsToDraw);
     scene->addItem(ei);
     ei->setPos(0,0);
+    scene->update();
 }

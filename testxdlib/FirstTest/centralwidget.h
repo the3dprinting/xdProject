@@ -7,6 +7,8 @@
 #include <QWidget>
 #include "xdlib/exPolygon.h"
 
+class  MainWindow;
+
 class centralwidget : public QWidget
 {
     Q_OBJECT
@@ -16,11 +18,7 @@ public:
     centralwidget(QWidget *parent = 0);
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //定义本身widget的最小尺寸
     QSize sizeHint() const Q_DECL_OVERRIDE;   //返回本身widget的推荐值
-    xd::ExPolygons * polygonsToDraw;   //共有为了让主窗口访问
-    qreal scale; //放缩系数暂时放这里
 
-    std::vector<xd::Polylines> * medialAxisToDraw;
-    std::vector<xd::Polygons> * trToDraw;
 
 public slots:
 
@@ -38,12 +36,18 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
 
 private:
+    xd::ExPolygons * polygonsToDraw;
+    std::vector<xd::Polylines> * medialAxisToDraw;
+    std::vector<xd::Polygons> * trToDraw;
 
     QPointF lastPos;
     qreal moveX;
     qreal moveY;
+    qreal scale; //放缩系数
     QPen pen;
     QBrush brush;
+
+friend MainWindow;  //友元，为了让主窗口访问
 };
 
 #endif // CENTRALWIDGET

@@ -65,7 +65,7 @@ Polyline
 Polygon::split_at_index(int index) const
 {
     Polyline polyline;
-    polyline.points.reserve(this->points.size() + 1);
+    polyline.points.reserve(this->points.size() + 1);   //注意，返回的多了一个点！
     for (Points::const_iterator it = this->points.begin() + index; it != this->points.end(); ++it)
         polyline.points.push_back(*it);
     for (Points::const_iterator it = this->points.begin(); it != this->points.begin() + index + 1; ++it)  //注意，index的点又加上了一个

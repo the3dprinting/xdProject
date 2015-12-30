@@ -20,6 +20,8 @@
  *           https://github.com/admesh/admesh/issues
  */
 
+#define _USE_MATH_DEFINES  // Otherwise #defines like M_PI are undeclared under Visual Studio
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,7 +33,9 @@ static void stl_rotate(float *x, float *y, float angle);
 static float get_area(stl_facet *facet);
 static float get_volume(stl_file *stl);
 
-//static const M_PI=3.141592653589793238;
+#ifndef M_PI
+#define M_PI		3.14159265358979323846
+#endif
 
 void
 stl_verify_neighbors(stl_file *stl) {

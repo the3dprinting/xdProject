@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect((QObject*)dw->SliceThicknessButton,SIGNAL(clicked()),this,SLOT(on_sliceButton_clicked()));  //这个需要强制转换
     connect(this,SIGNAL(changeLayerNumRange(int)),dw,SLOT(setLayerRange(int)));
     connect((QObject*)dw->LayerNum,SIGNAL(valueChanged(int)),this,SLOT(layerNumChanged(int)));
+    connect((QObject*)this->dw->triangulate_p2tButton,SIGNAL(clicked()),this->cw,SLOT(generate_triangulate_p2t()));
     this->triangleMesh = new xd::TriangleMesh;   //这里必须先要声明，否则后面函数不能使用它！
     this->layers = new std::vector<xd::ExPolygons>;
 }
