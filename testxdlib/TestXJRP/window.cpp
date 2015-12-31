@@ -120,6 +120,15 @@ Window::Window()
     interval_numLabel->hide();
 }
 
+Window::~Window()
+{
+    if(this->triangleMesh)
+    {
+        delete this->triangleMesh;
+        this->triangleMesh = NULL;
+    }
+}
+
 void Window::LayerChanged()
 {
     drawArea->setLayer(model->layerAtIndex(LayerNum->value()-1));
@@ -209,11 +218,19 @@ void Window::saveTrigger()
 void Window::clearTrigger()
 {
     this->model->clear();
+    if(this->triangleMesh)
+        delete this->triangleMesh;
+    this->triangleMesh = new xd::TriangleMesh;
     LayerNum->setRange(0,0);
     LayerNum->setSpecialValueText(tr("0 (No Model)"));
     infill->hide();
     save->hide();
     centering->hide();
+
+    openSTL->show();
+    thickness->show();
+    thicknessEdit->show();
+    slice->show();
 }
 void Window::infillTrigger()
 {

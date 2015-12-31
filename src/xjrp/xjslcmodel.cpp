@@ -264,12 +264,12 @@ void SLCModel::readxdlib (std::vector<float> z,std::vector<xd::ExPolygons>* laye
         for(xd::ExPolygons::iterator k=layers->operator [](i).begin() ; k!=layers->operator [](i).end() ; ++k)
         {
             xjPolygon polygon;
-            k->contour.make_counter_clockwise();  //轮廓逆时针
+            k->contour.make_counter_clockwise();  //外轮廓逆时针
             for(xd::Points::const_iterator p=k->contour.points.begin() ; p!=k->contour.points.end() ; ++p)
             {
                 polygon.append(xjPoint(p->x * SCALING_FACTOR, p->y * SCALING_FACTOR, z[i]));
             }
-            //polygon.append(xjPoint(k->contour.last_point().x* SCALING_FACTOR,k->contour.last_point().x* SCALING_FACTOR,z[i])); //polygon类型转换为points后没有最后一个点
+            polygon.append(xjPoint(k->contour.last_point().x* SCALING_FACTOR,k->contour.last_point().y* SCALING_FACTOR,z[i])); //polygon类型里面的points后没有最后一个点
             polygon.setType (xjPolygon::PolygonType::Contour);
             layer.append(polygon);
             for(xd::Polygons::iterator h=k->holes.begin() ; h!=k->holes.end() ; ++h)  //里面使用了make_clockwise函数，因此必须iterator
@@ -280,7 +280,7 @@ void SLCModel::readxdlib (std::vector<float> z,std::vector<xd::ExPolygons>* laye
                 {
                     polygon.append(xjPoint(hp->x * SCALING_FACTOR, hp->y * SCALING_FACTOR, z[i]));
                 }
-                //polygon.append(xjPoint(h->last_point().x* SCALING_FACTOR,h->last_point().x* SCALING_FACTOR,z[i])); //polygon类型转换为points后没有最后一个点
+                polygon.append(xjPoint(h->last_point().x* SCALING_FACTOR,h->last_point().y* SCALING_FACTOR,z[i])); //polygon类型里面的points后没有最后一个点
                 polygon.setType (xjPolygon::PolygonType::Contour);
                 layer.append(polygon);
             }

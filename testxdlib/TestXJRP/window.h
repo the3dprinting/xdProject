@@ -21,7 +21,7 @@ class Window : public QWidget
 
 public:
     explicit Window();
-
+    ~Window();
 private slots:
     void LayerChanged();
     void openTrigger();
