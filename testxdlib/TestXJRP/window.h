@@ -25,14 +25,16 @@ public:
 private slots:
     void LayerChanged();
     void openTrigger();
+    void openSTLTrigger();
     void saveTrigger();
+    void sliceTrigger();
     void clearTrigger();
     void infillTrigger();
     void infillPatternChanged(int N);
 private:
     XJRP::SLCModel *model;
     xd::TriangleMesh *triangleMesh;
-    std::vector<xd::ExPolygons>* layers;
+    //std::vector<xd::ExPolygons>* layers;
 
     draw *drawArea;
     QLabel *LayerNumLabel;
@@ -63,6 +65,11 @@ private:
     QPushButton *clear;
     QPushButton *infill;
     QPushButton *centering;
+    //slt文件功能
+    QPushButton *openSTL;
+    QPushButton *slice;
+    QLabel *thickness;
+    QLineEdit *thicknessEdit;
 
     QLabel *infillPatternLabel;
     QComboBox *infillPatternComboBox;

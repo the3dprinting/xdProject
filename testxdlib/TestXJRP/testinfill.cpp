@@ -54,8 +54,6 @@ int main(int argc, char *argv[])
     Window bb;
     bb.show();
 
-
-
     return a.exec ();
 }
 

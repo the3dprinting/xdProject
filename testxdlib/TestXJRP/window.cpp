@@ -8,6 +8,7 @@ Window::Window()
 {
     drawArea = new draw;
     model = new XJRP::SLCModel;
+    triangleMesh = new xd::TriangleMesh;
     //用来显示层的SpinBox
     LayerNum = new QSpinBox;
     LayerNum->setRange(0,0);
@@ -47,14 +48,18 @@ Window::Window()
     ScanSpeedLabel->setBuddy(ScanSpeedEdit);
     contourNumLabel = new QLabel(tr("Contour Number:"));
     contourNumEdit = new QLineEdit(tr("1"));
-    contourSpaceLabel = new QLabel("Contour Space");
+    contourSpaceLabel = new QLabel("Contour Space:");
     contourSpaceEdit = new QLineEdit(tr("0.1"));
+    thickness = new QLabel("thickness:");
+    thicknessEdit = new QLineEdit(tr("0.1"));
     //按钮
     open = new QPushButton(tr("&open"));
     save = new QPushButton(tr("&save"));
     clear = new QPushButton(tr("&clear"));
     infill = new QPushButton(tr("&infill"));
     centering = new QPushButton(tr("center"));
+    openSTL = new QPushButton(tr("openSTL"));
+    slice = new QPushButton(tr("slice"));
     connect(open,SIGNAL(clicked()),
             this,SLOT(openTrigger()));
     connect(save,SIGNAL(clicked()),
@@ -63,8 +68,12 @@ Window::Window()
             this,SLOT(clearTrigger()));
     connect(infill,SIGNAL(clicked()),
             this,SLOT(infillTrigger()));
-     connect(centering,SIGNAL(clicked()),
+    connect(centering,SIGNAL(clicked()),
             drawArea,SLOT(centering()));
+    connect(openSTL,SIGNAL(clicked()),
+            this,SLOT(openSTLTrigger()));
+    connect(slice,SIGNAL(clicked()),
+    this,SLOT(sliceTrigger()));
     //布局
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(drawArea, 0, 0, 1, 16);
@@ -77,6 +86,10 @@ Window::Window()
     mainLayout->addWidget(infillPatternComboBox,2,6);
     mainLayout->addWidget(infill, 2, 7);
     mainLayout->addWidget(save, 2, 8);
+    mainLayout->addWidget(openSTL,2,11);
+    mainLayout->addWidget(thicknessEdit,2,12);
+    mainLayout->addWidget(thickness,2,13);
+    mainLayout->addWidget(slice,2,14);
     //第3行
     mainLayout->addWidget(contourNumLabel,3,0);
     mainLayout->addWidget(contourNumEdit,3,1);
@@ -132,6 +145,55 @@ void Window::openTrigger()
     infill->show();
     centering->show();
 }
+
+void Window::openSTLTrigger()
+{
+    std::string fileName = (QFileDialog::getOpenFileName(this,tr("Open a stl file"),tr("/select .stl file please"),tr("model file(*.stl)"))).toStdString();
+    if(fileName.length()==0)
+        return;
+    char *FN;
+    FN=new char[fileName.length()];
+    memset(FN,'\0',(fileName.length())*sizeof(char));
+    strcpy(FN,fileName.c_str());
+    this->triangleMesh->ReadSTLFile(FN);
+    qDebug()<<"facet Number is:" <<triangleMesh->facets_count()<<'\n'
+            <<"needed repair："<<triangleMesh->needed_repair();
+}
+
+void Window::sliceTrigger()
+{
+    if(this->triangleMesh->stl.stats.original_num_facets==0)
+    {
+        QMessageBox::information(NULL, "Warning", "Not Loaded stl file", QMessageBox::Yes, QMessageBox::Yes);
+        return;
+    }
+    xd::TriangleMeshSlicer slicer(this->triangleMesh);
+    std::vector<float> z;
+    float sliceThinkness = this->thicknessEdit->text().toFloat();
+    float top = this->triangleMesh->stl.stats.max.z;
+    float bottom = this->triangleMesh->stl.stats.min.z;
+    for(float deltaZ = bottom + sliceThinkness ; deltaZ < top ; deltaZ+=sliceThinkness)
+        z.push_back(deltaZ);
+    qDebug()<<"facet Number is:" <<slicer.mesh->facets_count()<<'\n'
+            <<"needed repair："<<slicer.mesh->needed_repair();
+    std::vector<xd::ExPolygons>* layers = new std::vector<xd::ExPolygons>;  //一定要new一下，这样下面才能用！
+    slicer.slice(z,layers);
+    QMessageBox::information(NULL, "remind", "slice finished", QMessageBox::Yes, QMessageBox::Yes);
+    this->model->readxdlib(z,layers);
+    delete layers;
+    drawArea->setModel(*(this->model));
+    LayerNum->setRange(1,this->model->size());
+    LayerNum->setSpecialValueText(tr("1 (Layer Number)"));
+    drawArea->setLayer(model->layerAtIndex(LayerNum->value()-1));
+    infill->show();
+    centering->show();
+
+    openSTL->hide();
+    thickness->hide();
+    thicknessEdit->hide();
+    slice->hide();
+}
+
 void Window::saveTrigger()
 {
     QString fileName = QFileDialog::getSaveFileName(this,tr("Save a xlc file"),"/home/jana/untitled.xlc",tr("slicing file(*.xlc)"));
