@@ -1,0 +1,32 @@
+﻿生成启动时间为 2015/12/24 9:27:54。
+     1>项目“F:\qt\xdProject\testxdlib\FirstTest\FirstTest.vcxproj”在节点 2 上(Build 个目标)。
+     1>CustomBuild:
+         Moc'ing centralwidget.h...
+         Moc'ing dockwidget.h...
+         Moc'ing mainwindow.h...
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I. /I..\..\src /ID:\Qt\Qt5.5.0\5.5\msvc2013\include /ID:\Qt\Qt5.5.0\5.5\msvc2013\include\QtOpenGL /ID:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets /ID:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui /ID:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE /ID:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore /Idebug /I. /I"D:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013" /I.\GeneratedFiles /Zi /nologo /W3 /WX- /Od /Oy- /D _WINDOWS /D UNICODE /D WIN32 /D QT_OPENGL_LIB /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_CORE_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"Win32\Debug\\" /Fd"Win32\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt -w34100 -w34189 -w44996 Debug\moc_centralwidget.cpp Debug\moc_dockwidget.cpp Debug\moc_mainwindow.cpp
+         moc_centralwidget.cpp
+         moc_dockwidget.cpp
+         moc_mainwindow.cpp
+     1>f:\qt\xdproject\src\xdlib\polygon.h(76): warning C4100: “t”: 未引用的形参
+     1>f:\qt\xdproject\src\xdlib\polygon.h(117): warning C4100: “polygon_set”: 未引用的形参
+     1>f:\qt\xdproject\src\xdlib\polygon.h(118): warning C4100: “polygon_set”: 未引用的形参
+     1>f:\qt\xdproject\src\xdlib\exPolygon.h(71): warning C4100: “t”: 未引用的形参
+     1>f:\qt\xdproject\src\xdlib\exPolygon.h(136): warning C4100: “polygon_set”: 未引用的形参
+     1>f:\qt\xdproject\src\xdlib\exPolygon.h(137): warning C4100: “polygon_set”: 未引用的形参
+         正在生成代码...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\bin\\FirstTest.exe" /NOLOGO /LIBPATH:D:\Qt\Qt5.5.0\5.5\msvc2013\lib /LIBPATH:D:/qt/qt5.5.0/5.5/msvc2013/lib /LIBPATH:D:\Qt\Qt5.5.0\5.5\msvc2013\lib /LIBPATH:F:\qt\xdProject\testxdlib\FirstTest\..\..\bin D:\Qt\Qt5.5.0\5.5\msvc2013\lib\qtmaind.lib shell32.lib D:/qt/qt5.5.0/5.5/msvc2013/lib\Qt5Cored.lib F:\qt\xdProject\testxdlib\FirstTest\..\..\bin\AllLib.lib D:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5OpenGLd.lib D:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgetsd.lib D:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Guid.lib D:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Cored.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\..\bin\FirstTest.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /SAFESEH "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" Win32\Debug\centralwidget.obj
+         Win32\Debug\moc_centralwidget.obj
+         Win32\Debug\moc_dockwidget.obj
+         Win32\Debug\moc_mainwindow.obj
+         Win32\Debug\dockwidget.obj
+         Win32\Debug\main.obj
+         Win32\Debug\mainwindow.obj
+         FirstTest.vcxproj -> F:\qt\xdProject\testxdlib\FirstTest\..\..\bin\FirstTest.exe
+     1>已完成生成项目“F:\qt\xdProject\testxdlib\FirstTest\FirstTest.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:18.39

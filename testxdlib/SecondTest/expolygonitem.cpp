@@ -14,7 +14,9 @@ void _drawMultiPoint(QPainter *p, const xd::MultiPoint & MP)   //»­Layer
 
 void _drawExPolygon(QPainter *p, const xd::ExPolygon & EP)
 {
-    p->setPen(Qt::red);
+    QPen pen(Qt::red);
+    pen.setWidth(0);
+    p->setPen(pen);
     _drawMultiPoint(p,EP.contour);
     p->setPen(Qt::green);
     for(int i=0; i!=EP.holes.size();++i)
@@ -25,7 +27,9 @@ void _drawExPolygon(QPainter *p, const xd::ExPolygon & EP)
 
 void _drawPolylines(QPainter *p, const xd::Polylines & PL)
 {
-    p->setPen(Qt::blue);
+    QPen pen(Qt::blue);
+    pen.setWidth(0);
+    p->setPen(pen);
     for(xd::Polylines::const_iterator i = PL.begin() ; i!=PL.end();++i)
     {
         _drawMultiPoint(p,*i);
@@ -34,7 +38,9 @@ void _drawPolylines(QPainter *p, const xd::Polylines & PL)
 
 void _drawPolygons(QPainter *p, const xd::Polygons & PG)
 {
-    p->setPen(Qt::black);
+    QPen pen(Qt::black);
+    pen.setWidth(0);
+    p->setPen(pen);
     for(xd::Polygons::const_iterator i = PG.begin() ; i!=PG.end();++i)
     {
         _drawMultiPoint(p,*i);

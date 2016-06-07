@@ -2703,10 +2703,12 @@ void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float widt
                 if(temData.size()<=2)
                     continue;
                 if(temData.size()==3)
+                {
                     if(temData[0]==temData[1]||temData[1]==temData[2]||temData[2]==temData[0])
                         continue;
                     if(temData[0].isDifference(temData[1])||temData[1].isDifference(temData[2])||temData[2].isDifference(temData[0])) //这个以后肯定要改！
                         continue;
+                }
                 temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//加上最后一个点，保证封闭
 				dataOffset.push_back(temData);
 				theResult.push_back(temData);

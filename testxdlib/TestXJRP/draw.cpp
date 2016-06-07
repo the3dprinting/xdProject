@@ -176,7 +176,6 @@ void draw::mouseMoveEvent(QMouseEvent *e)
     }
     else if(e->buttons() & Qt::MidButton)
     {
-
         update();
     }
     lastPos = e->pos();
