@@ -1,5 +1,5 @@
 # xdProject
-###　　　　　　　　　　　　Author:冬之晓
+###　　　　　　　　　　　　Author:冬之晓:blush:
 ###　　　　　　　　　 E-mail:347916416@qq.com
 ***
 a infill program which can read a slc or STL format file and transform it to discrete coordinate. If it read the STL file, it can slice it and then fill it!
