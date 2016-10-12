@@ -11,38 +11,38 @@ class Linef3;
 class Polyline;
 typedef std::vector<Line> Lines;
 
-class Line   //ÕâÀï¶¨ÒåLineÀà£¬°üº¬ÁËÁ½¸öPointÀà
+class Line   //è¿™é‡Œå®šä¹‰Lineç±»ï¼ŒåŒ…å«äº†ä¸¤ä¸ªPointç±»
 {
     public:
     Point a;
     Point b;
     Line() {};
     explicit Line(Point _a, Point _b): a(_a), b(_b) {};
-    std::string wkt() const;   //·µ»ØÒÔLINESTRING(a.x a.y,b.x b.y)µÄĞÎÊ½Éú³ÉµÄ×Ö·û´®
-    operator Lines() const;   //ÀàĞÍ×ª»»º¯Êı£¬ÈıÀà²»Ğè·µ»ØÖµµÄº¯ÊıÖ®Ò»¡£½«LineÀà×ª»»ÎªLinesÀà¡£¼´LinesÀàÀï¼ÓÈëthisÖ¸ÏòµÄÒ»¸öLineÀà
-    operator Polyline() const;  //Í¬ÉÏ£¬Ö»ÊÇLineÀà×ª»»ÎªPolylineÀà¡£¼´PolylineÀàµÄPoints¼ÓÈëa£¬bµã
-    void scale(double factor);  //LineµÄÁ½¸öµã¶¼·Å´ófactor±¶
-    void translate(double x, double y);   //LineµÄÁ½¸öµã¶¼Æ½ÒÆ¼´¼ÓÉÏx£¬yµÄÖµ
-    void rotate(double angle, const Point &center); //LineµÄÁ½¸öµã¶¼ÈÆcenterÄæÊ±ÕëĞı×ªangle¶È
-    void reverse();  //µãaºÍµãb½»»»
-    double length() const;  //·µ»ØLineµÄ³¤¶È
-    Point midpoint() const;  //·µ»ØLineµÄÖĞµã
-    void point_at(double distance, Point* point) const;  //Ö¸ÕëpointÖ¸Ïò£ºÓÉa¡úb·½ÏòÉÏ×ßdistance¸öµ¥Î»µÄµã£¬distance=0Ê±¼´aµã
-    Point point_at(double distance) const;  //Í¬ÉÏ£¬Ö»ÊÇ·µ»ØÉÏÃæµÄpointµã
-    bool intersection_infinite(const Line &other, Point* point) const;  //·µ»ØfaultËµÃ÷Á½Ïß¶Î»ù±¾Æ½ĞĞ£¬·ñÔòpointÖ¸ÏòÁ½Ïß¶Î½»µã¡£
-    //×¢Òâ£ºÉÏÃæµÄº¯ÊıÊµÏÖµ±Á½ÌõÏß¶Î²»Ïà½»Ê±£¬»¹Ã»ÓĞÍÆ³öÀ´pointÊÇ·ñÖ¸ÏòÑÓ³¤Ïß½»µã£¡£¡£¡
-    bool coincides_with(const Line &line) const;  //ÅĞ¶ÏÁ½¸öÏß¶ÎÊÇ·ñÏàÍ¬
-    double distance_to(const Point &point) const;  //·µ»ØÀà±¾ÉíÏß¶Îµ½¸ø¶¨µã×î½üµÄ¾àÀë£¬Èç¹ûÏß¶ÎÊÇÒ»¸öµã£¬Ôò·µ»Øµ½µãµ½µãµÄ¾àÀë
+    std::string wkt() const;   //è¿”å›ä»¥LINESTRING(a.x a.y,b.x b.y)çš„å½¢å¼ç”Ÿæˆçš„å­—ç¬¦ä¸²
+    operator Lines() const;   //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œä¸‰ç±»ä¸éœ€è¿”å›å€¼çš„å‡½æ•°ä¹‹ä¸€ã€‚å°†Lineç±»è½¬æ¢ä¸ºLinesç±»ã€‚å³Linesç±»é‡ŒåŠ å…¥thisæŒ‡å‘çš„ä¸€ä¸ªLineç±»
+    operator Polyline() const;  //åŒä¸Šï¼Œåªæ˜¯Lineç±»è½¬æ¢ä¸ºPolylineç±»ã€‚å³Polylineç±»çš„PointsåŠ å…¥aï¼Œbç‚¹
+    void scale(double factor);  //Lineçš„ä¸¤ä¸ªç‚¹éƒ½æ”¾å¤§factorå€
+    void translate(double x, double y);   //Lineçš„ä¸¤ä¸ªç‚¹éƒ½å¹³ç§»å³åŠ ä¸Šxï¼Œyçš„å€¼
+    void rotate(double angle, const Point &center); //Lineçš„ä¸¤ä¸ªç‚¹éƒ½ç»•centeré€†æ—¶é’ˆæ—‹è½¬angleåº¦
+    void reverse();  //ç‚¹aå’Œç‚¹bäº¤æ¢
+    double length() const;  //è¿”å›Lineçš„é•¿åº¦
+    Point midpoint() const;  //è¿”å›Lineçš„ä¸­ç‚¹
+    void point_at(double distance, Point* point) const;  //æŒ‡é’ˆpointæŒ‡å‘ï¼šç”±aâ†’bæ–¹å‘ä¸Šèµ°distanceä¸ªå•ä½çš„ç‚¹ï¼Œdistance=0æ—¶å³aç‚¹
+    Point point_at(double distance) const;  //åŒä¸Šï¼Œåªæ˜¯è¿”å›ä¸Šé¢çš„pointç‚¹
+    bool intersection_infinite(const Line &other, Point* point) const;  //è¿”å›faultè¯´æ˜ä¸¤çº¿æ®µåŸºæœ¬å¹³è¡Œï¼Œå¦åˆ™pointæŒ‡å‘ä¸¤çº¿æ®µäº¤ç‚¹ã€‚
+    //æ³¨æ„ï¼šä¸Šé¢çš„å‡½æ•°å®ç°å½“ä¸¤æ¡çº¿æ®µä¸ç›¸äº¤æ—¶ï¼Œè¿˜æ²¡æœ‰æ¨å‡ºæ¥pointæ˜¯å¦æŒ‡å‘å»¶é•¿çº¿äº¤ç‚¹ï¼ï¼ï¼
+    bool coincides_with(const Line &line) const;  //åˆ¤æ–­ä¸¤ä¸ªçº¿æ®µæ˜¯å¦ç›¸åŒ
+    double distance_to(const Point &point) const;  //è¿”å›ç±»æœ¬èº«çº¿æ®µåˆ°ç»™å®šç‚¹æœ€è¿‘çš„è·ç¦»ï¼Œå¦‚æœçº¿æ®µæ˜¯ä¸€ä¸ªç‚¹ï¼Œåˆ™è¿”å›åˆ°ç‚¹åˆ°ç‚¹çš„è·ç¦»
     bool parallel_to(double angle) const;
     bool parallel_to(const Line &line) const;
-    double atan2_() const;  //·µ»ØÏß¶ÎºÍË®Æ½Ïß¼Ğ½ÇµÄ»¡¶ÈÖµ£¬È¡Öµ·¶Î§½éÓÚ -pi µ½ pi Ö®¼ä£¨²»°üÀ¨ -pi£©
-    double orientation() const;  //·µ»ØÏß¶ÎºÍË®Æ½Ïß¼Ğ½ÇµÄ»¡¶ÈÖµ£¬È¡Öµ·¶Î§½éÓÚ 0 µ½ 2pi Ö®¼ä£¨²»°üÀ¨ 0£©¡£±íÊ¾Ïß¶ÎµÄÖ¸Ïò
-    double direction() const;    //·µ»ØÏß¶ÎºÍË®Æ½Ïß¼Ğ½ÇµÄ»¡¶ÈÖµ£¬½á¹ûÈç¹ûÊÇ(-pi,0)»òÕßpiÊ±¾Í¼Ópi£¬Ïàµ±ÓÚÈ¡Ïà·´·½Ïò£¬¼´µÃÊıÔÚ[0,pi)ÉÏ¡£±íÊ¾Ïß¶ÎµÄ·½Ïò
-    Vector vector() const;  //·µ»Ø±¾ÉíµÄÏòÁ¿Öµ
-    Vector normal() const;  //·µ»Ø±¾ÉíµÄ·¨ÏòÁ¿£¬¼´ºÍ±¾ÉíÏòÁ¿´¹Ö±µÄÏòÁ¿
+    double atan2_() const;  //è¿”å›çº¿æ®µå’Œæ°´å¹³çº¿å¤¹è§’çš„å¼§åº¦å€¼ï¼Œå–å€¼èŒƒå›´ä»‹äº -pi åˆ° pi ä¹‹é—´ï¼ˆä¸åŒ…æ‹¬ -piï¼‰
+    double orientation() const;  //è¿”å›çº¿æ®µå’Œæ°´å¹³çº¿å¤¹è§’çš„å¼§åº¦å€¼ï¼Œå–å€¼èŒƒå›´ä»‹äº 0 åˆ° 2pi ä¹‹é—´ï¼ˆä¸åŒ…æ‹¬ 0ï¼‰ã€‚è¡¨ç¤ºçº¿æ®µçš„æŒ‡å‘
+    double direction() const;    //è¿”å›çº¿æ®µå’Œæ°´å¹³çº¿å¤¹è§’çš„å¼§åº¦å€¼ï¼Œç»“æœå¦‚æœæ˜¯(-pi,0)æˆ–è€…piæ—¶å°±åŠ piï¼Œç›¸å½“äºå–ç›¸åæ–¹å‘ï¼Œå³å¾—æ•°åœ¨[0,pi)ä¸Šã€‚è¡¨ç¤ºçº¿æ®µçš„æ–¹å‘
+    Vector vector() const;  //è¿”å›æœ¬èº«çš„å‘é‡å€¼
+    Vector normal() const;  //è¿”å›æœ¬èº«çš„æ³•å‘é‡ï¼Œå³å’Œæœ¬èº«å‘é‡å‚ç›´çš„å‘é‡
  };
 
-class Linef    //½¨Á¢doubleĞÍµÄÏß¶Î
+class Linef    //å»ºç«‹doubleå‹çš„çº¿æ®µ
 {
     public:
     Pointf a;
@@ -51,20 +51,20 @@ class Linef    //½¨Á¢doubleĞÍµÄÏß¶Î
     explicit Linef(Pointf _a, Pointf _b): a(_a), b(_b) {};
 };
 
-class Linef3   //½¨Á¢doubleĞÍ3Î¬Ïß¶Î
+class Linef3   //å»ºç«‹doubleå‹3ç»´çº¿æ®µ
 {
     public:
     Pointf3 a;
     Pointf3 b;
     Linef3() {};
     explicit Linef3(Pointf3 _a, Pointf3 _b): a(_a), b(_b) {};
-    Pointf3 intersect_plane(double z) const; //·µ»ØÏß¶ÎºÍZ·½Ïò×ø±êÖµÎªzµÄÆ½ÃæµÄ½»µã
-    void scale(double factor);  //Ïß¶ÎÁ½¸ö¶ËµãµÄ×ø±ê¶¼·Å´ófactor±¶
+    Pointf3 intersect_plane(double z) const; //è¿”å›çº¿æ®µå’ŒZæ–¹å‘åæ ‡å€¼ä¸ºzçš„å¹³é¢çš„äº¤ç‚¹
+    void scale(double factor);  //çº¿æ®µä¸¤ä¸ªç«¯ç‚¹çš„åæ ‡éƒ½æ”¾å¤§factorå€
 
 };
-}  //½áÊøÃüÃû¿Õ¼äxd
+}  //ç»“æŸå‘½åç©ºé—´xd
 
-// ¿ªÊ¼Boost£¬×¢²álineµÄÀàĞÍ
+// å¼€å§‹Boostï¼Œæ³¨å†Œlineçš„ç±»å‹
 #include <boost/polygon/polygon.hpp>
 namespace boost { namespace polygon {
     template <>
@@ -80,7 +80,7 @@ namespace boost { namespace polygon {
         }
     };
 } }
-// ½áÊøBoost
+// ç»“æŸBoost
 
 #endif // LINE_H
 

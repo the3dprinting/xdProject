@@ -10,40 +10,40 @@ namespace xd {
 class ExPolygon;
 typedef std::vector<ExPolygon> ExPolygons;
 
-class ExPolygon  //ÕæÕıÒâÒåÉÏµÄ¶à±ßĞÎ£¬ÓÉÒ»¸öÍâÂÖÀª£¬Èô¸É¸ö¶´×é³ÉµÄ
+class ExPolygon  //çœŸæ­£æ„ä¹‰ä¸Šçš„å¤šè¾¹å½¢ï¼Œç”±ä¸€ä¸ªå¤–è½®å»“ï¼Œè‹¥å¹²ä¸ªæ´ç»„æˆçš„
 {
     public:
     Polygon contour;
     Polygons holes;
-    operator Points() const;  //ÀàĞÍ×ª»»º¯Êı£¬ÂÖÀªºÍ¶´µÄËùÓĞµÄµã£¨×¢Òâ¸´Ï°ÀàĞÍ×ª»»º¯Êı£©
-    operator Polygons() const;  //ÀàĞÍ×ª»»º¯Êı£¬·µ»ØPolydonsµÚÒ»¸öÊÇÍâÂÖÀª£¬ºóÃæÒ»´ÎÊÇ¶´
-    void scale(double factor);  //·Å´ófactor±¶
-    void translate(double x, double y);  //Æ½ÒÆx y¾àÀë
-    void rotate(double angle, const Point &center);  //ÈÆcenterÄæÊ±ÕëĞı×ªangle
-    double area() const;  //×ÜÃæ»ı=ÂÖÀªÃæ»ı-¶´Ãæ»ı
-    bool is_valid() const;  //ÓĞĞ§±ØĞëÂú×ã£¬ÍâÂÖÀªÄæÊ±Õë£¬¶´Ë³Ê±Õë£¬Í¬Ê±¶¼Ö»ÊÇ3¸öµã
-    bool contains(const Line &line) const;  //·µ»ØlineÊÇ·ñÔÚ¶à±ßĞÎÄÚ²¿
-    bool contains(const Polyline &polyline) const;  //·µ»ØÒ»¸ö¶àÏß¶ÎÊÇ·ñÔÚ¶à±ßĞÎÄÚ²¿
-    bool contains(const Point &point) const;   //µãÊÇ·ñÔÚÂÖÀªÄÚ
-    bool contains_b(const Point &point) const;  //µãÊÇ·ñÔÚÂÖÀªÄÚ»òÔÚ±ß½çÉÏ¶¼·µ»Øtrue
-    bool has_boundary_point(const Point &point) const;  //pointÊÇ·ñÔÚÂÖÀª±ß½çÉÏ
-    Polygons simplify_p(double tolerance) const;  //°´ÕÕÏÒ¸ßÎó²îÎªtolerance¼ò»¯¶à±ßĞÎ£¬·µ»ØPolygons¼´¿É£¬µÚÒ»¸öÎªÂÖÀª£¬ºóÃæµÄÎª¶´
-    ExPolygons simplify(double tolerance) const;  //°´ÕÕÏÒ¸ßÎó²îÎªtolerance¼ò»¯¶à±ßĞÎ£¬·µ»ØExPolygons
-    void simplify(double tolerance, ExPolygons &expolygons) const;  //½«±¾Éí¼ò»¯ºóµÄExpolygons´«ÈëµÄexpolygonsµÄºóÃæ
-    void medial_axis(double max_width, double min_width, Polylines* polylines) const;  //Éú³ÉÖĞÖáÏß£¬²¢·ÅÔÚpolylinesÀïÃæ
-    void get_trapezoids(Polygons* polygons) const;  //½«±¾ÉíµÄ¶à±ßĞÎ¼¯ºÏ·ÖÎªÒ»¶ÑËÄ±ßĞÎ£¬·ÅÔÚpolygonsÀïÃæ
-    void get_trapezoids(Polygons* polygons, double angle) const;  //ÒÔangle½Ç¶È·½Ïò»®·ÖËÄ±ßĞÎ·ÅÔÚpolygonsÀïÃæ
-    void get_trapezoids2(Polygons* polygons) const;   //½«±¾ÉíÑØ×ÅxÕı·½ÏòÃ¿Á½¸öµãÔÚy·½ÏòÑÓ³¤ºóºÍ±¾ÉíÏà½»µÄÍ¼ĞÎ»®·ÖÎªÒ»¶Ñ¶à±ßĞÎ²¢´æ´¢µ½polygonsÀï
-    void get_trapezoids2(Polygons* polygons, double angle) const;  //ÒÔÒ»¶¨½Ç¶È·Ö¸î±¾Éí£¬µ÷ÓÃÉÏÃæº¯Êı
-    void triangulate(Polygons* polygons) const;  //ÏÈ°´ÕÕÉÏÃæº¯ÊıËÄ±ßĞÎ»¯£¬ÔÙÈı½Ç»¯
-    void triangulate_pp(Polygons* polygons) const;  //https://github.com/ivanfratric/polypartitionÀïÃæµÄTriangulate_MONOÈı½Ç»¯
-    void triangulate_p2t(Polygons* polygons) const;   //http://code.google.com/p/poly2tri/ÀïµÄÈı½Ç»¯·½·¨½øĞĞÈı½Ç»¯
-    Lines lines() const;  //½«´ø¶´¶à±ßĞÎËùÓĞµã×ª»»ÎªlinesÀàÀ´·µ»Ø£¬¼´Ò»¸ö´ø¶´¶à±ßĞÎµÄËùÓĞ±ß
-    Points points() const;  //½«±¾ÉíËùÓĞµã·µ»Ø£¬×Ô¼ºĞ´µÄº¯Êı
+    operator Points() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè½®å»“å’Œæ´çš„æ‰€æœ‰çš„ç‚¹ï¼ˆæ³¨æ„å¤ä¹ ç±»å‹è½¬æ¢å‡½æ•°ï¼‰
+    operator Polygons() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè¿”å›Polydonsç¬¬ä¸€ä¸ªæ˜¯å¤–è½®å»“ï¼Œåé¢ä¸€æ¬¡æ˜¯æ´
+    void scale(double factor);  //æ”¾å¤§factorå€
+    void translate(double x, double y);  //å¹³ç§»x yè·ç¦»
+    void rotate(double angle, const Point &center);  //ç»•centeré€†æ—¶é’ˆæ—‹è½¬angle
+    double area() const;  //æ€»é¢ç§¯=è½®å»“é¢ç§¯-æ´é¢ç§¯
+    bool is_valid() const;  //æœ‰æ•ˆå¿…é¡»æ»¡è¶³ï¼Œå¤–è½®å»“é€†æ—¶é’ˆï¼Œæ´é¡ºæ—¶é’ˆï¼ŒåŒæ—¶éƒ½åªæ˜¯3ä¸ªç‚¹
+    bool contains(const Line &line) const;  //è¿”å›lineæ˜¯å¦åœ¨å¤šè¾¹å½¢å†…éƒ¨
+    bool contains(const Polyline &polyline) const;  //è¿”å›ä¸€ä¸ªå¤šçº¿æ®µæ˜¯å¦åœ¨å¤šè¾¹å½¢å†…éƒ¨
+    bool contains(const Point &point) const;   //ç‚¹æ˜¯å¦åœ¨è½®å»“å†…
+    bool contains_b(const Point &point) const;  //ç‚¹æ˜¯å¦åœ¨è½®å»“å†…æˆ–åœ¨è¾¹ç•Œä¸Šéƒ½è¿”å›true
+    bool has_boundary_point(const Point &point) const;  //pointæ˜¯å¦åœ¨è½®å»“è¾¹ç•Œä¸Š
+    Polygons simplify_p(double tolerance) const;  //æŒ‰ç…§å¼¦é«˜è¯¯å·®ä¸ºtoleranceç®€åŒ–å¤šè¾¹å½¢ï¼Œè¿”å›Polygonså³å¯ï¼Œç¬¬ä¸€ä¸ªä¸ºè½®å»“ï¼Œåé¢çš„ä¸ºæ´
+    ExPolygons simplify(double tolerance) const;  //æŒ‰ç…§å¼¦é«˜è¯¯å·®ä¸ºtoleranceç®€åŒ–å¤šè¾¹å½¢ï¼Œè¿”å›ExPolygons
+    void simplify(double tolerance, ExPolygons &expolygons) const;  //å°†æœ¬èº«ç®€åŒ–åçš„Expolygonsä¼ å…¥çš„expolygonsçš„åé¢
+    void medial_axis(double max_width, double min_width, Polylines* polylines) const;  //ç”Ÿæˆä¸­è½´çº¿ï¼Œå¹¶æ”¾åœ¨polylinesé‡Œé¢
+    void get_trapezoids(Polygons* polygons) const;  //å°†æœ¬èº«çš„å¤šè¾¹å½¢é›†åˆåˆ†ä¸ºä¸€å †å››è¾¹å½¢ï¼Œæ”¾åœ¨polygonsé‡Œé¢
+    void get_trapezoids(Polygons* polygons, double angle) const;  //ä»¥angleè§’åº¦æ–¹å‘åˆ’åˆ†å››è¾¹å½¢æ”¾åœ¨polygonsé‡Œé¢
+    void get_trapezoids2(Polygons* polygons) const;   //å°†æœ¬èº«æ²¿ç€xæ­£æ–¹å‘æ¯ä¸¤ä¸ªç‚¹åœ¨yæ–¹å‘å»¶é•¿åå’Œæœ¬èº«ç›¸äº¤çš„å›¾å½¢åˆ’åˆ†ä¸ºä¸€å †å¤šè¾¹å½¢å¹¶å­˜å‚¨åˆ°polygonsé‡Œ
+    void get_trapezoids2(Polygons* polygons, double angle) const;  //ä»¥ä¸€å®šè§’åº¦åˆ†å‰²æœ¬èº«ï¼Œè°ƒç”¨ä¸Šé¢å‡½æ•°
+    void triangulate(Polygons* polygons) const;  //å…ˆæŒ‰ç…§ä¸Šé¢å‡½æ•°å››è¾¹å½¢åŒ–ï¼Œå†ä¸‰è§’åŒ–
+    void triangulate_pp(Polygons* polygons) const;  //https://github.com/ivanfratric/polypartitioné‡Œé¢çš„Triangulate_MONOä¸‰è§’åŒ–
+    void triangulate_p2t(Polygons* polygons) const;   //http://code.google.com/p/poly2tri/é‡Œçš„ä¸‰è§’åŒ–æ–¹æ³•è¿›è¡Œä¸‰è§’åŒ–
+    Lines lines() const;  //å°†å¸¦æ´å¤šè¾¹å½¢æ‰€æœ‰ç‚¹è½¬æ¢ä¸ºlinesç±»æ¥è¿”å›ï¼Œå³ä¸€ä¸ªå¸¦æ´å¤šè¾¹å½¢çš„æ‰€æœ‰è¾¹
+    Points points() const;  //å°†æœ¬èº«æ‰€æœ‰ç‚¹è¿”å›ï¼Œè‡ªå·±å†™çš„å‡½æ•°
 };
-}  //½áÊøxdÃüÃû¿Õ¼ä
+}  //ç»“æŸxdå‘½åç©ºé—´
 
-//¿ªÊ¼Boost
+//å¼€å§‹Boost
 #include "../boost/polygon/polygon.hpp"
 namespace boost { namespace polygon {
     template <>
@@ -52,12 +52,12 @@ namespace boost { namespace polygon {
         typedef xd::Points::const_iterator iterator_type;
         typedef xd::Point point_type;
 
-        // µÃµ½¿ªÊ¼iterator
+        // å¾—åˆ°å¼€å§‹iterator
         static inline iterator_type begin_points(const xd::ExPolygon& t) {
             return t.contour.points.begin();
         }
 
-        // µÃµ½½áÊøiterator
+        // å¾—åˆ°ç»“æŸiterator
         static inline iterator_type end_points(const xd::ExPolygon& t) {
             return t.contour.points.end();
         }
@@ -79,7 +79,7 @@ namespace boost { namespace polygon {
         template <typename iT>
         static inline xd::ExPolygon& set_points(xd::ExPolygon& expolygon, iT input_begin, iT input_end) {
             expolygon.contour.points.assign(input_begin, input_end);
-            //ºöÂÔ×îºóÒ»¸öµã£¬ÒòÎªBoost½«»áÉèÖÃlast point = first point
+            //å¿½ç•¥æœ€åä¸€ä¸ªç‚¹ï¼Œå› ä¸ºBoostå°†ä¼šè®¾ç½®last point = first point
             expolygon.contour.points.pop_back();
             return expolygon;
         }
@@ -145,7 +145,7 @@ namespace boost { namespace polygon {
         }
     };
 } }
-//½áÊøboost
+//ç»“æŸboost
 
 #endif // EXPOLYGON_H
 

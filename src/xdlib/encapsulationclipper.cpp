@@ -1,23 +1,23 @@
 #include "encapsulationclipper.h"
 #include "geometry.h"
 
-//Ñ§Ï°: vector<int>::value_type AnInt;
-//µÈ¼ÛÓÚ int AnInt;
+//å­¦ä¹ : vector<int>::value_type AnInt;
+//ç­‰ä»·äº int AnInt;
 
 namespace xd {
 
 void AddOuterPolyNodeToExPolygons(ClipperLib::PolyNode& polynode, xd::ExPolygons* expolygons)
 {
   size_t cnt = expolygons->size();
-  expolygons->resize(cnt + 1);  //ÕâÒ»²½resizeºó¼´ÔÚºóÃæ¼ÓÉÏÒ»¸ö£¨´ø¶´£©¶à±ßĞÎ
-  ClipperPath_to_xdMultiPoint(polynode.Contour, &(*expolygons)[cnt].contour);  //ÕâÀï¼ÓÉÏ¶à±ßĞÎµÄÂÖÀª
+  expolygons->resize(cnt + 1);  //è¿™ä¸€æ­¥resizeåå³åœ¨åé¢åŠ ä¸Šä¸€ä¸ªï¼ˆå¸¦æ´ï¼‰å¤šè¾¹å½¢
+  ClipperPath_to_xdMultiPoint(polynode.Contour, &(*expolygons)[cnt].contour);  //è¿™é‡ŒåŠ ä¸Šå¤šè¾¹å½¢çš„è½®å»“
   (*expolygons)[cnt].holes.resize(polynode.ChildCount());
   for (int i = 0; i < polynode.ChildCount(); ++i)
   {
-    ClipperPath_to_xdMultiPoint(polynode.Childs[i]->Contour, &(*expolygons)[cnt].holes[i]);  //ÕâÀï¼ÓÉÏ¶à±ßĞÎ¿ÉÄÜ³öÏÖµÄn¸ö¶´
+    ClipperPath_to_xdMultiPoint(polynode.Childs[i]->Contour, &(*expolygons)[cnt].holes[i]);  //è¿™é‡ŒåŠ ä¸Šå¤šè¾¹å½¢å¯èƒ½å‡ºç°çš„nä¸ªæ´
     //Add outer polygons contained by (nested within) holes ...
-    for (int j = 0; j < polynode.Childs[i]->ChildCount(); ++j)   //ÓĞ¼¸¸ö×Ó£¬¾Í»áÓĞ¼¸¸ö£¨´ø¶´£©¶à±ßĞÎ
-      AddOuterPolyNodeToExPolygons(*polynode.Childs[i]->Childs[j], expolygons);  //ÕâÒ»²½Ê¹ÓÃµİ¹é
+    for (int j = 0; j < polynode.Childs[i]->ChildCount(); ++j)   //æœ‰å‡ ä¸ªå­ï¼Œå°±ä¼šæœ‰å‡ ä¸ªï¼ˆå¸¦æ´ï¼‰å¤šè¾¹å½¢
+      AddOuterPolyNodeToExPolygons(*polynode.Childs[i]->Childs[j], expolygons);  //è¿™ä¸€æ­¥ä½¿ç”¨é€’å½’
   }
 }
 
@@ -65,7 +65,7 @@ ClipperPaths_to_xdMultiPoints(const ClipperLib::Paths &input, T* output)
 {
     output->clear();
     for (ClipperLib::Paths::const_iterator it = input.begin(); it != input.end(); ++it) {
-        typename T::value_type p;  //value_typeÒ»°ãÔÚÄ£°åº¯ÊıÀïÓÃ£¬ÒòÎªÄ£°åµÄ<>ÀïÃæ²»ÖªµÀÊÇÊ²Ã´ÀàĞÍ
+        typename T::value_type p;  //value_typeä¸€èˆ¬åœ¨æ¨¡æ¿å‡½æ•°é‡Œç”¨ï¼Œå› ä¸ºæ¨¡æ¿çš„<>é‡Œé¢ä¸çŸ¥é“æ˜¯ä»€ä¹ˆç±»å‹
         ClipperPath_to_xdMultiPoint(*it, &p);
         output->push_back(p);
     }
@@ -78,14 +78,14 @@ ClipperPaths_to_xdExPolygons(const ClipperLib::Paths &input, xd::ExPolygons* out
     ClipperLib::Clipper clipper;
     clipper.Clear();
 
-    // perform union   ÕâÀïÓÃ·¨ÖµµÃÑ§Ï°£¬½«clipperÀïµÄpaths±äÎªpolytreeµÄ·½·¨
+    // perform union   è¿™é‡Œç”¨æ³•å€¼å¾—å­¦ä¹ ï¼Œå°†clipperé‡Œçš„pathså˜ä¸ºpolytreeçš„æ–¹æ³•
     clipper.AddPaths(input, ClipperLib::ptSubject, true);
     ClipperLib::PolyTree polytree;
     clipper.Execute(ClipperLib::ctUnion, polytree, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);  // offset results work with both EvenOdd and NonZero
 
     // write to ExPolygons object
     output->clear();
-    PolyTreeToExPolygons(polytree, output);  //·Ç³£ºÃµÄÌáÈ¡³öÁËpolytreeÀïµÄ¶à¸ö¶à±ßĞÎµÄ·½·¨
+    PolyTreeToExPolygons(polytree, output);  //éå¸¸å¥½çš„æå–å‡ºäº†polytreeé‡Œçš„å¤šä¸ªå¤šè¾¹å½¢çš„æ–¹æ³•
 }
 
 void
@@ -98,19 +98,19 @@ scaleClipperPolygons(ClipperLib::Paths &polygons, const double scale)
         }
     }
 }
-//Æ«ÖÃ¶à±ßĞÎ
+//åç½®å¤šè¾¹å½¢
 void
 offset(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // ¶ÁÈ¡ÊäÈë
+    // è¯»å–è¾“å…¥
     ClipperLib::Paths input;
     xdMultiPoints_to_ClipperPaths(polygons, &input);
 
-    // ·Å´óÊäÈë
+    // æ”¾å¤§è¾“å…¥
     scaleClipperPolygons(input, scale);
 
-    // ½øĞĞÆ«ÖÃ
+    // è¿›è¡Œåç½®
     ClipperLib::ClipperOffset co;
     if (joinType == jtRound) {
         co.ArcTolerance = miterLimit;
@@ -120,7 +120,7 @@ offset(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float delt
     co.AddPaths(input, joinType, ClipperLib::etClosedPolygon);
     co.Execute(*retval, (delta*scale));
 
-    // ËõĞ¡Êä³ö
+    // ç¼©å°è¾“å‡º
     scaleClipperPolygons(*retval, 1/scale);
 }
 
@@ -128,26 +128,26 @@ void
 offset(const xd::Polygons &polygons, xd::Polygons* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // ½øĞĞÆ«ÖÃ
+    // è¿›è¡Œåç½®
     ClipperLib::Paths output;
     offset(polygons, &output, delta, scale, joinType, miterLimit);
 
-    // ×ª»»³ÉExPolygons
+    // è½¬æ¢æˆExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
-//Æ«ÖÃPolylines
+//åç½®Polylines
 void
 offset(const xd::Polylines &polylines, ClipperLib::Paths* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // ¶ÁÈ¡ÊäÈë
+    // è¯»å–è¾“å…¥
     ClipperLib::Paths input;
     xdMultiPoints_to_ClipperPaths(polylines, &input);
 
-    // ·Å´óÊäÈë
+    // æ”¾å¤§è¾“å…¥
     scaleClipperPolygons(input, scale);
 
-    // ½øĞĞÆ«ÖÃ
+    // è¿›è¡Œåç½®
     ClipperLib::ClipperOffset co;
     if (joinType == jtRound) {
         co.ArcTolerance = miterLimit;
@@ -157,7 +157,7 @@ offset(const xd::Polylines &polylines, ClipperLib::Paths* retval, const float de
     co.AddPaths(input, joinType, ClipperLib::etOpenButt);
     co.Execute(*retval, (delta*scale));
 
-    // ËõĞ¡Êä³ö
+    // ç¼©å°è¾“å‡º
     scaleClipperPolygons(*retval, 1/scale);
 }
 
@@ -165,23 +165,23 @@ void
 offset(const xd::Polylines &polylines, xd::Polygons* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // ½øĞĞÆ«ÖÃ
+    // è¿›è¡Œåç½®
     ClipperLib::Paths output;
     offset(polylines, &output, delta, scale, joinType, miterLimit);
 
-    // ×ª»»³ÉExPolygons
+    // è½¬æ¢æˆExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
-//Æ«ÖÃsurface
+//åç½®surface
 void
 offset(const xd::Surface &surface, xd::Surfaces* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // ½øĞĞÆ«ÖÃ
+    // è¿›è¡Œåç½®
     xd::ExPolygons expp;
     offset(surface.expolygon, &expp, delta, scale, joinType, miterLimit);
 
-    // ÎªÃ¿Ò»¸öÎÒÃÇµÃµ½µÄÃ¿Ò»¸öexpolygon¿ËÂ¡Êä³öÎªsurface
+    // ä¸ºæ¯ä¸€ä¸ªæˆ‘ä»¬å¾—åˆ°çš„æ¯ä¸€ä¸ªexpolygonå…‹éš†è¾“å‡ºä¸ºsurface
     retval->clear();
     retval->reserve(expp.size());
     for (ExPolygons::iterator it = expp.begin(); it != expp.end(); ++it) {
@@ -195,11 +195,11 @@ void
 offset(const xd::Polygons &polygons, xd::ExPolygons* retval, const float delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
-    // ½øĞĞÆ«ÖÃ
+    // è¿›è¡Œåç½®
     ClipperLib::Paths output;
     offset(polygons, &output, delta, scale, joinType, miterLimit);
 
-    // ×ª»»³ÉExPolygons
+    // è½¬æ¢æˆExPolygons
     ClipperPaths_to_xdExPolygons(output, retval);
 }
 
@@ -207,14 +207,14 @@ void
 offset2(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float delta1,
     const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
-    // ¶ÁÈ¡ÊäÈë
+    // è¯»å–è¾“å…¥
     ClipperLib::Paths input;
    xdMultiPoints_to_ClipperPaths(polygons, &input);
 
-    // ·Å´óÊäÈë
+    // æ”¾å¤§è¾“å…¥
     scaleClipperPolygons(input, scale);
 
-    // ×¼±¸ClipperOffset¶ÔÏó
+    // å‡†å¤‡ClipperOffsetå¯¹è±¡
     ClipperLib::ClipperOffset co;
     if (joinType == jtRound) {
         co.ArcTolerance = miterLimit;
@@ -222,17 +222,17 @@ offset2(const xd::Polygons &polygons, ClipperLib::Paths* retval, const float del
         co.MiterLimit = miterLimit;
     }
 
-    // ½øĞĞµÚÒ»´ÎÆ«ÖÃ
+    // è¿›è¡Œç¬¬ä¸€æ¬¡åç½®
     ClipperLib::Paths output1;
     co.AddPaths(input, joinType, ClipperLib::etClosedPolygon);
     co.Execute(output1, (delta1*scale));
 
-    // ½øĞĞµÚ¶ş´ÎÆ«ÖÃ
+    // è¿›è¡Œç¬¬äºŒæ¬¡åç½®
     co.Clear();
     co.AddPaths(output1, joinType, ClipperLib::etClosedPolygon);
     co.Execute(*retval, (delta2*scale));
 
-    //ËõĞ¡Êä³ö
+    //ç¼©å°è¾“å‡º
     scaleClipperPolygons(*retval, 1/scale);
 }
 
@@ -240,11 +240,11 @@ void
 offset2(const xd::Polygons &polygons, xd::Polygons* retval, const float delta1,
     const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
-    //½øĞĞÆ«ÖÃ
+    //è¿›è¡Œåç½®
     ClipperLib::Paths output;
     offset2(polygons, &output, delta1, delta2, scale, joinType, miterLimit);
 
-    //×ª»»³É ExPolygons
+    //è½¬æ¢æˆ ExPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 
@@ -252,24 +252,24 @@ void
 offset2(const xd::Polygons &polygons, xd::ExPolygons* retval, const float delta1,
     const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
-    //½øĞĞÆ«ÖÃ
+    //è¿›è¡Œåç½®
     ClipperLib::Paths output;
     offset2(polygons, &output, delta1, delta2, scale, joinType, miterLimit);
 
-    //×ª»»³ÉExPolygons
+    //è½¬æ¢æˆExPolygons
     ClipperPaths_to_xdExPolygons(output, retval);
 }
-//ÏÂÃæÊÇ²¼¶û²îÔËËãµÄº¯Êı·â×°
+//ä¸‹é¢æ˜¯å¸ƒå°”å·®è¿ç®—çš„å‡½æ•°å°è£…
 template <class T>
 void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polygons &subject,
     const xd::Polygons &clip, T* retval, const ClipperLib::PolyFillType fillType, const bool safety_offset_)
 {
-    //¶ÁÈ¡ÊäÈë
+    //è¯»å–è¾“å…¥
     ClipperLib::Paths input_subject, input_clip;
     xdMultiPoints_to_ClipperPaths(subject, &input_subject);
     xdMultiPoints_to_ClipperPaths(clip,    &input_clip);
 
-    //½øĞĞ°²È«Æ«ÖÃ
+    //è¿›è¡Œå®‰å…¨åç½®
     if (safety_offset_) {
         if (clipType == ClipperLib::ctUnion) {
             safety_offset(&input_subject);
@@ -278,15 +278,15 @@ void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polygons &subjec
         }
     }
 
-    //³õÊ¼»¯Clipper
+    //åˆå§‹åŒ–Clipper
     ClipperLib::Clipper clipper;
     clipper.Clear();
 
-    //Ôö¼Ópolygons
+    //å¢åŠ polygons
     clipper.AddPaths(input_subject, ClipperLib::ptSubject, true);
     clipper.AddPaths(input_clip, ClipperLib::ptClip, true);
 
-    //½øĞĞ²Ù×÷
+    //è¿›è¡Œæ“ä½œ
     clipper.Execute(clipType, *retval, fillType, fillType);
 }
 
@@ -294,7 +294,7 @@ void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polylines &subje
     const xd::Polygons &clip, ClipperLib::PolyTree* retval, const ClipperLib::PolyFillType fillType,
     const bool safety_offset_)
 {
-    //¶ÁÈ¡ÊäÈë
+    //è¯»å–è¾“å…¥
     ClipperLib::Paths input_subject, input_clip;
     xdMultiPoints_to_ClipperPaths(subject, &input_subject);
     xdMultiPoints_to_ClipperPaths(clip,    &input_clip);
@@ -302,26 +302,26 @@ void _clipper_do(const ClipperLib::ClipType clipType, const xd::Polylines &subje
     // perform safety offset
     if (safety_offset_) safety_offset(&input_clip);
 
-    //³õÊ¼»¯Clipper
+    //åˆå§‹åŒ–Clipper
     ClipperLib::Clipper clipper;
     clipper.Clear();
 
-    //Ôö¼Ópolygons
+    //å¢åŠ polygons
     clipper.AddPaths(input_subject, ClipperLib::ptSubject, false);
     clipper.AddPaths(input_clip,    ClipperLib::ptClip,    true);
 
-    //½øĞĞ²Ù×÷
+    //è¿›è¡Œæ“ä½œ
     clipper.Execute(clipType, *retval, fillType, fillType);
 }
 
 void _clipper(ClipperLib::ClipType clipType, const xd::Polygons &subject,
     const xd::Polygons &clip, xd::Polygons* retval, bool safety_offset_)
 {
-    //½øĞĞ²Ù×÷
+    //è¿›è¡Œæ“ä½œ
     ClipperLib::Paths output;
     _clipper_do<ClipperLib::Paths>(clipType, subject, clip, &output, ClipperLib::pftNonZero, safety_offset_);
 
-    //×ª»»³ÉPolygons
+    //è½¬æ¢æˆPolygons
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 
@@ -345,7 +345,7 @@ void _clipper(ClipperLib::ClipType clipType, const xd::Polylines &subject,
 
     // convert into Polylines
     ClipperLib::Paths output;
-    ClipperLib::PolyTreeToPaths(polytree, output);   //´Ë´¦µÄ¶à´ËÒ»¾Ù²»Àí½â
+    ClipperLib::PolyTreeToPaths(polytree, output);   //æ­¤å¤„çš„å¤šæ­¤ä¸€ä¸¾ä¸ç†è§£
     ClipperPaths_to_xdMultiPoints(output, retval);
 }
 
@@ -367,7 +367,7 @@ void _clipper(ClipperLib::ClipType clipType, const xd::Lines &subject,
 }
 
 void _clipper(ClipperLib::ClipType clipType, const xd::Polygons &subject,
-    const xd::Polygons &clip, xd::Polylines* retval, bool safety_offset_)   //Õâ¸öº¯ÊıÍ·ÎÄ¼ş£¬Ã»ÓĞ£¬ÒòÎªÖ»ÓĞÉÏÒ»¸öº¯ÊıĞèÒªÊ¹ÓÃ£¬ÔİÊ±Ã»¿´¶®£¡
+    const xd::Polygons &clip, xd::Polylines* retval, bool safety_offset_)   //è¿™ä¸ªå‡½æ•°å¤´æ–‡ä»¶ï¼Œæ²¡æœ‰ï¼Œå› ä¸ºåªæœ‰ä¸Šä¸€ä¸ªå‡½æ•°éœ€è¦ä½¿ç”¨ï¼Œæš‚æ—¶æ²¡çœ‹æ‡‚ï¼
 {
     // transform input polygons into polylines
     xd::Polylines polylines;
@@ -413,7 +413,7 @@ void _clipper(ClipperLib::ClipType clipType, const xd::Polygons &subject,
         }
     }
 }
-//ÏÂÃæÊÇ²¼¶û²îµÄº¯Êı·â×°
+//ä¸‹é¢æ˜¯å¸ƒå°”å·®çš„å‡½æ•°å°è£…
 template <class SubjectType, class ResultType>
 void diff(const SubjectType &subject, const xd::Polygons &clip, ResultType* retval, bool safety_offset_)
 {
@@ -436,7 +436,7 @@ void diff(const SubjectType &subject, const xd::ExPolygons &clip, ResultType* re
     diff(subject, pp, retval, safety_offset_);
 }
 template void diff<xd::Polygons, xd::ExPolygons>(const xd::Polygons &subject, const xd::ExPolygons &clip, xd::ExPolygons* retval, bool safety_offset_);
-//ÏÂÃæÊÇ²¼¶û½»µÄº¯Êı·â×°
+//ä¸‹é¢æ˜¯å¸ƒå°”äº¤çš„å‡½æ•°å°è£…
 template <class SubjectType, class ResultType>
 void intersection(const SubjectType &subject, const xd::Polygons &clip, ResultType* retval, bool safety_offset_)
 {
@@ -458,13 +458,13 @@ bool intersects(const SubjectType &subject, const xd::Polygons &clip, bool safet
 template bool intersects<xd::Polygons>(const xd::Polygons &subject, const xd::Polygons &clip, bool safety_offset_);
 template bool intersects<xd::Polylines>(const xd::Polylines &subject, const xd::Polygons &clip, bool safety_offset_);
 template bool intersects<xd::Lines>(const xd::Lines &subject, const xd::Polygons &clip, bool safety_offset_);
-//ÏÂÃæÊÇ²¼¶ûÒì»òº¯ÊıµÄ·â×°
+//ä¸‹é¢æ˜¯å¸ƒå°”å¼‚æˆ–å‡½æ•°çš„å°è£…
 void xor_(const xd::Polygons &subject, const xd::Polygons &clip, xd::ExPolygons* retval,
     bool safety_offset_)
 {
     _clipper(ClipperLib::ctXor, subject, clip, retval, safety_offset_);
 }
-//ÏÂÃæÊÇ²¼¶û²¢º¯ÊıµÄ·â×°
+//ä¸‹é¢æ˜¯å¸ƒå°”å¹¶å‡½æ•°çš„å°è£…
 template <class T>
 void union_(const xd::Polygons &subject, T* retval, bool safety_offset_)
 {
@@ -568,7 +568,7 @@ void simplify_polygons(const xd::Polygons &subject, xd::ExPolygons* retval, bool
     PolyTreeToExPolygons(polytree, retval);
 }
 
-void safety_offset(ClipperLib::Paths* paths)    //±íÊ¾½«Ò»¸öÂ·¾¶Æ«ÖÃ10.0µÄ¾àÀë¡£ÎªÉ¶»á°²È«£¿£¡
+void safety_offset(ClipperLib::Paths* paths)    //è¡¨ç¤ºå°†ä¸€ä¸ªè·¯å¾„åç½®10.0çš„è·ç¦»ã€‚ä¸ºå•¥ä¼šå®‰å…¨ï¼Ÿï¼
 {
     // scale input
     scaleClipperPolygons(*paths, CLIPPER_OFFSET_SCALE);

@@ -18,7 +18,7 @@ class Pointf3;
 typedef Point Vector;
 typedef Pointf Vectorf;
 typedef Pointf3 Vectorf3;
-typedef std::vector<Point> Points;   //ÓÉPoint×é³ÉµÄÏòÁ¿¡£
+typedef std::vector<Point> Points;   //ç”±Pointç»„æˆçš„å‘é‡ã€‚
 typedef std::vector<Point*> PointPtrs;
 typedef std::vector<const Point*> PointConstPtrs;
 typedef std::vector<Pointf> Pointfs;
@@ -31,50 +31,50 @@ class Point
     coord_t y;
     Point(coord_t _x = 0, coord_t _y = 0): x(_x), y(_y) {};
     Point(int _x, int _y): x(_x), y(_y) {};
-    Point(long long _x, long long _y): x(_x), y(_y) {};  // ÎªClipper
+    Point(long long _x, long long _y): x(_x), y(_y) {};  // ä¸ºClipper
     Point(double x, double y);
     static Point new_scale(coordf_t x, coordf_t y) {
-        return Point(scale_(x), scale_(y));  //Ä¬ÈÏµÄÇé¿öÏÂ£¬Ë«¾«¶È¸¡µã×ø±êÖµÊµ¼Ê·Å´óÁË10^6±¶ºóÈ¡³¤ÕûĞÍ£¬Ïàµ±ÓÚ±£Áô¾«¶Èµ½Ğ¡ÊıµãºóµÚÁùÎ»
-    };             //×¢Òâ£ºÍ¨³£Çé¿öÏÂ£¬32Î»²Ù×÷ÏµÍ³ÖĞ³¤ÕûĞÍ×î´óÊÇ2147483647£¬À©´ó10^6ÒâÎ¶×ÅÒÔºÁÃ×Îªµ¥Î»µÄÁã¼şÄÜ¼ÆËãµÄ×î´óÊäÈë³ß´çÊÇ21Ã×¶àÒ»µã
-    bool operator==(const Point& rhs) const;   //ÖØÔØÔËËã·û==£¬ÊµÏÖ¹ı³Ìµ÷ÓÃÁËÏÂÃæµÄcoincides_with£¨£©º¯Êı
-    std::string wkt() const;      //·µ»ØÒÔPOINT(x y)µÄĞÎÊ½Éú³ÉµÄ×Ö·û´®
-    void scale(double factor);    //½«µã·Å´ófactor±¶
-    void translate(double x, double y);   //½«µã×ø±êÊ¸Á¿¼ÓÉÏ(x y)£¬¼´Æ½ÒÆ
-    void translate(const Vector &vector);    //Ê¸Á¿¼Ó£¬Í¬ÉÏ
-    void rotate(double angle, const Point &center);   //ÒÔcenterÎªÖĞĞÄÄæÊ±ÕëĞı×ªangle¶È£¬angleÊÇ»¡¶È¡££¨ÍÆµ¼¹ı³Ì¿ÉÒÔ¼ÙÉècenterÎª×ø±êÔ­µã£©
-    bool coincides_with(const Point &point) const;    //ÊÇ·ñºÍ¸ø¶¨µãÏàµÈ
-    bool coincides_with_epsilon(const Point &point) const;   //µ½¸ø¶¨µãpointµÄ×ø±ê²î¡÷x<100ÇÒ¡÷y<100Ê±ÎªÕæ£¬Ïàµ±ÓÚ¶¼Ğ¡ÓÚ0.0001mm
-    int nearest_point_index(const Points &points) const;     //ÏÈ½«µãÏòÁ¿×ª»»Îªµã³£Ö¸ÕëÏòÁ¿£¬ÔÙµ÷ÓÃÏÂÃæµÄº¯Êı£¬ÕÒÒ»ÏµÁĞµãÖĞ¾à±¾Éí×î½üµÄµãµÄ½Ç±ê
-    int nearest_point_index(const PointConstPtrs &points) const;  //Õâ¸öº¯ÊıÇÉÃîµÄÊ¹ÓÃcontinueº¯Êı£¬¼õÉÙÁË¼ÆËãÁ¿£¬½¨ÒéÑ§Ï°£¬Í¬Ê±×¢Òâ£º
-    //Èç¹ûÑ°ÕÒ×î½üµãÊ±£¬¾àÀëµÄÆ½·½ÒÑ¾­Ğ¡ÓÚEPSILON=1e-4£¬Ôò²»ÔÙÑ°ÕÒ£¬ÒòÎªÕâ¸öµã¾Í¿ÉÒÔµ±×öºÍÕÒµ½µÄµãÖØºÏÁË
-    int nearest_point_index(const PointPtrs &points) const;  //ÏÈ½«µãÖ¸ÕëÏòÁ¿×ª»»Îªµã³£Ö¸ÕëÏòÁ¿£¬ÔÙµ÷ÓÃÉÏÃæµÄº¯Êı
-    size_t nearest_waypoint_index(const Points &points, const Point &point) const;  //·µ»ØpointsÖĞµ½¸ø¶¨µãºÍÀà±¾Éíµã¾àÀëºÍ×îĞ¡µÄµãµÄ½Ç±ê
-    //×¢Òâ£ºsize_tÊÇ±ê×¼C¿âÖĞ¶¨ÒåµÄ£¬Ó¦Îªunsigned int£¬ÔÚ64Î»ÏµÍ³ÖĞÎª long unsigned int
-    bool nearest_point(const Points &points, Point* point) const; //ÈÃpointÖ¸ÏòpointsÖĞ¾àÀëÀà±¾Éíµã×î½üµÄµã£¬³É¹¦·µ»Øtrue
-    bool nearest_waypoint(const Points &points, const Point &dest, Point* point) const; //poitnÖ¸ÏòpointsÖĞµ½¸ø¶¨µãºÍÀà±¾Éíµã¾àÀëºÍ×îĞ¡µÄµã
-    double distance_to(const Point &point) const;  //·µ»Øµ½pointµÄ¾àÀë
-    double distance_to(const Line &line) const;    //·µ»ØÀà±¾Éíµãµ½¸ø¶¨Ïß¶Î×î½üµÄ¾àÀë£¬Èç¹ûÏß¶ÎÊÇÒ»¸öµã£¬Ôò·µ»Øµ½´ËµãµÄ¾àÀë£¨ÍÆµ¼¼ûcpp£©
-    double perp_distance_to(const Line &line) const;   //·µ»Øµ½¸ø¶¨Ïß¶ÎµÄ´¹Ö±¾àÀë£¬Èç¹ûÏß¶ÎÊÇÒ»¸öµã£¬Ôò·µ»Øµ½´ËµãµÄ¾àÀë
-    double ccw(const Point &p1, const Point &p2) const;  //·µ»Øp1¡úp2²æ³Ëp1¡úthis£¬·µ»ØÖµ>0ÊÇÄæÊ±Õë£¬·´Ö®Ë³Ê±Õë£¬=0Ôò¹²Ïß
-    double ccw(const Line &line) const;   //ÓÃÏß¶ÎµÄÁ½¸öµã´úÌæ´øÈëÉÏÃæµÄº¯Êı£¬½á¹ûÍ¬ÉÏ
-    double ccw_angle(const Point &p1, const Point &p2) const;  //·µ»Ø½Ç¶Èp1¡úthis¡úp2µÄ»¡¶ÈÖµ£¬½á¹ûÊÇÈç¹ûÊÇ¸ºÊı¼Ó2piµÃµ½ÕıÊı
-    Point projection_onto(const MultiPoint &poly) const;  	//thisµ½ÓÉpoly×é³ÉµÄÒ»ÏµÁĞlineÉÏµÄ¾àÀëÍ¶Ó°×îĞ¡µÄµã£¬Èç¹ûÍ¶Ó°µã²»ÔÚÏßµÄÉÏ£¬Ôò·µ»Ø¾àÀëthis×î½üµÄÏß¶Î¶Ëµã
-    Point projection_onto(const Line &line) const; //·µ»Øthisµ½lineÉÏµÄÍ¶Ó°£¬Èç¹ûÍ¶Ó°µã²»ÔÚÏßµÄÉÏ£¬Ôò·µ»Ø¾àÀëthis×î½üµÄÏß¶Î¶Ëµã
-    Point negative() const;  //·µ»ØµãµÄ¸ºÖµ
-    Vector vector_to(const Point &point) const;  //·µ»Øthisµ½pointµÄÏòÁ¿Öµ£¬Ò²ÊÇpointÀàĞÍ
+        return Point(scale_(x), scale_(y));  //é»˜è®¤çš„æƒ…å†µä¸‹ï¼ŒåŒç²¾åº¦æµ®ç‚¹åæ ‡å€¼å®é™…æ”¾å¤§äº†10^6å€åå–é•¿æ•´å‹ï¼Œç›¸å½“äºä¿ç•™ç²¾åº¦åˆ°å°æ•°ç‚¹åç¬¬å…­ä½
+    };             //æ³¨æ„ï¼šé€šå¸¸æƒ…å†µä¸‹ï¼Œ32ä½æ“ä½œç³»ç»Ÿä¸­é•¿æ•´å‹æœ€å¤§æ˜¯2147483647ï¼Œæ‰©å¤§10^6æ„å‘³ç€ä»¥æ¯«ç±³ä¸ºå•ä½çš„é›¶ä»¶èƒ½è®¡ç®—çš„æœ€å¤§è¾“å…¥å°ºå¯¸æ˜¯21ç±³å¤šä¸€ç‚¹
+    bool operator==(const Point& rhs) const;   //é‡è½½è¿ç®—ç¬¦==ï¼Œå®ç°è¿‡ç¨‹è°ƒç”¨äº†ä¸‹é¢çš„coincides_withï¼ˆï¼‰å‡½æ•°
+    std::string wkt() const;      //è¿”å›ä»¥POINT(x y)çš„å½¢å¼ç”Ÿæˆçš„å­—ç¬¦ä¸²
+    void scale(double factor);    //å°†ç‚¹æ”¾å¤§factorå€
+    void translate(double x, double y);   //å°†ç‚¹åæ ‡çŸ¢é‡åŠ ä¸Š(x y)ï¼Œå³å¹³ç§»
+    void translate(const Vector &vector);    //çŸ¢é‡åŠ ï¼ŒåŒä¸Š
+    void rotate(double angle, const Point &center);   //ä»¥centerä¸ºä¸­å¿ƒé€†æ—¶é’ˆæ—‹è½¬angleåº¦ï¼Œangleæ˜¯å¼§åº¦ã€‚ï¼ˆæ¨å¯¼è¿‡ç¨‹å¯ä»¥å‡è®¾centerä¸ºåæ ‡åŸç‚¹ï¼‰
+    bool coincides_with(const Point &point) const;    //æ˜¯å¦å’Œç»™å®šç‚¹ç›¸ç­‰
+    bool coincides_with_epsilon(const Point &point) const;   //åˆ°ç»™å®šç‚¹pointçš„åæ ‡å·®â–³x<100ä¸”â–³y<100æ—¶ä¸ºçœŸï¼Œç›¸å½“äºéƒ½å°äº0.0001mm
+    int nearest_point_index(const Points &points) const;     //å…ˆå°†ç‚¹å‘é‡è½¬æ¢ä¸ºç‚¹å¸¸æŒ‡é’ˆå‘é‡ï¼Œå†è°ƒç”¨ä¸‹é¢çš„å‡½æ•°ï¼Œæ‰¾ä¸€ç³»åˆ—ç‚¹ä¸­è·æœ¬èº«æœ€è¿‘çš„ç‚¹çš„è§’æ ‡
+    int nearest_point_index(const PointConstPtrs &points) const;  //è¿™ä¸ªå‡½æ•°å·§å¦™çš„ä½¿ç”¨continueå‡½æ•°ï¼Œå‡å°‘äº†è®¡ç®—é‡ï¼Œå»ºè®®å­¦ä¹ ï¼ŒåŒæ—¶æ³¨æ„ï¼š
+    //å¦‚æœå¯»æ‰¾æœ€è¿‘ç‚¹æ—¶ï¼Œè·ç¦»çš„å¹³æ–¹å·²ç»å°äºEPSILON=1e-4ï¼Œåˆ™ä¸å†å¯»æ‰¾ï¼Œå› ä¸ºè¿™ä¸ªç‚¹å°±å¯ä»¥å½“åšå’Œæ‰¾åˆ°çš„ç‚¹é‡åˆäº†
+    int nearest_point_index(const PointPtrs &points) const;  //å…ˆå°†ç‚¹æŒ‡é’ˆå‘é‡è½¬æ¢ä¸ºç‚¹å¸¸æŒ‡é’ˆå‘é‡ï¼Œå†è°ƒç”¨ä¸Šé¢çš„å‡½æ•°
+    size_t nearest_waypoint_index(const Points &points, const Point &point) const;  //è¿”å›pointsä¸­åˆ°ç»™å®šç‚¹å’Œç±»æœ¬èº«ç‚¹è·ç¦»å’Œæœ€å°çš„ç‚¹çš„è§’æ ‡
+    //æ³¨æ„ï¼šsize_tæ˜¯æ ‡å‡†Cåº“ä¸­å®šä¹‰çš„ï¼Œåº”ä¸ºunsigned intï¼Œåœ¨64ä½ç³»ç»Ÿä¸­ä¸º long unsigned int
+    bool nearest_point(const Points &points, Point* point) const; //è®©pointæŒ‡å‘pointsä¸­è·ç¦»ç±»æœ¬èº«ç‚¹æœ€è¿‘çš„ç‚¹ï¼ŒæˆåŠŸè¿”å›true
+    bool nearest_waypoint(const Points &points, const Point &dest, Point* point) const; //poitnæŒ‡å‘pointsä¸­åˆ°ç»™å®šç‚¹å’Œç±»æœ¬èº«ç‚¹è·ç¦»å’Œæœ€å°çš„ç‚¹
+    double distance_to(const Point &point) const;  //è¿”å›åˆ°pointçš„è·ç¦»
+    double distance_to(const Line &line) const;    //è¿”å›ç±»æœ¬èº«ç‚¹åˆ°ç»™å®šçº¿æ®µæœ€è¿‘çš„è·ç¦»ï¼Œå¦‚æœçº¿æ®µæ˜¯ä¸€ä¸ªç‚¹ï¼Œåˆ™è¿”å›åˆ°æ­¤ç‚¹çš„è·ç¦»ï¼ˆæ¨å¯¼è§cppï¼‰
+    double perp_distance_to(const Line &line) const;   //è¿”å›åˆ°ç»™å®šçº¿æ®µçš„å‚ç›´è·ç¦»ï¼Œå¦‚æœçº¿æ®µæ˜¯ä¸€ä¸ªç‚¹ï¼Œåˆ™è¿”å›åˆ°æ­¤ç‚¹çš„è·ç¦»
+    double ccw(const Point &p1, const Point &p2) const;  //è¿”å›p1â†’p2å‰ä¹˜p1â†’thisï¼Œè¿”å›å€¼>0æ˜¯é€†æ—¶é’ˆï¼Œåä¹‹é¡ºæ—¶é’ˆï¼Œ=0åˆ™å…±çº¿
+    double ccw(const Line &line) const;   //ç”¨çº¿æ®µçš„ä¸¤ä¸ªç‚¹ä»£æ›¿å¸¦å…¥ä¸Šé¢çš„å‡½æ•°ï¼Œç»“æœåŒä¸Š
+    double ccw_angle(const Point &p1, const Point &p2) const;  //è¿”å›è§’åº¦p1â†’thisâ†’p2çš„å¼§åº¦å€¼ï¼Œç»“æœæ˜¯å¦‚æœæ˜¯è´Ÿæ•°åŠ 2piå¾—åˆ°æ­£æ•°
+    Point projection_onto(const MultiPoint &poly) const;  	//thisåˆ°ç”±polyç»„æˆçš„ä¸€ç³»åˆ—lineä¸Šçš„è·ç¦»æŠ•å½±æœ€å°çš„ç‚¹ï¼Œå¦‚æœæŠ•å½±ç‚¹ä¸åœ¨çº¿çš„ä¸Šï¼Œåˆ™è¿”å›è·ç¦»thisæœ€è¿‘çš„çº¿æ®µç«¯ç‚¹
+    Point projection_onto(const Line &line) const; //è¿”å›thisåˆ°lineä¸Šçš„æŠ•å½±ï¼Œå¦‚æœæŠ•å½±ç‚¹ä¸åœ¨çº¿çš„ä¸Šï¼Œåˆ™è¿”å›è·ç¦»thisæœ€è¿‘çš„çº¿æ®µç«¯ç‚¹
+    Point negative() const;  //è¿”å›ç‚¹çš„è´Ÿå€¼
+    Vector vector_to(const Point &point) const;  //è¿”å›thisåˆ°pointçš„å‘é‡å€¼ï¼Œä¹Ÿæ˜¯pointç±»å‹
 };
 
-Point operator+(const Point& point1, const Point& point2);   //ÖØÔØ+ÔËËã·û£¬·µ»ØÁ½¸öµãµÄ×ø±ê·Ö±ğÏà¼ÓµÄµã
-Point operator*(double scalar, const Point& point2);    //·µ»Øscalar³ËÒÔµãµÄ×ø±êÖµ£¬µ«Ö»ÖØÔØÁËdoubleÔÚ³ËºÅ×ó±ßµÄÇé¿ö£¬ÎÒÈÏÎªÈç¹ûdoubleÔÚÓÒ±ßÔò»á³öÏÖ´íÎó¡£
+Point operator+(const Point& point1, const Point& point2);   //é‡è½½+è¿ç®—ç¬¦ï¼Œè¿”å›ä¸¤ä¸ªç‚¹çš„åæ ‡åˆ†åˆ«ç›¸åŠ çš„ç‚¹
+Point operator*(double scalar, const Point& point2);    //è¿”å›scalarä¹˜ä»¥ç‚¹çš„åæ ‡å€¼ï¼Œä½†åªé‡è½½äº†doubleåœ¨ä¹˜å·å·¦è¾¹çš„æƒ…å†µï¼Œæˆ‘è®¤ä¸ºå¦‚æœdoubleåœ¨å³è¾¹åˆ™ä¼šå‡ºç°é”™è¯¯ã€‚
 
-class Point3 : public Point  //¼Ì³ĞPointÀàµÄÈıÎ¬µã£¬½ö½ö¶àÁËÒ»¸özÖµ£¬ÆäËû¶şÎ¬º¯Êı¶¼Ã»ÓĞÀ©Õ¹µ½ÈıÎ¬ÉÏ£¬Ò²Ã»ÓĞ±ØÒª
+class Point3 : public Point  //ç»§æ‰¿Pointç±»çš„ä¸‰ç»´ç‚¹ï¼Œä»…ä»…å¤šäº†ä¸€ä¸ªzå€¼ï¼Œå…¶ä»–äºŒç»´å‡½æ•°éƒ½æ²¡æœ‰æ‰©å±•åˆ°ä¸‰ç»´ä¸Šï¼Œä¹Ÿæ²¡æœ‰å¿…è¦
 {
     public:
     coord_t z;
     explicit Point3(coord_t _x = 0, coord_t _y = 0, coord_t _z = 0): Point(_x, _y), z(_z) {};
 };
 
-std::ostream& operator<<(std::ostream &stm, const Pointf &pointf);  //Îª±ê×¼Êä³öÁ÷¼ÓÈëPointf£¬ĞÎÊ½ÊÇx£¬y
+std::ostream& operator<<(std::ostream &stm, const Pointf &pointf);  //ä¸ºæ ‡å‡†è¾“å‡ºæµåŠ å…¥Pointfï¼Œå½¢å¼æ˜¯xï¼Œy
 
 class Pointf
 {
@@ -84,15 +84,15 @@ class Pointf
     explicit Pointf(coordf_t _x = 0, coordf_t _y = 0): x(_x), y(_y) {};
     static Pointf new_unscale(coord_t x, coord_t y) {
         return Pointf(unscale(x), unscale(y));
-    };  //ËõĞ¡10^6±¶£¬ÒòÎª¼ÆËãÊ±·Å´óÁË10^6±¶£¬ËùÒÔ×îºóÔÚÊä³öÊ±×ª»»ÎªdoubleĞÎÊ½µÄÊıÒªËõĞ¡
+    };  //ç¼©å°10^6å€ï¼Œå› ä¸ºè®¡ç®—æ—¶æ”¾å¤§äº†10^6å€ï¼Œæ‰€ä»¥æœ€ååœ¨è¾“å‡ºæ—¶è½¬æ¢ä¸ºdoubleå½¢å¼çš„æ•°è¦ç¼©å°
     static Pointf new_unscale(const Point &p) {
         return Pointf(unscale(p.x), unscale(p.y));
-    };  //Í¬ÉÏ
-    void scale(double factor);   //×ø±ê·Å´ófactor±¶
-    void translate(double x, double y);   //×ø±êÆ½ÒÆx£¬y³¤¶È
-    void rotate(double angle, const Pointf &center);  //ÒÔcenterÎªÖĞĞÄÄæÊ±ÕëĞı×ªangle¶È£¬angleÊÇ»¡¶È¡£
-    Pointf negative() const;   //·µ»ØµãµÄ¸ºÖµ
-    Vectorf vector_to(const Pointf &point) const;  //·µ»Øthisµ½pointµÄÏòÁ¿Öµ£¬Ò²ÊÇpointfÀàĞÍ
+    };  //åŒä¸Š
+    void scale(double factor);   //åæ ‡æ”¾å¤§factorå€
+    void translate(double x, double y);   //åæ ‡å¹³ç§»xï¼Œyé•¿åº¦
+    void rotate(double angle, const Pointf &center);  //ä»¥centerä¸ºä¸­å¿ƒé€†æ—¶é’ˆæ—‹è½¬angleåº¦ï¼Œangleæ˜¯å¼§åº¦ã€‚
+    Pointf negative() const;   //è¿”å›ç‚¹çš„è´Ÿå€¼
+    Vectorf vector_to(const Pointf &point) const;  //è¿”å›thisåˆ°pointçš„å‘é‡å€¼ï¼Œä¹Ÿæ˜¯pointfç±»å‹
 };
 
 class Pointf3 : public Pointf
@@ -102,17 +102,17 @@ class Pointf3 : public Pointf
     explicit Pointf3(coordf_t _x = 0, coordf_t _y = 0, coordf_t _z = 0): Pointf(_x, _y), z(_z) {};
     static Pointf3 new_unscale(coord_t x, coord_t y, coord_t z) {
         return Pointf3(unscale(x), unscale(y), unscale(z));
-    };   //ËõĞ¡10^6±¶£¬ÒòÎª¼ÆËãÊ±·Å´óÁË10^6±¶£¬ËùÒÔ×îºóÔÚÊä³öÊ±×ª»»ÎªdoubleĞÎÊ½µÄÊıÒªËõĞ¡
-    void scale(double factor);  //×ø±ê·Å´ófactor±¶
-    void translate(const Vectorf3 &vector);   //×ø±êÆ½ÒÆx£¬y£¬z³¤¶È
-    void translate(double x, double y, double z);  //×ø±êÆ½ÒÆx£¬y£¬z³¤¶È
-    double distance_to(const Pointf3 &point) const;    //·µ»ØÁ½µãÖ®¼äµÄ¾àÀë
-    Pointf3 negative() const;   //·µ»ØµãµÄ¸ºÖµ
-    Vectorf3 vector_to(const Pointf3 &point) const;  //·µ»Øthisµ½pointµÄÏòÁ¿Öµ£¬Ò²ÊÇpointfÀàĞÍ
+    };   //ç¼©å°10^6å€ï¼Œå› ä¸ºè®¡ç®—æ—¶æ”¾å¤§äº†10^6å€ï¼Œæ‰€ä»¥æœ€ååœ¨è¾“å‡ºæ—¶è½¬æ¢ä¸ºdoubleå½¢å¼çš„æ•°è¦ç¼©å°
+    void scale(double factor);  //åæ ‡æ”¾å¤§factorå€
+    void translate(const Vectorf3 &vector);   //åæ ‡å¹³ç§»xï¼Œyï¼Œzé•¿åº¦
+    void translate(double x, double y, double z);  //åæ ‡å¹³ç§»xï¼Œyï¼Œzé•¿åº¦
+    double distance_to(const Pointf3 &point) const;    //è¿”å›ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»
+    Pointf3 negative() const;   //è¿”å›ç‚¹çš„è´Ÿå€¼
+    Vectorf3 vector_to(const Pointf3 &point) const;  //è¿”å›thisåˆ°pointçš„å‘é‡å€¼ï¼Œä¹Ÿæ˜¯pointfç±»å‹
 };
-}   //xdÃüÃû¿Õ¼ä½áÊø
+}   //xdå‘½åç©ºé—´ç»“æŸ
 
-// ¿ªÊ¼Boost£¬ÏÂÃæÊÇ×¢²áµãÀàĞÍ£¬boostÊ¹ÓÃ±ØĞëµÄ²½Öè
+// å¼€å§‹Boostï¼Œä¸‹é¢æ˜¯æ³¨å†Œç‚¹ç±»å‹ï¼Œboostä½¿ç”¨å¿…é¡»çš„æ­¥éª¤
 #include "../boost/polygon/polygon.hpp"
 namespace boost { namespace polygon {
     template <>
@@ -157,7 +157,7 @@ namespace boost { namespace polygon {
         }
     };
 } }
-// ½áÊøBoost
+// ç»“æŸBoost
 
 #endif // POINT_H
 

@@ -10,11 +10,11 @@ class PolylineCollection
 {
     public:
     Polylines polylines;
-    void chained_path(PolylineCollection* retval, bool no_reverse = false) const;  //Í¬ÏÂ£¬Ö»ÊÇÆğÊ¼µãÎªµÚÒ»¸öpolilineµÄµÚÒ»¸öµã
-    void chained_path_from(Point start_near, PolylineCollection* retval, bool no_reverse = false) const;//´Óstart_near¿ªÊ¼ÕÒµ½polylines
-    //ÀïµÄpolylineÖĞ×î½üµÄÆğÊ¼µã£¬È»ºó°ÑÕâ¸öpolylineµÄ×îÖÕµãµ±³ÉÏÂÒ»¸öÆğÊ¼µã£¬×îÖÕ¹æ»®ºÃµÄpolyline´æ´¢µ½retvalÀïÃæ£¬boolÎªÕæ±íÊ¾¹æ»®Ê±
-    //polyline¿ÉÒÔ·­×ª£¬¼´Ò»¸öpolylineÀïÃæÈç¹û×îÖÕµãÊÇ×î½üµãÔò¿ÉÒÔ·­×ªÕâ¸öpolyline
-    Point leftmost_point() const;  //·µ»ØPolylinesÀïÃæ×î×ó±ßµÄµã
+    void chained_path(PolylineCollection* retval, bool no_reverse = false) const;  //åŒä¸‹ï¼Œåªæ˜¯èµ·å§‹ç‚¹ä¸ºç¬¬ä¸€ä¸ªpolilineçš„ç¬¬ä¸€ä¸ªç‚¹
+    void chained_path_from(Point start_near, PolylineCollection* retval, bool no_reverse = false) const;//ä»start_nearå¼€å§‹æ‰¾åˆ°polylines
+    //é‡Œçš„polylineä¸­æœ€è¿‘çš„èµ·å§‹ç‚¹ï¼Œç„¶åæŠŠè¿™ä¸ªpolylineçš„æœ€ç»ˆç‚¹å½“æˆä¸‹ä¸€ä¸ªèµ·å§‹ç‚¹ï¼Œæœ€ç»ˆè§„åˆ’å¥½çš„polylineå­˜å‚¨åˆ°retvalé‡Œé¢ï¼Œboolä¸ºçœŸè¡¨ç¤ºè§„åˆ’æ—¶
+    //polylineå¯ä»¥ç¿»è½¬ï¼Œå³ä¸€ä¸ªpolylineé‡Œé¢å¦‚æœæœ€ç»ˆç‚¹æ˜¯æœ€è¿‘ç‚¹åˆ™å¯ä»¥ç¿»è½¬è¿™ä¸ªpolyline
+    Point leftmost_point() const;  //è¿”å›Polylinesé‡Œé¢æœ€å·¦è¾¹çš„ç‚¹
 };
 
 }

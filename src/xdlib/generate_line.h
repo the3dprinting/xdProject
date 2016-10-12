@@ -1,6 +1,6 @@
-//ÍõÏş¶« 2014/1/20 ±àÖÆÉú³ÉÖ±ÏßÉ¨ÃèÏßµÄÍ·ÎÄ¼ş£¬Îª·ÀÖ¹ÃüÃû³åÍ»£¬·ÅÔÚÃüÃû¿Õ¼äxdÀïÃæ¡£
-//ÍõÏş¶« 2015/4/7  Ôö¼ÓÁËÖ±ÏßÉ¨ÃèÔÚÇ°ºóÁ½ÌõÖ±Ïß¿çÔ½¼«ÖµµãÊ±µÄ·ÖÇøËã·¨£¬·ñÔòFDM¼Ó¹¤³ÉĞÍ¼ş¿ÉÄÜ»á³öÏÖÎÊÌâ¡£
-//ÍõÏş¶« 2015/8/12 ×¢Òâ£¡µ±³öÏÖÂÖÀªÇúÀï¹ÕÍäÊ±£¬ËµÃ÷¾«¶ÈÎÊÌâ°¡£¡£¡³ıÒÔÒ»¸öÊıÒ»¶¨ÒªĞ´³É1000000.0£¡£¡£¡²»ÊÇ1000000£¡£¡£¡
+//ç‹æ™“ä¸œ 2014/1/20 ç¼–åˆ¶ç”Ÿæˆç›´çº¿æ‰«æçº¿çš„å¤´æ–‡ä»¶ï¼Œä¸ºé˜²æ­¢å‘½åå†²çªï¼Œæ”¾åœ¨å‘½åç©ºé—´xdé‡Œé¢ã€‚
+//ç‹æ™“ä¸œ 2015/4/7  å¢åŠ äº†ç›´çº¿æ‰«æåœ¨å‰åä¸¤æ¡ç›´çº¿è·¨è¶Šæå€¼ç‚¹æ—¶çš„åˆ†åŒºç®—æ³•ï¼Œå¦åˆ™FDMåŠ å·¥æˆå‹ä»¶å¯èƒ½ä¼šå‡ºç°é—®é¢˜ã€‚
+//ç‹æ™“ä¸œ 2015/8/12 æ³¨æ„ï¼å½“å‡ºç°è½®å»“æ›²é‡Œæ‹å¼¯æ—¶ï¼Œè¯´æ˜ç²¾åº¦é—®é¢˜å•Šï¼ï¼é™¤ä»¥ä¸€ä¸ªæ•°ä¸€å®šè¦å†™æˆ1000000.0ï¼ï¼ï¼ä¸æ˜¯1000000ï¼ï¼ï¼
 #ifndef GENERATE_LINE_H
 #define GENERATE_LINE_H
 
@@ -9,24 +9,24 @@
 #include <iostream>
 #include <list>
 #include <vector>
-#include "../clipper/clipper.hpp"   //µ÷ÓÃ¿ªÔ´º¯Êı¿âclipper¿âÊµÏÖ¶à±ßĞÎµÄÂÖÀªÆ«ÖÃËã·¨ºÍ²¼¶ûËã·¨
+#include "../clipper/clipper.hpp"   //è°ƒç”¨å¼€æºå‡½æ•°åº“clipperåº“å®ç°å¤šè¾¹å½¢çš„è½®å»“åç½®ç®—æ³•å’Œå¸ƒå°”ç®—æ³•
 #include "constdefine.h"
 
 namespace xd
 {
     static float const pi = 3.141592653589793238;
-    float degrees(float fudu); //·ù¶È×ª»¯Îª½Ç¶ÈµÄº¯Êı
-    float radians(float jiaodu); //½Ç¶È×ª»»Îª·ù¶ÈµÄº¯Êı
-    class xdpoint   //»ù±¾µãÀà£¬°üº¬Æ½ÃæÄÚ¼«×ø±êºÍµÑ¿¨¶û×ø±êÏµµÄ×ª»»
+    float degrees(float fudu); //å¹…åº¦è½¬åŒ–ä¸ºè§’åº¦çš„å‡½æ•°
+    float radians(float jiaodu); //è§’åº¦è½¬æ¢ä¸ºå¹…åº¦çš„å‡½æ•°
+    class xdpoint   //åŸºæœ¬ç‚¹ç±»ï¼ŒåŒ…å«å¹³é¢å†…æåæ ‡å’Œç¬›å¡å°”åæ ‡ç³»çš„è½¬æ¢
     {
     public:
         float x;
         float y;
         float z;
         xdpoint():x(0),y(0),z(0){}
-        xdpoint(float a,float b):x(a),y(b),z(0){}  //ÕâÀïµÄÖØÔØº¯ÊızÄ¬ÈÏÎª0£¬ÒÔºó¿ÉÒÔ¸Ä½ø
+        xdpoint(float a,float b):x(a),y(b),z(0){}  //è¿™é‡Œçš„é‡è½½å‡½æ•°zé»˜è®¤ä¸º0ï¼Œä»¥åå¯ä»¥æ”¹è¿›
         xdpoint(float a, float b,float c):x(a),y(b),z(c){}
-        //xdpoint(int a, int b) :x(a/1000000.0), y(b/1000000.0), z(0){}  //ÕâÀïÎªÁËÊÊÓ¦Ê¦ĞÖ³ÌĞò
+        //xdpoint(int a, int b) :x(a/1000000.0), y(b/1000000.0), z(0){}  //è¿™é‡Œä¸ºäº†é€‚åº”å¸ˆå…„ç¨‹åº
         float modulus() const;
         float argument() const;
         xdpoint & modulus(float new_modulus);
@@ -36,7 +36,7 @@ namespace xd
             return std::abs(this->x - p.x) < 0.005 || std::abs(this->y - p.y) < 0.005;
         }
         friend inline bool operator== (const xdpoint& a, const xdpoint& b)
-        {//Á½¸öµãÏà¾àĞ¡ÓÚ0.001ÔòÈÏÎªÏàµÈ
+        {//ä¸¤ä¸ªç‚¹ç›¸è·å°äº0.001åˆ™è®¤ä¸ºç›¸ç­‰
             //return a.x == b.x && a.y == b.y;
             return std::abs(a.x - b.x) < 0.005 && std::abs(a.y - b.y) < 0.005;
         }
@@ -49,26 +49,26 @@ namespace xd
 
     typedef std::vector<xdpoint> outline;
     typedef std::vector<outline> outlines;
-    typedef std::vector<std::pair<outline,unsigned int> > outputOutlines;   //ÓÃÓÚÊä³ö´øÓĞÉ¨Ãè²ãÊıµÄÂ·¾¶¡£
+    typedef std::vector<std::pair<outline,unsigned int> > outputOutlines;   //ç”¨äºè¾“å‡ºå¸¦æœ‰æ‰«æå±‚æ•°çš„è·¯å¾„ã€‚
 
-    void ClipperPathToOutline(const ClipperLib::Path & input,outline * output);   //Ã»¼Ó×îºóÒ»¸öµã£¬×¢Òâ£¡
-    void ClipperPathsToOutlines(const ClipperLib::Paths & input,outlines * output);  //Ã»¼Ó×îºóÒ»¸öµã£¬×¢Òâ£¡
+    void ClipperPathToOutline(const ClipperLib::Path & input,outline * output);   //æ²¡åŠ æœ€åä¸€ä¸ªç‚¹ï¼Œæ³¨æ„ï¼
+    void ClipperPathsToOutlines(const ClipperLib::Paths & input,outlines * output);  //æ²¡åŠ æœ€åä¸€ä¸ªç‚¹ï¼Œæ³¨æ„ï¼
     void OutlineToClipperPath(const outline & input, ClipperLib::Path * output);
     void OutlinesToClipperPaths(const outlines & input, ClipperLib::Paths * output);
 
-    bool IsContainPoint(std::vector<std::pair<float,float> > &a, xdpoint b);  //ÅĞ¶Á¼«ÖµµãÁĞ±íÀïÊÇ·ñ°üº¬Ä³Ò»¸öµãµÄº¯Êı¡£
+    bool IsContainPoint(std::vector<std::pair<float,float> > &a, xdpoint b);  //åˆ¤è¯»æå€¼ç‚¹åˆ—è¡¨é‡Œæ˜¯å¦åŒ…å«æŸä¸€ä¸ªç‚¹çš„å‡½æ•°ã€‚
 
-    int IsLeft(xdpoint p1,xdpoint p2, xdpoint p); //ÅĞ¶ÏpµãÊÇ·ñÔÚÓĞÏòÏß¶Îp1,p2×ó²àµÄº¯Êı¡£
+    int IsLeft(xdpoint p1,xdpoint p2, xdpoint p); //åˆ¤æ–­pç‚¹æ˜¯å¦åœ¨æœ‰å‘çº¿æ®µp1,p2å·¦ä¾§çš„å‡½æ•°ã€‚
 
-    bool IsEmpty(std::vector<std::pair<float,std::list<float> > > tem,int & firstV);  //ÅĞ¶ÏÉ¨ÃèÏßÖĞµÄÔªËØÊÇ·ñÈ«²¿È¡ÍêµÄº¯Êı¡£
+    bool IsEmpty(std::vector<std::pair<float,std::list<float> > > tem,int & firstV);  //åˆ¤æ–­æ‰«æçº¿ä¸­çš„å…ƒç´ æ˜¯å¦å…¨éƒ¨å–å®Œçš„å‡½æ•°ã€‚
 
-    void DeleteOddDate(std::vector<std::pair<float,std::list<float> > > & tem);   //½«´æ·ÅÆæÊıµãÊı¾İµÄÉ¨ÃèÏßÉ¾³ıµÄº¯Êı£¬Õı³£Çé¿öÏÂÓÃ²»×Å´Ëº¯Êı¡£
+    void DeleteOddDate(std::vector<std::pair<float,std::list<float> > > & tem);   //å°†å­˜æ”¾å¥‡æ•°ç‚¹æ•°æ®çš„æ‰«æçº¿åˆ é™¤çš„å‡½æ•°ï¼Œæ­£å¸¸æƒ…å†µä¸‹ç”¨ä¸ç€æ­¤å‡½æ•°ã€‚
 
-    bool IsDealFinish(const std::vector<xdpoint> & l,int & i);  //ÅĞ¶ÏÆ½ĞĞÓÚxÖáµÄÖ±ÏßÉÏÊÇ·ñÓĞ¶àÓÚÁ½¸öµãµÄº¯Êı¡£
-    void DealOneLayer(std::vector<xdpoint> & l); //ÉÏÃæº¯ÊıµÄ¼ò»¯ÊµÏÖ£¬´ı²âÊÔ£¡£¡
-    bool exceedExtremum(float bijiaoY1,float bijiaoY2,std::list<float> maxY,std::list<float> minY);  //ÓÃÀ´ÅĞ¶ÏÇ°ºóÁ½ÌõÖ±ÏßÊÇ·ñÔ½¹ıÁË¾Ö²¿¼«ÖµµãµÄº¯Êı
+    bool IsDealFinish(const std::vector<xdpoint> & l,int & i);  //åˆ¤æ–­å¹³è¡Œäºxè½´çš„ç›´çº¿ä¸Šæ˜¯å¦æœ‰å¤šäºä¸¤ä¸ªç‚¹çš„å‡½æ•°ã€‚
+    void DealOneLayer(std::vector<xdpoint> & l); //ä¸Šé¢å‡½æ•°çš„ç®€åŒ–å®ç°ï¼Œå¾…æµ‹è¯•ï¼ï¼
+    bool exceedExtremum(float bijiaoY1,float bijiaoY2,std::list<float> maxY,std::list<float> minY);  //ç”¨æ¥åˆ¤æ–­å‰åä¸¤æ¡ç›´çº¿æ˜¯å¦è¶Šè¿‡äº†å±€éƒ¨æå€¼ç‚¹çš„å‡½æ•°
 
-    class CTwoDimensionVector //¹¹Ôìµ¥Î»Ê¸Á¿Àà£¬°üº¬Ê¸Á¿µÄ²æ³ËºÍµã³Ë¡£
+    class CTwoDimensionVector //æ„é€ å•ä½çŸ¢é‡ç±»ï¼ŒåŒ…å«çŸ¢é‡çš„å‰ä¹˜å’Œç‚¹ä¹˜ã€‚
     {
     public:
         float x;
@@ -89,38 +89,38 @@ namespace xd
         }
     };
 
-    void DealCompensate(outline DealData,outline & ResultData,float R); //´¦ÀíÂÖÀªµãÊı¾İ£¬Ê¹Æä±äÎªÓĞ²¹³¥°ë¾¶µÄÂÖÀªµãÊı¾İ¡£ ÈÚÈëµ½×Ô¼ººóÆÚ³ÌĞòÖĞ£¬2015/3/10 ¿ÉÄÜÓĞ´í
+    void DealCompensate(outline DealData,outline & ResultData,float R); //å¤„ç†è½®å»“ç‚¹æ•°æ®ï¼Œä½¿å…¶å˜ä¸ºæœ‰è¡¥å¿åŠå¾„çš„è½®å»“ç‚¹æ•°æ®ã€‚ èå…¥åˆ°è‡ªå·±åæœŸç¨‹åºä¸­ï¼Œ2015/3/10 å¯èƒ½æœ‰é”™
 
-    void InfillLine(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo, float shrinkDistance,  float offsetWidth); //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¡£
-    void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth); //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¿ÉÒÔ·Ö¿ªÂÖÀªÌî³äÊı¾İ¡£
-    void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo, float shrinkDistance,  float offsetWidth); //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¡£
-    void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth); //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¿ÉÒÔ·Ö¿ªÂÖÀªÌî³äÊı¾İ¡£
-    void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth);//²»·ÖÇøµÄÌî³äËã·¨£¬ÎªÁË¼ÓËÙ
-    void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, int lunkuo, float offsetWidth); //×Ô¼º±àĞ´µÄÍ¬ĞÄÌî³äº¯Êı
+    void InfillLine(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo, float shrinkDistance,  float offsetWidth); //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°ã€‚
+    void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth); //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°å¯ä»¥åˆ†å¼€è½®å»“å¡«å……æ•°æ®ã€‚
+    void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo, float shrinkDistance,  float offsetWidth); //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°ã€‚
+    void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth); //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°å¯ä»¥åˆ†å¼€è½®å»“å¡«å……æ•°æ®ã€‚
+    void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth);//ä¸åˆ†åŒºçš„å¡«å……ç®—æ³•ï¼Œä¸ºäº†åŠ é€Ÿ
+    void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, int lunkuo, float offsetWidth); //è‡ªå·±ç¼–å†™çš„åŒå¿ƒå¡«å……å‡½æ•°
 
-    void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float degree ); //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¡£
+    void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float degree ); //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°ã€‚
 
-    void InfillBMP(outlines TheOutline,std::vector<std::vector<int> > & ResultData,int piex ,int size); //Éú³Ébmp¸ñÊ½µÄº¯Êı¡£
+    void InfillBMP(outlines TheOutline,std::vector<std::vector<int> > & ResultData,int piex ,int size); //ç”Ÿæˆbmpæ ¼å¼çš„å‡½æ•°ã€‚
 
-    void InfillOffset(outlines theOutline,outlines & theResult,float width);  //½øĞĞÆ«ÖÃÌî³äµÄº¯Êı¡£
+    void InfillOffset(outlines theOutline,outlines & theResult,float width);  //è¿›è¡Œåç½®å¡«å……çš„å‡½æ•°ã€‚
 
-    void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float width);  //½øĞĞÆ«ÖÃÌî³äµÄº¯Êı£¬ÊäÈë¾ÍÊÇ·Å´óºóµÄÊı¾İ,ÄÚ²¿×Ô¶¯ËõĞ¡£¬Ê¹µÃÊä³öÎªÕı³£Êı¾İ
+    void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float width);  //è¿›è¡Œåç½®å¡«å……çš„å‡½æ•°ï¼Œè¾“å…¥å°±æ˜¯æ”¾å¤§åçš„æ•°æ®,å†…éƒ¨è‡ªåŠ¨ç¼©å°ï¼Œä½¿å¾—è¾“å‡ºä¸ºæ­£å¸¸æ•°æ®
 
-    void PickUpLayer(std::vector<xd::outlines> theOutline,std::vector<int> & theResult);    //ÌôÑ¡³öÍ»±ä½ØÃæµÄº¯Êı£¬ÊµÏÖ·½°¸Ò»
+    void PickUpLayer(std::vector<xd::outlines> theOutline,std::vector<int> & theResult);    //æŒ‘é€‰å‡ºçªå˜æˆªé¢çš„å‡½æ•°ï¼Œå®ç°æ–¹æ¡ˆä¸€
 
-    bool IsSingleInfill(int layerNumber,std::vector<int> needInfillLayer);      //ÕÒµ½µ¥²ãÌî³äµÄ²ãÊı£¬ÊµÏÖ·½°¸Ò»
+    bool IsSingleInfill(int layerNumber,std::vector<int> needInfillLayer);      //æ‰¾åˆ°å•å±‚å¡«å……çš„å±‚æ•°ï¼Œå®ç°æ–¹æ¡ˆä¸€
 
-    void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::outputOutlines> &result,float width,float shrinkDistance);  //µ¥²ãÆ«ÖÃ£¬¶à²ãÌî³ä£¬ÊµÏÖ·½°¸¶ş
+    void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::outputOutlines> &result,float width,float shrinkDistance);  //å•å±‚åç½®ï¼Œå¤šå±‚å¡«å……ï¼Œå®ç°æ–¹æ¡ˆäºŒ
 
-    void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::outputOutlines> &result,float width,float shrinkDistance,float degree);  //Ã¿²ã¶¼²Ã¼ô£¬×îºóÌî³ä£¬ÊµÏÖ·½°¸Èı
+    void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::outputOutlines> &result,float width,float shrinkDistance,float degree);  //æ¯å±‚éƒ½è£å‰ªï¼Œæœ€åå¡«å……ï¼Œå®ç°æ–¹æ¡ˆä¸‰
 
-    void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::vector<outlines> & dataOffsets,float width,int M,int N,int lunkuo,float overlap);  //Æ«ÖÃN´Îºó»®·ÖÎªm*n¸öÇøÓòµÄº¯Êı,Æ«ÖÃµÄËùÓĞÂÖÀª,×¢ÒâM¡¢N¡İ1£¬ÇÒM*N>1
+    void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::vector<outlines> & dataOffsets,float width,int M,int N,int lunkuo,float overlap);  //åç½®Næ¬¡ååˆ’åˆ†ä¸ºm*nä¸ªåŒºåŸŸçš„å‡½æ•°,åç½®çš„æ‰€æœ‰è½®å»“,æ³¨æ„Mã€Nâ‰¥1ï¼Œä¸”M*N>1
 
-    int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std::vector<outlines> & dataOffsets, float width, int Length, int Width, int lunkuo, float overlap, float threshold);  //Æ«ÖÃN´Îºó»®·ÖÎªLength*Width³¤¶ÈÇøÓòµÄº¯Êı
+    int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std::vector<outlines> & dataOffsets, float width, int Length, int Width, int lunkuo, float overlap, float threshold);  //åç½®Næ¬¡ååˆ’åˆ†ä¸ºLength*Widthé•¿åº¦åŒºåŸŸçš„å‡½æ•°
 
-    void offsetReturnSingleRegion(outlines TheOutline,std::vector<xd::outlines> & theResult,std::vector<outlines> & dataOffsets,float width,int lunkuo);  //ÊäÈëÂÖÀª·µ»ØÆ«ÖÃÂÖÀªlunkou´ÎºóµÄÂÖÀªÊı¾İ£¬¶øÇÒÂÖÀªÊı¾İÒÑ¾­°´ÕÕÁ¬Í¨Óò·Ö¿ª£¡ÇÒ·Ö¿ªºóµÚÒ»¸öÊÇÍâÂÖÀª
-    void offsetReturnSingleRegion(outlines TheOutline,std::vector<outlines> & theResult);  //ÖØÔØº¯ÊıÂÖÀªÊı¾İÒÑ¾­°´ÕÕÁ¬Í¨Óò·Ö¿ª£¡
-    void AddOuterPolyNodeToResult(ClipperLib::PolyNode& polynode,std::vector<xd::outlines> & output); //ÉÏÒ»¸öº¯ÊıĞèÒªÓÃµÄÒ»¸öµİ¹éº¯Êı£¡£¡
+    void offsetReturnSingleRegion(outlines TheOutline,std::vector<xd::outlines> & theResult,std::vector<outlines> & dataOffsets,float width,int lunkuo);  //è¾“å…¥è½®å»“è¿”å›åç½®è½®å»“lunkouæ¬¡åçš„è½®å»“æ•°æ®ï¼Œè€Œä¸”è½®å»“æ•°æ®å·²ç»æŒ‰ç…§è¿é€šåŸŸåˆ†å¼€ï¼ä¸”åˆ†å¼€åç¬¬ä¸€ä¸ªæ˜¯å¤–è½®å»“
+    void offsetReturnSingleRegion(outlines TheOutline,std::vector<outlines> & theResult);  //é‡è½½å‡½æ•°è½®å»“æ•°æ®å·²ç»æŒ‰ç…§è¿é€šåŸŸåˆ†å¼€ï¼
+    void AddOuterPolyNodeToResult(ClipperLib::PolyNode& polynode,std::vector<xd::outlines> & output); //ä¸Šä¸€ä¸ªå‡½æ•°éœ€è¦ç”¨çš„ä¸€ä¸ªé€’å½’å‡½æ•°ï¼ï¼
 
 }
 

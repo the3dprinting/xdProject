@@ -15,7 +15,7 @@ PolylineCollection::chained_path_from(Point start_near, PolylineCollection* retv
 {
     Polylines my_paths = this->polylines;
 
-    Points endpoints;  //ÀïÃæ´æ´¢ËùÓÐpolylineÀïÃæµÄµÚÒ»¸öµãºÍÔÊÐí·­×ªÊ±µÄ×îºóÒ»¸öµãµÄ×ø±ê
+    Points endpoints;  //é‡Œé¢å­˜å‚¨æ‰€æœ‰polylineé‡Œé¢çš„ç¬¬ä¸€ä¸ªç‚¹å’Œå…è®¸ç¿»è½¬æ—¶çš„æœ€åŽä¸€ä¸ªç‚¹çš„åæ ‡
     for (Polylines::const_iterator it = my_paths.begin(); it != my_paths.end(); ++it) {
         endpoints.push_back(it->first_point());
         if (no_reverse) {

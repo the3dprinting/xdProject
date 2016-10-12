@@ -16,30 +16,30 @@
 namespace xd { namespace Geometry {
 
 static bool
-sort_points (Point a, Point b)  //Ò»ÖÖÅÅĞò·½°¸£¬¾Ö²¿º¯ÊıÓÃÀ´ÊµÏÖÏÂÃæµÄÄ³¸öº¯Êı£¬aµãÔÚbµã×ó±ß»òÕß´¹Ö±ÏÂÃæÔòÎªÕæ
+sort_points (Point a, Point b)  //ä¸€ç§æ’åºæ–¹æ¡ˆï¼Œå±€éƒ¨å‡½æ•°ç”¨æ¥å®ç°ä¸‹é¢çš„æŸä¸ªå‡½æ•°ï¼Œaç‚¹åœ¨bç‚¹å·¦è¾¹æˆ–è€…å‚ç›´ä¸‹é¢åˆ™ä¸ºçœŸ
 {
     return (a.x < b.x) || (a.x == b.x && a.y < b.y);
 }
 
-//»ùÓÚAndrew's monotone chain 2DÍ¹°üËã·¨
+//åŸºäºAndrew's monotone chain 2Då‡¸åŒ…ç®—æ³•
 Polygon
 convex_hull(Points points)
 {
     assert(points.size() >= 3);
-    // ÅÅÁĞÊäÈëµã
+    // æ’åˆ—è¾“å…¥ç‚¹
     std::sort(points.begin(), points.end(), sort_points);
 
     int n = points.size(), k = 0;
     Polygon hull;
     hull.points.resize(2*n);
 
-    // ´´½¨µÍ²ã°ü
+    // åˆ›å»ºä½å±‚åŒ…
     for (int i = 0; i < n; i++) {
         while (k >= 2 && points[i].ccw(hull.points[k-2], hull.points[k-1]) <= 0) k--;
         hull.points[k++] = points[i];
     }
 
-    // ´´½¨¸ß²ã°ü
+    // åˆ›å»ºé«˜å±‚åŒ…
     for (int i = n-2, t = k+1; i >= 0; i--) {
         while (k >= t && points[i].ccw(hull.points[k-2], hull.points[k-1]) <= 0) k--;
         hull.points[k++] = points[i];
@@ -54,16 +54,16 @@ convex_hull(Points points)
 }
 
 Polygon
-convex_hull(const Polygons &polygons)  //ÕÒ³öÒ»¶Ñ¶à±ßĞÎµÄ×ÜÍ¹°ü
+convex_hull(const Polygons &polygons)  //æ‰¾å‡ºä¸€å †å¤šè¾¹å½¢çš„æ€»å‡¸åŒ…
 {
     Points pp;
     for (Polygons::const_iterator p = polygons.begin(); p != polygons.end(); ++p) {
-        pp.insert(pp.end(), p->points.begin(), p->points.end());   //ÔÚppÖĞ²åÈëÇø¼äÉÏµÄÔªËØ
+        pp.insert(pp.end(), p->points.begin(), p->points.end());   //åœ¨ppä¸­æ’å…¥åŒºé—´ä¸Šçš„å…ƒç´ 
     }
     return convex_hull(pp);
 }
 
-//½ÓÊÜÒ»ÏµÁĞµã£¬¸ù¾İ×î½üÂ·¾¶Ô­Ôò·µ»ØÄ¿Â¼ÁĞ±í
+//æ¥å—ä¸€ç³»åˆ—ç‚¹ï¼Œæ ¹æ®æœ€è¿‘è·¯å¾„åŸåˆ™è¿”å›ç›®å½•åˆ—è¡¨
 void
 chained_path(const Points &points, std::vector<Points::size_type> &retval, Point start_near)
 {
@@ -71,15 +71,15 @@ chained_path(const Points &points, std::vector<Points::size_type> &retval, Point
     std::map<const Point*,Points::size_type> indices;
     my_points.reserve(points.size());
     for (Points::const_iterator it = points.begin(); it != points.end(); ++it) {
-        my_points.push_back(&*it);   //ÕâÀïÊµÔÚ¿´²»¶®£¬ÎªÉ¶È¡Ö¸ÏòÄÚÈİµÄµØÖ·£¬¶à´ËÒ»¾ÙÃ´£¿Ö±½ÓÓÃit²»ĞĞÃ´£¿£¡
-        indices[&*it] = it - points.begin();   //map<¾ø¶ÔµØÖ·£¨¿ÉÒÔÈ¡µØÖ·ÄÚÈİ£©¡úÏà¶ÔµØÖ·£¨´ú±í½Ç±ê£©>
+        my_points.push_back(&*it);   //è¿™é‡Œå®åœ¨çœ‹ä¸æ‡‚ï¼Œä¸ºå•¥å–æŒ‡å‘å†…å®¹çš„åœ°å€ï¼Œå¤šæ­¤ä¸€ä¸¾ä¹ˆï¼Ÿç›´æ¥ç”¨itä¸è¡Œä¹ˆï¼Ÿï¼
+        indices[&*it] = it - points.begin();   //map<ç»å¯¹åœ°å€ï¼ˆå¯ä»¥å–åœ°å€å†…å®¹ï¼‰â†’ç›¸å¯¹åœ°å€ï¼ˆä»£è¡¨è§’æ ‡ï¼‰>
     }
 
     retval.reserve(points.size());
     while (!my_points.empty()) {
         Points::size_type idx = start_near.nearest_point_index(my_points);
         start_near = *my_points[idx];
-        retval.push_back(indices[ my_points[idx] ]);    //ÕâÀïÈ¡³öÁËmapÀàĞÍindicesÀï¶ÔÓ¦pointµØÖ·µÄ½Ç±êÖµ
+        retval.push_back(indices[ my_points[idx] ]);    //è¿™é‡Œå–å‡ºäº†mapç±»å‹indicesé‡Œå¯¹åº”pointåœ°å€çš„è§’æ ‡å€¼
         my_points.erase(my_points.begin() + idx);
     }
 }
@@ -153,7 +153,7 @@ simplify_polygons(const Polygons &polygons, double tolerance, Polygons* retval)
         p.points.pop_back();
         pp.push_back(p);
     }
-    xd::simplify_polygons(pp, retval);  //Õâ¸öº¯Êıµ÷ÓÃÁË·â×°clipperÀïÃæµÄÒ»¸öº¯Êı
+    xd::simplify_polygons(pp, retval);  //è¿™ä¸ªå‡½æ•°è°ƒç”¨äº†å°è£…clipperé‡Œé¢çš„ä¸€ä¸ªå‡½æ•°
 }
 
 double
@@ -283,7 +283,7 @@ arrange(size_t total_parts, Pointf part, coordf_t dist, const BoundingBoxf &bb)
     return positions;
 }
 
-//ÒÔÏÂÊ¹ÓÃboost¿âvoronoiÀïÃæµÄº¯Êı¿ÉÒÔ²Î¿¼ÍøÖ·£ºhttp://www.boost.org/doc/libs/1_58_0/libs/polygon/doc/voronoi_diagram.htm
+//ä»¥ä¸‹ä½¿ç”¨booståº“voronoié‡Œé¢çš„å‡½æ•°å¯ä»¥å‚è€ƒç½‘å€ï¼šhttp://www.boost.org/doc/libs/1_58_0/libs/polygon/doc/voronoi_diagram.htm
 Line
 MedialAxis::edge_to_line(const VD::edge_type &edge) const
 {
@@ -304,7 +304,7 @@ MedialAxis::build(Polylines* polylines)
     this->bb = BoundingBox(this->lines);
     */
 
-    construct_voronoi(this->lines.begin(), this->lines.end(), &this->vd);//Ê¹ÓÃ±¾ÀàÖĞµÄËùÓĞÏß¶Î¹¹½¨voronoiÍ¼
+    construct_voronoi(this->lines.begin(), this->lines.end(), &this->vd);//ä½¿ç”¨æœ¬ç±»ä¸­çš„æ‰€æœ‰çº¿æ®µæ„å»ºvoronoiå›¾
 
     /*
     // DEBUG: dump all Voronoi edges
@@ -321,8 +321,8 @@ MedialAxis::build(Polylines* polylines)
     }
     */
 
-    typedef const VD::vertex_type vert_t;   //boost¿âÖĞ¶¨ÒåµÄvoronoiÍ¼µÄµãÀàĞÍ
-    typedef const VD::edge_type   edge_t;   //boost¿âÖĞ¶¨ÒåµÄvoronoiÍ¼µÄ±ßÀàĞÍ
+    typedef const VD::vertex_type vert_t;   //booståº“ä¸­å®šä¹‰çš„voronoiå›¾çš„ç‚¹ç±»å‹
+    typedef const VD::edge_type   edge_t;   //booståº“ä¸­å®šä¹‰çš„voronoiå›¾çš„è¾¹ç±»å‹
 
     // collect valid edges (i.e. prune those not belonging to MAT)
     // note: this keeps twins, so it inserts twice the number of the valid edges
@@ -330,15 +330,15 @@ MedialAxis::build(Polylines* polylines)
     for (VD::const_edge_iterator edge = this->vd.edges().begin(); edge != this->vd.edges().end(); ++edge) {
         // if we only process segments representing closed loops, none if the
         // infinite edges (if any) would be part of our MAT anyway
-        if (edge->is_secondary() || edge->is_infinite()) continue;  //¶ÔÓÚ¶à±ßĞÎÄÚ²¿µÄvoronoiÍ¼À´Ëµ£¬ÎŞÏŞ±ßºÍ´ÎÒª±ß¶¼ÎŞĞ§£¬ËùÒÔÉáÈ¥
+        if (edge->is_secondary() || edge->is_infinite()) continue;  //å¯¹äºå¤šè¾¹å½¢å†…éƒ¨çš„voronoiå›¾æ¥è¯´ï¼Œæ— é™è¾¹å’Œæ¬¡è¦è¾¹éƒ½æ— æ•ˆï¼Œæ‰€ä»¥èˆå»
         this->edges.insert(&*edge);
     }
 
-    // count valid segments for each vertex   ÏÂÃæ¶¨ÒåµÄmapÓÖÊÇµãÖ¸Õë¡ú¼¯ºÏ£¬³£ÓÃÖ¸Õë×ö¼üÖµÃ´£¿Ñ§Ï°Ò»ÏÂ£¡
+    // count valid segments for each vertex   ä¸‹é¢å®šä¹‰çš„mapåˆæ˜¯ç‚¹æŒ‡é’ˆâ†’é›†åˆï¼Œå¸¸ç”¨æŒ‡é’ˆåšé”®å€¼ä¹ˆï¼Ÿå­¦ä¹ ä¸€ä¸‹ï¼
     std::map< vert_t*,std::set<edge_t*> > vertex_edges;  // collects edges connected for each vertex
     std::set<vert_t*> startpoints;                       // collects all vertices having a single starting edge
-    for (VD::const_vertex_iterator it = this->vd.vertices().begin(); it != this->vd.vertices().end(); ++it) {//±éÀúµÄÊÇÉú³ÉµÄvoronoiÍ¼µÄ½»µã
-        vert_t* vertex = &*it;  //ÕâÀïµÄ¼üÖµÒªÓÃ&*À´³õÊ¼»¯Ö¸Õëit£¡£¡
+    for (VD::const_vertex_iterator it = this->vd.vertices().begin(); it != this->vd.vertices().end(); ++it) {//éå†çš„æ˜¯ç”Ÿæˆçš„voronoiå›¾çš„äº¤ç‚¹
+        vert_t* vertex = &*it;  //è¿™é‡Œçš„é”®å€¼è¦ç”¨&*æ¥åˆå§‹åŒ–æŒ‡é’ˆitï¼ï¼
 
         // loop through all edges originating from this vertex
         // starting from a random one
@@ -346,19 +346,19 @@ MedialAxis::build(Polylines* polylines)
         do {
             // if this edge was not pruned by our filter above,
             // add it to vertex_edges
-            if (this->edges.count(edge) > 0)   //set.count()ÓÃÀ´²éÕÒsetÖĞÄ³¸öÄ³¸ö¼üÖµ³öÏÖµÄ´ÎÊı£¬ÕâÀïÅĞ¶ÏËµÃ÷±éÀúµÄµã´ËÊ±±éÀúµÄÕâ¸ö±ßÊÇÓĞĞ§±ß
-                vertex_edges[vertex].insert(edge);  //²åÈëµÄ±ß¶¼ÊÇÒÔ´ËµãÎªÆğµãµÄ±ß
+            if (this->edges.count(edge) > 0)   //set.count()ç”¨æ¥æŸ¥æ‰¾setä¸­æŸä¸ªæŸä¸ªé”®å€¼å‡ºç°çš„æ¬¡æ•°ï¼Œè¿™é‡Œåˆ¤æ–­è¯´æ˜éå†çš„ç‚¹æ­¤æ—¶éå†çš„è¿™ä¸ªè¾¹æ˜¯æœ‰æ•ˆè¾¹
+                vertex_edges[vertex].insert(edge);  //æ’å…¥çš„è¾¹éƒ½æ˜¯ä»¥æ­¤ç‚¹ä¸ºèµ·ç‚¹çš„è¾¹
 
             // continue looping next edge originating from this vertex
-            edge = edge->rot_next(); //ÄæÊ±ÕëÎ§ÈÆÕâ¸öµãµÄÏÂÒ»¸ö±ß
-        } while (edge != vertex->incident_edge());  //Ö±µ½Î§ÈÆµ½³õÊ¼±ßÎªÖ¹
+            edge = edge->rot_next(); //é€†æ—¶é’ˆå›´ç»•è¿™ä¸ªç‚¹çš„ä¸‹ä¸€ä¸ªè¾¹
+        } while (edge != vertex->incident_edge());  //ç›´åˆ°å›´ç»•åˆ°åˆå§‹è¾¹ä¸ºæ­¢
 
         // if there's only one edge starting at this vertex then it's an endpoint
-        if (vertex_edges[vertex].size() == 1) {  //Õâ¸öµã¶ÔÓÚ»·ÈÆ±ßÊı£¨²»°üÀ¨ÎŞÏŞ±ßºÍ´ÎÒª±ß£©Ö»ÓĞÒ»¸öÊ±
-            startpoints.insert(vertex);  //ËµÃ÷ÊÇÒ»¸öÖÕµã
+        if (vertex_edges[vertex].size() == 1) {  //è¿™ä¸ªç‚¹å¯¹äºç¯ç»•è¾¹æ•°ï¼ˆä¸åŒ…æ‹¬æ— é™è¾¹å’Œæ¬¡è¦è¾¹ï¼‰åªæœ‰ä¸€ä¸ªæ—¶
+            startpoints.insert(vertex);  //è¯´æ˜æ˜¯ä¸€ä¸ªç»ˆç‚¹
         }
     }
-    //ÉÏÃæÌô³öÀ´µÄµã£¬×ÜÌåÀ´ËµÊÇÓÉ±ßÏŞÖÆµÄ£¡ÕâÑù¾ÍÊ¹µÃÌô³öµÄËùÓĞµã¼¯ºÏ¸½´øµÄ±ß¶¼ÊÇĞ§voronoiÍ¼µÄÓĞĞ§±ß
+    //ä¸Šé¢æŒ‘å‡ºæ¥çš„ç‚¹ï¼Œæ€»ä½“æ¥è¯´æ˜¯ç”±è¾¹é™åˆ¶çš„ï¼è¿™æ ·å°±ä½¿å¾—æŒ‘å‡ºçš„æ‰€æœ‰ç‚¹é›†åˆé™„å¸¦çš„è¾¹éƒ½æ˜¯æ•ˆvoronoiå›¾çš„æœ‰æ•ˆè¾¹
     // prune startpoints recursively if extreme segments are not valid
     while (!startpoints.empty()) {
         // get a random entry node
@@ -368,29 +368,29 @@ MedialAxis::build(Polylines* polylines)
         assert(vertex_edges[v].size() == 1);
         edge_t* edge = *vertex_edges[v].begin();
 
-        if (!this->is_valid_edge(*edge)) {//ÊÇ·ñÓĞĞ§µÄ¶¨Òå¼û±¾ÀàµÄË½ÓĞ³ÉÔ±º¯Êı£¬µ¹ÊıµÚ¶ş¸öº¯Êı£¡
+        if (!this->is_valid_edge(*edge)) {//æ˜¯å¦æœ‰æ•ˆçš„å®šä¹‰è§æœ¬ç±»çš„ç§æœ‰æˆå‘˜å‡½æ•°ï¼Œå€’æ•°ç¬¬äºŒä¸ªå‡½æ•°ï¼
             // if edge is not valid, erase it and its twin from edge list
             (void)this->edges.erase(edge);
             (void)this->edges.erase(edge->twin());
 
-            // decrement edge counters for the affected nodes  Í¬Ê±Ò²°Ñ
-            vert_t* v1 = edge->vertex1();  //vertex1Ö¸ÕâÌõ±ßµÄÖÕµã
-            (void)vertex_edges[v].erase(edge);  //ÏÈÉ¾³ı±¾ÉíµãÉÏ¶ÔÓÚµÄÕâÌõ±ß
-            (void)vertex_edges[v1].erase(edge->twin());  //ÔÙÉ¾³ıÕâÌõ±ßÖÕµã´æ´¢µÄÕâÌõ±ß
+            // decrement edge counters for the affected nodes  åŒæ—¶ä¹ŸæŠŠ
+            vert_t* v1 = edge->vertex1();  //vertex1æŒ‡è¿™æ¡è¾¹çš„ç»ˆç‚¹
+            (void)vertex_edges[v].erase(edge);  //å…ˆåˆ é™¤æœ¬èº«ç‚¹ä¸Šå¯¹äºçš„è¿™æ¡è¾¹
+            (void)vertex_edges[v1].erase(edge->twin());  //å†åˆ é™¤è¿™æ¡è¾¹ç»ˆç‚¹å­˜å‚¨çš„è¿™æ¡è¾¹
 
             // also, check whether the end vertex is a new leaf
             if (vertex_edges[v1].size() == 1) {
-                startpoints.insert(v1);  //É¾³ıÁËÒ»¸ö±ßºó´ËµãµÄ»·ÈÆ±ßÊıÄ¿Îª1ËµÃ÷´Ëµã±ä³ÉÁËÒ»¸öÖÕµã£¬¼´ĞèÒª¼ÓÈëstartpoints
+                startpoints.insert(v1);  //åˆ é™¤äº†ä¸€ä¸ªè¾¹åæ­¤ç‚¹çš„ç¯ç»•è¾¹æ•°ç›®ä¸º1è¯´æ˜æ­¤ç‚¹å˜æˆäº†ä¸€ä¸ªç»ˆç‚¹ï¼Œå³éœ€è¦åŠ å…¥startpoints
             } else if (vertex_edges[v1].empty()) {
-                startpoints.erase(v1);  //É¾³ıÁËÒ»¸ö±ßºó´ËµãµÄ»·ÈÆ±ßÊıÄ¿¿ÕÁËËµÃ÷Ô­À´startpointsÀïÃæÓĞÕâ¸öµã£¬¿ÉÒÔÉ¾³ı
+                startpoints.erase(v1);  //åˆ é™¤äº†ä¸€ä¸ªè¾¹åæ­¤ç‚¹çš„ç¯ç»•è¾¹æ•°ç›®ç©ºäº†è¯´æ˜åŸæ¥startpointsé‡Œé¢æœ‰è¿™ä¸ªç‚¹ï¼Œå¯ä»¥åˆ é™¤
             }
         }
 
         // remove node from the set to prevent it from being visited again
-        startpoints.erase(v);  //vµã´¦Àí¹ıÁË£¬µ±È»ĞèÒªÉ¾³ı£¬±£Ö¤whileÑ­»·ÓĞÖÕÖ¹
+        startpoints.erase(v);  //vç‚¹å¤„ç†è¿‡äº†ï¼Œå½“ç„¶éœ€è¦åˆ é™¤ï¼Œä¿è¯whileå¾ªç¯æœ‰ç»ˆæ­¢
     }
 
-    // iterate through the valid edges to build polylines   ×îºóÁôÏÂÔÚedgesÖĞµÄ±ß£¬¾ÍÊÇÌôÑ¡³öµÄvoronoi±ß
+    // iterate through the valid edges to build polylines   æœ€åç•™ä¸‹åœ¨edgesä¸­çš„è¾¹ï¼Œå°±æ˜¯æŒ‘é€‰å‡ºçš„voronoiè¾¹
     while (!this->edges.empty()) {
         edge_t &edge = **this->edges.begin();
 
@@ -399,7 +399,7 @@ MedialAxis::build(Polylines* polylines)
         polyline.points.push_back(Point( edge.vertex0()->x(), edge.vertex0()->y() ));
         polyline.points.push_back(Point( edge.vertex1()->x(), edge.vertex1()->y() ));
 
-        // remove this edge and its twin from the available edges  Ò»Ìõ±ßÖ»ÄÜÑ¡È¡Ò»´Î£¬Òò´ËÒª°ÑtwinÒ²É¾³ı
+        // remove this edge and its twin from the available edges  ä¸€æ¡è¾¹åªèƒ½é€‰å–ä¸€æ¬¡ï¼Œå› æ­¤è¦æŠŠtwinä¹Ÿåˆ é™¤
         (void)this->edges.erase(&edge);
         (void)this->edges.erase(edge.twin());
 
@@ -414,7 +414,7 @@ MedialAxis::build(Polylines* polylines)
         }
 
         // append polyline to result
-        polylines->push_back(polyline);  //ÕâÀï¼ÓÈëÓĞĞ§±ßµÄĞÎÊ½ÊÇ£ºÒ»¶Ñpolyline£¬µ«ÊÇÓĞ·Ö²æ¾Í½Ø¶ÏµÄpolyline£¡
+        polylines->push_back(polyline);  //è¿™é‡ŒåŠ å…¥æœ‰æ•ˆè¾¹çš„å½¢å¼æ˜¯ï¼šä¸€å †polylineï¼Œä½†æ˜¯æœ‰åˆ†å‰å°±æˆªæ–­çš„polylineï¼
     }
 }
 
@@ -432,7 +432,7 @@ MedialAxis::process_edge_neighbors(const VD::edge_type& edge, Points* points)
         if (this->edges.count(neighbor) > 0) neighbors.push_back(neighbor);
     }
 
-    // if we have a single neighbor then we can continue recursively  Ö»ÓĞ»·ÈÆ´Î±ß³ıÁË±¾ÉíÍâÖ»ÓĞÒ»Ìõ±ßµÄÇé¿ö£¬²Å»á¼ÓÈëpoints£¬²¢´ÓedgesÉ¾³ı
+    // if we have a single neighbor then we can continue recursively  åªæœ‰ç¯ç»•æ¬¡è¾¹é™¤äº†æœ¬èº«å¤–åªæœ‰ä¸€æ¡è¾¹çš„æƒ…å†µï¼Œæ‰ä¼šåŠ å…¥pointsï¼Œå¹¶ä»edgesåˆ é™¤
     if (neighbors.size() == 1) {
         const VD::edge_type& neighbor = *neighbors.front();
         points->push_back(Point( neighbor.vertex1()->x(), neighbor.vertex1()->y() ));
@@ -496,7 +496,7 @@ MedialAxis::is_valid_edge(const VD::edge_type& edge) const
 
     // if this edge is the centerline for a very thin area, we might want to skip it
     // in case the area is too thin
-    if (dist0 < this->min_width && dist1 < this->min_width) {//ÕâÀïËµÃ÷ÓĞĞ§±ß±ØĞëÊÇ¹¹½¨ËüµÄÁ½¸öÔ­Ê¼±ß¾àÀëÒª´óÓÚÊäÈëµÄmin_width
+    if (dist0 < this->min_width && dist1 < this->min_width) {//è¿™é‡Œè¯´æ˜æœ‰æ•ˆè¾¹å¿…é¡»æ˜¯æ„å»ºå®ƒçš„ä¸¤ä¸ªåŸå§‹è¾¹è·ç¦»è¦å¤§äºè¾“å…¥çš„min_width
         //printf(" => too thin, skipping\n");
         return false;
     }
@@ -507,8 +507,8 @@ MedialAxis::is_valid_edge(const VD::edge_type& edge) const
 const Line&
 MedialAxis::retrieve_segment(const VD::cell_type& cell) const
 {
-    VD::cell_type::source_index_type index = cell.source_index() - this->points.size();  //Ê×ÏÈ¼ÆËã£¨cellËù°üº¬µÄÔ´Ïß¶ÎµÄË÷Òı-ÊäÈëÔ´µãµÄ¸öÊı£©£¬µÃµ½µÄ¼´´ÎÏß¶ÎÔÚlinesÖĞµÄË÷ÒıºÅ
-    return this->lines[index];  //ÒÔlineµÄĞÎÊ½·µ»ØÕÒµ½µÄÏß¶Î
+    VD::cell_type::source_index_type index = cell.source_index() - this->points.size();  //é¦–å…ˆè®¡ç®—ï¼ˆcellæ‰€åŒ…å«çš„æºçº¿æ®µçš„ç´¢å¼•-è¾“å…¥æºç‚¹çš„ä¸ªæ•°ï¼‰ï¼Œå¾—åˆ°çš„å³æ¬¡çº¿æ®µåœ¨linesä¸­çš„ç´¢å¼•å·
+    return this->lines[index];  //ä»¥lineçš„å½¢å¼è¿”å›æ‰¾åˆ°çš„çº¿æ®µ
 }
 
 }}

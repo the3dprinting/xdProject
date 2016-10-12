@@ -15,7 +15,7 @@ namespace xd {
 ExPolygon::operator Points() const
 {
     Points points;
-    Polygons pp = *this;  //thisÇ¿ÖÆ×ª»»³ÉÁËPolygonsÀàĞÍ£¬¼´ÓÃÁËÏÂÒ»¸öº¯Êı£¡
+    Polygons pp = *this;  //thiså¼ºåˆ¶è½¬æ¢æˆäº†Polygonsç±»å‹ï¼Œå³ç”¨äº†ä¸‹ä¸€ä¸ªå‡½æ•°ï¼
     for (Polygons::const_iterator poly = pp.begin(); poly != pp.end(); ++poly) {
         for (Points::const_iterator point = poly->points.begin(); point != poly->points.end(); ++point)
             points.push_back(*point);
@@ -91,15 +91,15 @@ bool
 ExPolygon::contains(const Polyline &polyline) const
 {
     Polylines pl_out;
-    diff((Polylines)polyline, *this, &pl_out);  //ÕâÀïµ÷ÓÃÁËClipperUtilsÀïÃæ·â×°ÁËclipper¿âµÄº¯Êıdiff£¬±íÊ¾²¼¶û²î
-    return pl_out.empty(); //*this¼ôÍêÁËPolylineÈç¹ûÃ»ÓĞ¶«Î÷ÁË£¬ËµÃ÷polylineÈ«¶¼ÔÚ*thisÀïÃæ
+    diff((Polylines)polyline, *this, &pl_out);  //è¿™é‡Œè°ƒç”¨äº†ClipperUtilsé‡Œé¢å°è£…äº†clipperåº“çš„å‡½æ•°diffï¼Œè¡¨ç¤ºå¸ƒå°”å·®
+    return pl_out.empty(); //*thiså‰ªå®Œäº†Polylineå¦‚æœæ²¡æœ‰ä¸œè¥¿äº†ï¼Œè¯´æ˜polylineå…¨éƒ½åœ¨*thisé‡Œé¢
 }
 
 bool
 ExPolygon::contains(const Point &point) const
 {
-    if (!this->contour.contains(point)) return false;   //²»ÔÚÍâÂÖÀªÄÚ´ú±í²»°üº¬
-    for (Polygons::const_iterator it = this->holes.begin(); it != this->holes.end(); ++it) {  //ÔÚÄÚÂÖÀªÄÚÒ²´ú±í²»°üº¬
+    if (!this->contour.contains(point)) return false;   //ä¸åœ¨å¤–è½®å»“å†…ä»£è¡¨ä¸åŒ…å«
+    for (Polygons::const_iterator it = this->holes.begin(); it != this->holes.end(); ++it) {  //åœ¨å†…è½®å»“å†…ä¹Ÿä»£è¡¨ä¸åŒ…å«
         if (it->contains(point)) return false;
     }
     return true;
@@ -115,7 +115,7 @@ ExPolygon::contains_b(const Point &point) const
 bool
 ExPolygon::has_boundary_point(const Point &point) const
 {
-    if (this->contour.has_boundary_point(point)) return true;   //contourÊÇµ÷ÓÃÁË¸¸ÀàmultiPointµÄ³ÉÔ±º¯Êı
+    if (this->contour.has_boundary_point(point)) return true;   //contouræ˜¯è°ƒç”¨äº†çˆ¶ç±»multiPointçš„æˆå‘˜å‡½æ•°
     for (Polygons::const_iterator h = this->holes.begin(); h != this->holes.end(); ++h) {
         if (h->has_boundary_point(point)) return true;
     }
@@ -169,28 +169,28 @@ ExPolygon::simplify(double tolerance, ExPolygons &expolygons) const
 void
 ExPolygon::medial_axis(double max_width, double min_width, Polylines* polylines) const
 {
-    // ³õÊ¼»¯¼¸ºÎÎÄ¼şÀïÃæµÄMediaAxis¶ÔÏó
+    // åˆå§‹åŒ–å‡ ä½•æ–‡ä»¶é‡Œé¢çš„MediaAxiså¯¹è±¡
     xd::Geometry::MedialAxis ma(max_width, min_width);
 
-    // Ö²ÈëVoronoiÍ¼Ïß¶ÎµÄÁ´±í
+    // æ¤å…¥Voronoiå›¾çº¿æ®µçš„é“¾è¡¨
     ma.lines = this->contour.lines();
     for (Polygons::const_iterator hole = this->holes.begin(); hole != this->holes.end(); ++hole) {
         Lines lines = hole->lines();
         ma.lines.insert(ma.lines.end(), lines.begin(), lines.end());
     }
 
-    //¼ÆËãVoronoiÍ¼
-    ma.build(polylines);  //Éú³ÉÓĞĞ§voronoiÍ¼µÄ±ß£¬·ÅÔÚpolylinesÀïÃæ¡£¸ù¾İÊäÈëµÄmin_widthÉáÈ¥ÁËÒ»Ğ©±ß
+    //è®¡ç®—Voronoiå›¾
+    ma.build(polylines);  //ç”Ÿæˆæœ‰æ•ˆvoronoiå›¾çš„è¾¹ï¼Œæ”¾åœ¨polylinesé‡Œé¢ã€‚æ ¹æ®è¾“å…¥çš„min_widthèˆå»äº†ä¸€äº›è¾¹
 
     // clip segments to our expolygon area
     // (do this before extending endpoints as external segments coule be extended into
-    // expolygon, this leaving wrong things inside)  ½«²»ÔÚ¶à±ßĞÎÄÚ²¿µÄpolylines²Ã¼ôµô
+    // expolygon, this leaving wrong things inside)  å°†ä¸åœ¨å¤šè¾¹å½¢å†…éƒ¨çš„polylinesè£å‰ªæ‰
     intersection(*polylines, *this, polylines);
 
     // extend initial and final segments of each polyline (they will be clipped)
     // unless they represent closed loops
     for (Polylines::iterator polyline = polylines->begin(); polyline != polylines->end(); ++polyline) {
-        if (polyline->points.front().distance_to(polyline->points.back()) < min_width) continue;  //¶àÏß¶ÎµÄÆğµãºÍÄ©Î²µãÌ«½üÔò²»ÑÓ³¤ÁË
+        if (polyline->points.front().distance_to(polyline->points.back()) < min_width) continue;  //å¤šçº¿æ®µçš„èµ·ç‚¹å’Œæœ«å°¾ç‚¹å¤ªè¿‘åˆ™ä¸å»¶é•¿äº†
         // TODO: we should *not* extend endpoints where other polylines start/end
         // (such as T joints, which are returned as three polylines by MedialAxis)
         polyline->extend_start(max_width);
@@ -218,7 +218,7 @@ ExPolygon::get_trapezoids(Polygons* polygons) const
     ExPolygons expp;
     expp.push_back(*this);
     boost::polygon::get_trapezoids(*polygons, expp); //http://www.boost.org/doc/libs/1_57_0/libs/polygon/doc/gtl_polygon_set_concept.htm
-        //·ÖÎöºóµÃ³öget_trapezoidsº¯ÊıÖ±½Ó½«expp·Ö¸îºóµÄĞ¡ËÄ±ßĞÎ¼ÓÈëµ½polygonsºóÃæ
+        //åˆ†æåå¾—å‡ºget_trapezoidså‡½æ•°ç›´æ¥å°†exppåˆ†å‰²åçš„å°å››è¾¹å½¢åŠ å…¥åˆ°polygonsåé¢
 }
 
 void
@@ -297,13 +297,13 @@ ExPolygon::triangulate(Polygons* polygons) const
 
     // then triangulate each trapezoid
     for (Polygons::iterator polygon = trapezoids.begin(); polygon != trapezoids.end(); ++polygon)
-        polygon->triangulate_convex(polygons);  //½«×ÔÉípointsµÚÒ»¸öµãºÍÆäÓàÒÀ´ÎÁ½µã×é³ÉµÄÈı½ÇĞÎ¼ÓÈëµ½polygonsÀïÃæ£¨ÄæÊ±Õë²Å»á¼ÓÈë£©
+        polygon->triangulate_convex(polygons);  //å°†è‡ªèº«pointsç¬¬ä¸€ä¸ªç‚¹å’Œå…¶ä½™ä¾æ¬¡ä¸¤ç‚¹ç»„æˆçš„ä¸‰è§’å½¢åŠ å…¥åˆ°polygonsé‡Œé¢ï¼ˆé€†æ—¶é’ˆæ‰ä¼šåŠ å…¥ï¼‰
 }
 
 void
-ExPolygon::triangulate_pp(Polygons* polygons) const  //Ê¹ÓÃpolypartition.hÎÄ¼şÀïµÄËã·¨½øĞĞÈı½ÇĞÎ»®·Ö
+ExPolygon::triangulate_pp(Polygons* polygons) const  //ä½¿ç”¨polypartition.hæ–‡ä»¶é‡Œçš„ç®—æ³•è¿›è¡Œä¸‰è§’å½¢åˆ’åˆ†
 {
-    // convert polygons    Ò²¾ÍÊÇµ÷ÓÃµÚÈı·½¿âÊ±ĞèÒª×ª»»½Ó¿ÚÀàĞÍ
+    // convert polygons    ä¹Ÿå°±æ˜¯è°ƒç”¨ç¬¬ä¸‰æ–¹åº“æ—¶éœ€è¦è½¬æ¢æ¥å£ç±»å‹
     std::list<TPPLPoly> input;
 
     Polygons pp = *this;
@@ -346,7 +346,7 @@ ExPolygon::triangulate_pp(Polygons* polygons) const  //Ê¹ÓÃpolypartition.hÎÄ¼şÀï
     int res = TPPLPartition().Triangulate_MONO(&input, &output); //https://github.com/ivanfratric/polypartition
     if (res != 1) qDebug("Triangulation failed");
 
-    // µ÷ÓÃÍêµÚÈı·½¿âºóÒª×ª»»»ØÀ´½Ó¿Ú
+    // è°ƒç”¨å®Œç¬¬ä¸‰æ–¹åº“åè¦è½¬æ¢å›æ¥æ¥å£
     for (std::list<TPPLPoly>::iterator poly = output.begin(); poly != output.end(); ++poly) {
         long num_points = poly->GetNumPoints();
         Polygon p;
@@ -360,7 +360,7 @@ ExPolygon::triangulate_pp(Polygons* polygons) const  //Ê¹ÓÃpolypartition.hÎÄ¼şÀï
 }
 
 void
-ExPolygon::triangulate_p2t(Polygons* polygons) const   //Ê¹ÓÃpoly2tri.hÀïÃæµÄº¯Êı½øĞĞ¶à±ßĞÎµÄÈı½Ç»®·Ö
+ExPolygon::triangulate_p2t(Polygons* polygons) const   //ä½¿ç”¨poly2tri.hé‡Œé¢çš„å‡½æ•°è¿›è¡Œå¤šè¾¹å½¢çš„ä¸‰è§’åˆ’åˆ†
 {
     ExPolygons expp;
     simplify_polygons(*this, &expp, true);

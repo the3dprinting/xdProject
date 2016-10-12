@@ -11,41 +11,41 @@ namespace xd {
 
 class Polygon;
 typedef std::vector<Polygon> Polygons;
-//×¢Òâ£ºÓÉºóÃæµÄº¯ÊıÊµÏÖÍÆ³ö£¬PolygonÀïµÄPointsÊı¾İµÄ×îºóÒ»¸öµã²»ÊÇµÚÒ»¸öµã£¬µ«Ê¹ÓÃ´ËÀàÖĞµÄº¯Êı¶¼ÊµÏÖÁË¶à±ßĞÎ·â±ÕµÄÌØĞÔ£¬¼´lastP=firstP
+//æ³¨æ„ï¼šç”±åé¢çš„å‡½æ•°å®ç°æ¨å‡ºï¼ŒPolygoné‡Œçš„Pointsæ•°æ®çš„æœ€åä¸€ä¸ªç‚¹ä¸æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œä½†ä½¿ç”¨æ­¤ç±»ä¸­çš„å‡½æ•°éƒ½å®ç°äº†å¤šè¾¹å½¢å°é—­çš„ç‰¹æ€§ï¼Œå³lastP=firstP
 class Polygon : public MultiPoint {
     public:
-    operator Polygons() const;  //ÀàĞÍ×ª»»º¯Êı£¬×ª»»ÎªPolygonsµÄÀàĞÍ
-    operator Polyline() const;  //ÀàĞÍ×ª»»º¯Êı£¬×ª»»ÎªPolylineµÄÀàĞÍ£¬ÆäÖĞlastP=firstP
-    Point& operator[](Points::size_type idx);  //ÖØÔØ²Ù×÷·û[],·µ»Ø¶ÔÓ¦½Ç±êµÄµã
-    const Point& operator[](Points::size_type idx) const;  //Í¬ÉÏ£¬²»¹ı·µ»ØÒ»¸öconstµã£¬²»ÄÜĞŞ¸ÄµãµÄÖµ
+    operator Polygons() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè½¬æ¢ä¸ºPolygonsçš„ç±»å‹
+    operator Polyline() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè½¬æ¢ä¸ºPolylineçš„ç±»å‹ï¼Œå…¶ä¸­lastP=firstP
+    Point& operator[](Points::size_type idx);  //é‡è½½æ“ä½œç¬¦[],è¿”å›å¯¹åº”è§’æ ‡çš„ç‚¹
+    const Point& operator[](Points::size_type idx) const;  //åŒä¸Šï¼Œä¸è¿‡è¿”å›ä¸€ä¸ªconstç‚¹ï¼Œä¸èƒ½ä¿®æ”¹ç‚¹çš„å€¼
 
     Polygon() {};
-    explicit Polygon(const Points &points): MultiPoint(points) {};  //±ØĞëÍ¨¹ı´«µİpointsÀàĞÍÀ´¹¹ÔìPolygonÀà
-    Point last_point() const;  //·µ»ØµÚÒ»¸öµã£¬Í¬Ê±Ò²¼´ÊÇ×îºóÒ»¸öµã
-    Lines lines() const;  //½«points×ª»»ÎªlinesÀàÀ´·µ»Ø£¬¼´Ò»¸ö·â±Õ¶à±ßĞÎµÄËùÓĞ±ß,points×îºóÒ»¸öµã²»ÊÇµÚÒ»¸öµã
-    Polyline split_at_vertex(const Point &point) const;  //ÓÉ¶à±ßĞÎµÄÖ¸¶¨µã×÷ÎªPointsµÄÆğµã·µ»ØPolylineÀà£¬·µ»ØµÄlastP=firstP£¬ÈôÃ»ÓĞ´Ëµã£¬Ôò´Ó¿ªÊ¼µã·Ö¿ª
-    Polyline split_at_index(int index) const;  //Í¬ÉÏ£¬µ«ÊÇÓÉ½Ç±êÖµÈ·¶¨ÆğÊ¼µãÎ»ÖÃ
-    Polyline split_at_first_point() const;  //·µ»ØPolylineµÄÀàĞÍ£¬ÆäÖĞlastP=firstP
-    Points equally_spaced_points(double distance) const;  //Ã¿¸ô¾ùÔÈµÄ¾àÀëÈ¡Ò»¸öµã£¬¾àÀëÖ¸PointsÏß¶ÎÖ®ºÍ£¨ÓĞµÚÒ»¸öµã£¬Î´±ØÓĞ×îºóÒ»¸öµã£©
-    double area() const;  //µ÷ÓÃclipper¿â·µ»Ø¶à±ßĞÎÃæ»ı
-    bool is_counter_clockwise() const;  //·µ»Ø¶à±ßĞÎÊÇ·ñÎªÄæÊ±Õë
-    bool is_clockwise() const;  //·µ»Ø¶à±ßĞÎÊÇ·ñÎªË³Ê±Õë
-    bool make_counter_clockwise();  //Ê¹¶à±ßĞÎÄæÊ±Õë
-    bool make_clockwise();  //Ê¹¶à±ßĞÎË³Ê±Õë
-    bool is_valid() const;  //ÓĞĞ§¶à±ßĞÎÖ¸°üº¬µÄµãÖÁÉÙÈı¸öµã£¬ÒòÎªpointsÀïÃælastP£¡=firstP
-    bool contains(const Point &point) const;  //ÅĞ¶ÏµãÊÇ·ñÔÚ¶à±ßĞÎÄÚ¡ª¡ª¡ª²Î¿¼£ºhttp://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-    Polygons simplify(double tolerance) const;  //°´ÏÒ¸ßĞ¡ÓÚtolerance¼ò»¯¶à±ßĞÎÀàÀïµÄpoints£¬×îºóµÄµ½Polygons
-    void simplify(double tolerance, Polygons &polygons) const;  //ÔÚpolygonsºó¼ÓÈë±¾ÉíÀàÖĞpointsÒÔtolerance¼ò»¯ºóµÄ¶à±ßĞÎ
-    void triangulate_convex(Polygons* polygons) const;  //½«×ÔÉípointsµÚÒ»¸öµãºÍÆäÓàÒÀ´ÎÁ½µã×é³ÉµÄÈı½ÇĞÎ¼ÓÈëµ½polygonsÀïÃæ£¨ÄæÊ±Õë²Å»á¼ÓÈë£©
-    Point centroid() const;  //·µ»Ø¶à±ßĞÎÖÊĞÄ£¬ÃÜ¶ÈÆ½¾ùÒ²¾ÍÊÇ¾ÍÊÇĞÎĞÄ¡ª¡ª²Î¿¼£ºhttp://en.wikipedia.org/wiki/Centroid#Centroid_of_polygon
-    std::string wkt() const;  //ÒÔPOLYGON((x1 y1,x2 y2,...xn yn))ĞÎÊ½µÄ×Ö·û´®·µ»Ø
-    Points concave_points(double angle = PI) const;  //ÕÒ³öËùÓĞ°¼¶¥µã   ÊµÔÚ²»¶®ÎªÉ¶£¡
-    Points convex_points(double angle = PI) const;  //ÕÒ³öËùÓĞÍ¹¶¥µã
+    explicit Polygon(const Points &points): MultiPoint(points) {};  //å¿…é¡»é€šè¿‡ä¼ é€’pointsç±»å‹æ¥æ„é€ Polygonç±»
+    Point last_point() const;  //è¿”å›ç¬¬ä¸€ä¸ªç‚¹ï¼ŒåŒæ—¶ä¹Ÿå³æ˜¯æœ€åä¸€ä¸ªç‚¹
+    Lines lines() const;  //å°†pointsè½¬æ¢ä¸ºlinesç±»æ¥è¿”å›ï¼Œå³ä¸€ä¸ªå°é—­å¤šè¾¹å½¢çš„æ‰€æœ‰è¾¹,pointsæœ€åä¸€ä¸ªç‚¹ä¸æ˜¯ç¬¬ä¸€ä¸ªç‚¹
+    Polyline split_at_vertex(const Point &point) const;  //ç”±å¤šè¾¹å½¢çš„æŒ‡å®šç‚¹ä½œä¸ºPointsçš„èµ·ç‚¹è¿”å›Polylineç±»ï¼Œè¿”å›çš„lastP=firstPï¼Œè‹¥æ²¡æœ‰æ­¤ç‚¹ï¼Œåˆ™ä»å¼€å§‹ç‚¹åˆ†å¼€
+    Polyline split_at_index(int index) const;  //åŒä¸Šï¼Œä½†æ˜¯ç”±è§’æ ‡å€¼ç¡®å®šèµ·å§‹ç‚¹ä½ç½®
+    Polyline split_at_first_point() const;  //è¿”å›Polylineçš„ç±»å‹ï¼Œå…¶ä¸­lastP=firstP
+    Points equally_spaced_points(double distance) const;  //æ¯éš”å‡åŒ€çš„è·ç¦»å–ä¸€ä¸ªç‚¹ï¼Œè·ç¦»æŒ‡Pointsçº¿æ®µä¹‹å’Œï¼ˆæœ‰ç¬¬ä¸€ä¸ªç‚¹ï¼Œæœªå¿…æœ‰æœ€åä¸€ä¸ªç‚¹ï¼‰
+    double area() const;  //è°ƒç”¨clipperåº“è¿”å›å¤šè¾¹å½¢é¢ç§¯
+    bool is_counter_clockwise() const;  //è¿”å›å¤šè¾¹å½¢æ˜¯å¦ä¸ºé€†æ—¶é’ˆ
+    bool is_clockwise() const;  //è¿”å›å¤šè¾¹å½¢æ˜¯å¦ä¸ºé¡ºæ—¶é’ˆ
+    bool make_counter_clockwise();  //ä½¿å¤šè¾¹å½¢é€†æ—¶é’ˆ
+    bool make_clockwise();  //ä½¿å¤šè¾¹å½¢é¡ºæ—¶é’ˆ
+    bool is_valid() const;  //æœ‰æ•ˆå¤šè¾¹å½¢æŒ‡åŒ…å«çš„ç‚¹è‡³å°‘ä¸‰ä¸ªç‚¹ï¼Œå› ä¸ºpointsé‡Œé¢lastPï¼=firstP
+    bool contains(const Point &point) const;  //åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨å¤šè¾¹å½¢å†…â€”â€”â€”å‚è€ƒï¼šhttp://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+    Polygons simplify(double tolerance) const;  //æŒ‰å¼¦é«˜å°äºtoleranceç®€åŒ–å¤šè¾¹å½¢ç±»é‡Œçš„pointsï¼Œæœ€åçš„åˆ°Polygons
+    void simplify(double tolerance, Polygons &polygons) const;  //åœ¨polygonsååŠ å…¥æœ¬èº«ç±»ä¸­pointsä»¥toleranceç®€åŒ–åçš„å¤šè¾¹å½¢
+    void triangulate_convex(Polygons* polygons) const;  //å°†è‡ªèº«pointsç¬¬ä¸€ä¸ªç‚¹å’Œå…¶ä½™ä¾æ¬¡ä¸¤ç‚¹ç»„æˆçš„ä¸‰è§’å½¢åŠ å…¥åˆ°polygonsé‡Œé¢ï¼ˆé€†æ—¶é’ˆæ‰ä¼šåŠ å…¥ï¼‰
+    Point centroid() const;  //è¿”å›å¤šè¾¹å½¢è´¨å¿ƒï¼Œå¯†åº¦å¹³å‡ä¹Ÿå°±æ˜¯å°±æ˜¯å½¢å¿ƒâ€”â€”å‚è€ƒï¼šhttp://en.wikipedia.org/wiki/Centroid#Centroid_of_polygon
+    std::string wkt() const;  //ä»¥POLYGON((x1 y1,x2 y2,...xn yn))å½¢å¼çš„å­—ç¬¦ä¸²è¿”å›
+    Points concave_points(double angle = PI) const;  //æ‰¾å‡ºæ‰€æœ‰å‡¹é¡¶ç‚¹   å®åœ¨ä¸æ‡‚ä¸ºå•¥ï¼
+    Points convex_points(double angle = PI) const;  //æ‰¾å‡ºæ‰€æœ‰å‡¸é¡¶ç‚¹
 
 };
-}  //½áÊøxdÃüÃû¿Õ¼ä
+}  //ç»“æŸxdå‘½åç©ºé—´
 
-//¿ªÊ¼Boost£¬×¢²ápolygonÀàĞÍ
+//å¼€å§‹Boostï¼Œæ³¨å†Œpolygonç±»å‹
 #include"../boost/polygon/polygon.hpp"
 namespace boost { namespace polygon {
     template <>
@@ -85,7 +85,7 @@ namespace boost { namespace polygon {
         static inline xd::Polygon& set_points(xd::Polygon& polygon, iT input_begin, iT input_end) {
             polygon.points.clear();
             while (input_begin != input_end) {
-                polygon.points.push_back(xd::Point());    //ÕâÀïµ÷ÓÃpointµÄ¹¹Ôìº¯Êı£¬¼ÓÉÏÒ»¸ö¿Õµã£¬Ã»ÓĞÒâÒå£¿
+                polygon.points.push_back(xd::Point());    //è¿™é‡Œè°ƒç”¨pointçš„æ„é€ å‡½æ•°ï¼ŒåŠ ä¸Šä¸€ä¸ªç©ºç‚¹ï¼Œæ²¡æœ‰æ„ä¹‰ï¼Ÿ
                 boost::polygon::assign(polygon.points.back(), *input_begin);
                 ++input_begin;
             }
@@ -113,7 +113,7 @@ namespace boost { namespace polygon {
             return polygon_set.end();
         }
 
-        //±ğµ£ĞÄ£¬·µ»Ø´íÎó¼´¿É£¬ÍÆ²âÒÔºó²»»áÓÃÕâÁ½¸öÊôĞÔ
+        //åˆ«æ‹…å¿ƒï¼Œè¿”å›é”™è¯¯å³å¯ï¼Œæ¨æµ‹ä»¥åä¸ä¼šç”¨è¿™ä¸¤ä¸ªå±æ€§
         static inline bool clean(const xd::Polygons& polygon_set) { return false; }
         static inline bool sorted(const xd::Polygons& polygon_set) { return false; }
     };
@@ -126,7 +126,7 @@ namespace boost { namespace polygon {
         }
     };
 } }
-//½áÊø Boost
+//ç»“æŸ Boost
 
 #endif // POLYGON_H
 

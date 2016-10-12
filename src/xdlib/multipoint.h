@@ -11,7 +11,7 @@ namespace xd {
 
 class BoundingBox;
 
-class MultiPoint  //¶¨Òå¶àÖØµãÀà£¬°üº¬Ò»¸öPointÀà×é³ÉµÄÏòÁ¿Points
+class MultiPoint  //å®šä¹‰å¤šé‡ç‚¹ç±»ï¼ŒåŒ…å«ä¸€ä¸ªPointç±»ç»„æˆçš„å‘é‡Points
 {
     public:
     Points points;
@@ -19,26 +19,26 @@ class MultiPoint  //¶¨Òå¶àÖØµãÀà£¬°üº¬Ò»¸öPointÀà×é³ÉµÄÏòÁ¿Points
     operator Points() const;
     MultiPoint() {};
     explicit MultiPoint(const Points &_points): points(_points) {};
-    void scale(double factor);  //ËùÓĞµãµÄ×ø±êÖµ¶¼·Å´ófactor±¶
-    void translate(double x, double y);  //ËùÓĞµãµÄ×ø±ê¶¼Æ½ÒÆ¼ÓÉÏx,yµÄÖµ
-    void translate(const Point &vector);  //Í¬ÉÏ£¬Ö»ÊÇÓĞÏòÁ¿ĞÎÊ½µÄ¼Ó
-    void rotate(double angle, const Point &center);  //ËùÓĞµã¶¼ÒÔcenterÎªÖĞĞÄÑ¡Ôñangle¶È
-    void reverse();  //ËùÓĞµãÅÅÁĞ·½Ïò·´Ïò
-    Point first_point() const;  //·µ»Ø´æ´¢µÄµÚÒ»¸öµã
-    virtual Point last_point() const = 0;  //Áô¸ø×ÓÀàÓÃÀ´ÊµÏÖ·µ»Ø×îºóÒ»¸öµã
-    virtual Lines lines() const = 0;  //Áô¸øÆä×ÓÀàÓÃÀ´ÊµÏÖµã±äÎªÏß¶Î×é³ÉµÄÏòÁ¿
-    double length() const;  //Îª×ÓÀàÊµÏÖ·µ»ØËùÓĞÏß¶ÎµÄ×Ü³¤¶È
-    bool is_valid() const;  //·µ»Ø´æ´¢µÄµãÊıÊÇ·ñ´óÓÚµÈÓÚ2¸ö
-    int find_point(const Point &point) const;  //·µ»ØÓëpointÏàµ±µÄµãµÄ½Ç±ê£¬·µ»Ø-1ËµÃ÷Ã»ÓĞÏàµÈµÄµã
-    bool has_boundary_point(const Point &point) const;  //·µ»ØpointÊÇ·ñ½üËÆÔÚthis×é³ÉµÄÂÖÀªÉÏ£¬*thisÇ¿ÖÆ×ª»»³ÉÁËPoints
-    BoundingBox bounding_box() const;  //·µ»ØÓÉpoints×é³ÉµÄ°üÎ§ºĞÀà
-    void remove_duplicate_points();  //É¾³ıÏàµÈµÄµã£¬ÊµÏÖ·½·¨ºÜºÃ£¬Åå·ş£¡
-    void append(const Point &point);  //Ôö¼ÓÉÏÒ»¸öµã
-    void append(const Points &points);  //Ôö¼ÓÉÏºÃ¶àµã
-    void append(const Points::const_iterator &begin, const Points::const_iterator &end);  //ÒÔÖ¸ÕëµÄĞÎÊ½¼ÓÉÏºÃ¶àµã
+    void scale(double factor);  //æ‰€æœ‰ç‚¹çš„åæ ‡å€¼éƒ½æ”¾å¤§factorå€
+    void translate(double x, double y);  //æ‰€æœ‰ç‚¹çš„åæ ‡éƒ½å¹³ç§»åŠ ä¸Šx,yçš„å€¼
+    void translate(const Point &vector);  //åŒä¸Šï¼Œåªæ˜¯æœ‰å‘é‡å½¢å¼çš„åŠ 
+    void rotate(double angle, const Point &center);  //æ‰€æœ‰ç‚¹éƒ½ä»¥centerä¸ºä¸­å¿ƒé€‰æ‹©angleåº¦
+    void reverse();  //æ‰€æœ‰ç‚¹æ’åˆ—æ–¹å‘åå‘
+    Point first_point() const;  //è¿”å›å­˜å‚¨çš„ç¬¬ä¸€ä¸ªç‚¹
+    virtual Point last_point() const = 0;  //ç•™ç»™å­ç±»ç”¨æ¥å®ç°è¿”å›æœ€åä¸€ä¸ªç‚¹
+    virtual Lines lines() const = 0;  //ç•™ç»™å…¶å­ç±»ç”¨æ¥å®ç°ç‚¹å˜ä¸ºçº¿æ®µç»„æˆçš„å‘é‡
+    double length() const;  //ä¸ºå­ç±»å®ç°è¿”å›æ‰€æœ‰çº¿æ®µçš„æ€»é•¿åº¦
+    bool is_valid() const;  //è¿”å›å­˜å‚¨çš„ç‚¹æ•°æ˜¯å¦å¤§äºç­‰äº2ä¸ª
+    int find_point(const Point &point) const;  //è¿”å›ä¸pointç›¸å½“çš„ç‚¹çš„è§’æ ‡ï¼Œè¿”å›-1è¯´æ˜æ²¡æœ‰ç›¸ç­‰çš„ç‚¹
+    bool has_boundary_point(const Point &point) const;  //è¿”å›pointæ˜¯å¦è¿‘ä¼¼åœ¨thisç»„æˆçš„è½®å»“ä¸Šï¼Œ*thiså¼ºåˆ¶è½¬æ¢æˆäº†Points
+    BoundingBox bounding_box() const;  //è¿”å›ç”±pointsç»„æˆçš„åŒ…å›´ç›’ç±»
+    void remove_duplicate_points();  //åˆ é™¤ç›¸ç­‰çš„ç‚¹ï¼Œå®ç°æ–¹æ³•å¾ˆå¥½ï¼Œä½©æœï¼
+    void append(const Point &point);  //å¢åŠ ä¸Šä¸€ä¸ªç‚¹
+    void append(const Points &points);  //å¢åŠ ä¸Šå¥½å¤šç‚¹
+    void append(const Points::const_iterator &begin, const Points::const_iterator &end);  //ä»¥æŒ‡é’ˆçš„å½¢å¼åŠ ä¸Šå¥½å¤šç‚¹
 
-    static Points _douglas_peucker(const Points &points, const double tolerance);  //ÔÚÂú×ãÏÒ¸ßÎó²îµÄÇé¿öÏÂ»¯¼ò¶àµãÏß¶Î¡£
-                                                                                   //²Î¿¼https://en.wikipedia.org/wiki/Ramer¨CDouglas¨CPeucker_algorithm
+    static Points _douglas_peucker(const Points &points, const double tolerance);  //åœ¨æ»¡è¶³å¼¦é«˜è¯¯å·®çš„æƒ…å†µä¸‹åŒ–ç®€å¤šç‚¹çº¿æ®µã€‚
+                                                                                   //å‚è€ƒhttps://en.wikipedia.org/wiki/Ramerâ€“Douglasâ€“Peucker_algorithm
 };
 
 }

@@ -9,51 +9,51 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-//#include <sstream>  //Õâ¸öÎªÉ¶²»ĞèÒª¼Ó£¿
+//#include <sstream>  //è¿™ä¸ªä¸ºå•¥ä¸éœ€è¦åŠ ï¼Ÿ
 #include "constdefine.h"
 #include "point.h"
 #include <QString>
 
 namespace xd {
 
-typedef std::string t_config_option_key;   //ÅäÖÃÑ¡Ïî¼ü£¬¼´×Ö·û´®
-typedef std::vector<std::string> t_config_option_keys;   //Ò»¶ÑÅäÖÃÑ¡Ïî¼ü£¬¼´×Ö·û´®ÏòÁ¿×é
+typedef std::string t_config_option_key;   //é…ç½®é€‰é¡¹é”®ï¼Œå³å­—ç¬¦ä¸²
+typedef std::vector<std::string> t_config_option_keys;   //ä¸€å †é…ç½®é€‰é¡¹é”®ï¼Œå³å­—ç¬¦ä¸²å‘é‡ç»„
 
-class ConfigOption {    //×ÜÅäÖÃÑ¡Ïî½Ó¿Ú
+class ConfigOption {    //æ€»é…ç½®é€‰é¡¹æ¥å£
     public:
-    virtual ~ConfigOption() {};    //Îö¹¹º¯Êı
-    virtual std::string serialize() const = 0;     //ĞòÁĞ»¯
-    virtual bool deserialize(std::string str) = 0; //·´ĞòÁĞ»¯
-    virtual int getInt() const { return 0; };    //µÃµ½ÕûÊı
-    virtual void setInt(int val) {};            //ÉèÖÃÕûÊı
+    virtual ~ConfigOption() {};    //ææ„å‡½æ•°
+    virtual std::string serialize() const = 0;     //åºåˆ—åŒ–
+    virtual bool deserialize(std::string str) = 0; //ååºåˆ—åŒ–
+    virtual int getInt() const { return 0; };    //å¾—åˆ°æ•´æ•°
+    virtual void setInt(int val) {};            //è®¾ç½®æ•´æ•°
 };
 
-class ConfigOptionVectorBase : public ConfigOption {    //ÅäÖÃÑ¡ÏîÏòÁ¿»ùÀà
+class ConfigOptionVectorBase : public ConfigOption {    //é…ç½®é€‰é¡¹å‘é‡åŸºç±»
     public:
     virtual ~ConfigOptionVectorBase() {};
     virtual std::vector<std::string> vserialize() const = 0;
 };
 
 template <class T>
-class ConfigOptionVector : public ConfigOptionVectorBase    //ÅäÖÃÑ¡ÏîÏòÁ¿
+class ConfigOptionVector : public ConfigOptionVectorBase    //é…ç½®é€‰é¡¹å‘é‡
 {
     public:
     virtual ~ConfigOptionVector() {};
-    std::vector<T> values;    //valueÀïÃæ´æ´¢×ÅÒ»¶ÑTÀàĞÍµÄÊı¾İ
+    std::vector<T> values;    //valueé‡Œé¢å­˜å‚¨ç€ä¸€å †Tç±»å‹çš„æ•°æ®
 
-    T get_at(size_t i) const {     //µÃµ½valuesÀïÃæµÄµÚi¸öÊı¾İ£¬Èç¹û³¬³öÏÂ±êÔò·µ»ØµÚÒ»¸öÊı¾İ£¡
+    T get_at(size_t i) const {     //å¾—åˆ°valuesé‡Œé¢çš„ç¬¬iä¸ªæ•°æ®ï¼Œå¦‚æœè¶…å‡ºä¸‹æ ‡åˆ™è¿”å›ç¬¬ä¸€ä¸ªæ•°æ®ï¼
         try {
             return this->values.at(i);
-        } catch (const std::out_of_range& oor) {   //out_of_rangeÖªµÀatÓĞĞ§£¬½Ç±ê[]·ÃÎÊ²»ĞĞ
+        } catch (const std::out_of_range& oor) {   //out_of_rangeçŸ¥é“atæœ‰æ•ˆï¼Œè§’æ ‡[]è®¿é—®ä¸è¡Œ
             return this->values.front();
         }
     };
 };
 
-class ConfigOptionFloat : public ConfigOption    //ÅäÖÃÑ¡Ïî¸¡µãÊı
+class ConfigOptionFloat : public ConfigOption    //é…ç½®é€‰é¡¹æµ®ç‚¹æ•°
 {
     public:
-    double value;  // Ê¹ÓÃË«¾«¶È´úÌæ¸¡µãÊıÎªÁËºÍÀ´×ÔperlµÄÊı±£³Ö¼æÈİ
+    double value;  // ä½¿ç”¨åŒç²¾åº¦ä»£æ›¿æµ®ç‚¹æ•°ä¸ºäº†å’Œæ¥è‡ªperlçš„æ•°ä¿æŒå…¼å®¹
     ConfigOptionFloat() : value(0) {};
 
     operator float() const { return this->value; };
@@ -65,7 +65,7 @@ class ConfigOptionFloat : public ConfigOption    //ÅäÖÃÑ¡Ïî¸¡µãÊı
         return ss.str();
     };
 
-    bool deserialize(std::string str) {   //½«ÊäÈëµÄ×Ö·û´®´«µİ¸ø±¾ÉíµÄdoubleÀàĞÍµÄvalue
+    bool deserialize(std::string str) {   //å°†è¾“å…¥çš„å­—ç¬¦ä¸²ä¼ é€’ç»™æœ¬èº«çš„doubleç±»å‹çš„value
 //        std::istringstream iss(str);
 //        return iss >> this->value;
           QString iss=QString::fromStdString(str);
@@ -75,11 +75,11 @@ class ConfigOptionFloat : public ConfigOption    //ÅäÖÃÑ¡Ïî¸¡µãÊı
     };
 };
 
-class ConfigOptionFloats : public ConfigOptionVector<double>   //ÅäÖÃÑ¡Ïî¸¡µãÊıÃÇ£¬Õâ¸öÀàµÄvalueÀïÃæÓĞÒ»¶ÑdoubleÀàĞÍµÄÊı¾İ
+class ConfigOptionFloats : public ConfigOptionVector<double>   //é…ç½®é€‰é¡¹æµ®ç‚¹æ•°ä»¬ï¼Œè¿™ä¸ªç±»çš„valueé‡Œé¢æœ‰ä¸€å †doubleç±»å‹çš„æ•°æ®
 {
     public:
 
-    std::string serialize() const {   //ĞòÁĞ»¯Êä³övalueÀïµÄËùÓĞdoubleÀàĞÍµÄÊı×Ö,Í¬Ê±ÖĞ¼äÓÃ¶ººÅ¸ô¿ªµÄÒ»¸ö³¤×Ö·û´®
+    std::string serialize() const {   //åºåˆ—åŒ–è¾“å‡ºvalueé‡Œçš„æ‰€æœ‰doubleç±»å‹çš„æ•°å­—,åŒæ—¶ä¸­é—´ç”¨é€—å·éš”å¼€çš„ä¸€ä¸ªé•¿å­—ç¬¦ä¸²
         std::ostringstream ss;
         for (std::vector<double>::const_iterator it = this->values.begin(); it != this->values.end(); ++it) {
             if (it - this->values.begin() != 0) ss << ",";
@@ -88,7 +88,7 @@ class ConfigOptionFloats : public ConfigOptionVector<double>   //ÅäÖÃÑ¡Ïî¸¡µãÊıÃ
         return ss.str();
     };
 
-    std::vector<std::string> vserialize() const {   //½«±¾ÉívalueÀïÃæµÄÊı¾İÌáÈ¡·Åµ½×Ö·û´®ÏòÁ¿ÀïÃæ²¢·µ»Ø
+    std::vector<std::string> vserialize() const {   //å°†æœ¬èº«valueé‡Œé¢çš„æ•°æ®æå–æ”¾åˆ°å­—ç¬¦ä¸²å‘é‡é‡Œé¢å¹¶è¿”å›
         std::vector<std::string> vv;
         for (std::vector<double>::const_iterator it = this->values.begin(); it != this->values.end(); ++it) {
             std::ostringstream ss;
@@ -98,7 +98,7 @@ class ConfigOptionFloats : public ConfigOptionVector<double>   //ÅäÖÃÑ¡Ïî¸¡µãÊıÃ
         return vv;
     };
 
-    bool deserialize(std::string str) {   //½«×Ö·û´®µÄÊı¾İÌáÈ¡·Åµ½±¾ÉíµÄvalueÀïÃæ
+    bool deserialize(std::string str) {   //å°†å­—ç¬¦ä¸²çš„æ•°æ®æå–æ”¾åˆ°æœ¬èº«çš„valueé‡Œé¢
         this->values.clear();
         std::istringstream is(str);
         std::string item_str;
@@ -112,15 +112,15 @@ class ConfigOptionFloats : public ConfigOptionVector<double>   //ÅäÖÃÑ¡Ïî¸¡µãÊıÃ
     };
 };
 
-class ConfigOptionInt : public ConfigOption    //ÅäÖÃÑ¡ÏîÕûÊı
+class ConfigOptionInt : public ConfigOption    //é…ç½®é€‰é¡¹æ•´æ•°
 {
     public:
     int value;
     ConfigOptionInt() : value(0) {};
 
-    operator int() const { return this->value; };   //·µ»Ø±¾Éívalue
-    int getInt() const { return this->value; };     //·µ»Ø±¾Éívalue
-    void setInt(int val) { this->value = val; };    //ÉèÖÃ±¾Éívalue
+    operator int() const { return this->value; };   //è¿”å›æœ¬èº«value
+    int getInt() const { return this->value; };     //è¿”å›æœ¬èº«value
+    void setInt(int val) { this->value = val; };    //è®¾ç½®æœ¬èº«value
 
     std::string serialize() const {
         std::ostringstream ss;
@@ -138,11 +138,11 @@ class ConfigOptionInt : public ConfigOption    //ÅäÖÃÑ¡ÏîÕûÊı
     };
 };
 
-class ConfigOptionInts : public ConfigOptionVector<int>  //ÅäÖÃÑ¡ÏîÕûÊıÃÇ£¬Õâ¸öÀàµÄvalueÀïÃæÓĞÒ»¶ÑintÀàĞÍµÄÊı¾İ
+class ConfigOptionInts : public ConfigOptionVector<int>  //é…ç½®é€‰é¡¹æ•´æ•°ä»¬ï¼Œè¿™ä¸ªç±»çš„valueé‡Œé¢æœ‰ä¸€å †intç±»å‹çš„æ•°æ®
 {
     public:
 
-    std::string serialize() const {    //ĞòÁĞ»¯Êä³övalueÀïµÄËùÓĞintÀàĞÍµÄÊı×Ö,Í¬Ê±ÖĞ¼äÓÃ¶ººÅ¸ô¿ªµÄÒ»¸ö³¤×Ö·û´®
+    std::string serialize() const {    //åºåˆ—åŒ–è¾“å‡ºvalueé‡Œçš„æ‰€æœ‰intç±»å‹çš„æ•°å­—,åŒæ—¶ä¸­é—´ç”¨é€—å·éš”å¼€çš„ä¸€ä¸ªé•¿å­—ç¬¦ä¸²
         std::ostringstream ss;
         for (std::vector<int>::const_iterator it = this->values.begin(); it != this->values.end(); ++it) {
             if (it - this->values.begin() != 0) ss << ",";
@@ -151,7 +151,7 @@ class ConfigOptionInts : public ConfigOptionVector<int>  //ÅäÖÃÑ¡ÏîÕûÊıÃÇ£¬Õâ¸öÀ
         return ss.str();
     };
 
-    std::vector<std::string> vserialize() const {   //½«±¾ÉívalueÀïÃæµÄÊı¾İÌáÈ¡·Åµ½×Ö·û´®ÏòÁ¿ÀïÃæ²¢·µ»Ø
+    std::vector<std::string> vserialize() const {   //å°†æœ¬èº«valueé‡Œé¢çš„æ•°æ®æå–æ”¾åˆ°å­—ç¬¦ä¸²å‘é‡é‡Œé¢å¹¶è¿”å›
         std::vector<std::string> vv;
         for (std::vector<int>::const_iterator it = this->values.begin(); it != this->values.end(); ++it) {
             std::ostringstream ss;
@@ -161,7 +161,7 @@ class ConfigOptionInts : public ConfigOptionVector<int>  //ÅäÖÃÑ¡ÏîÕûÊıÃÇ£¬Õâ¸öÀ
         return vv;
     };
 
-    bool deserialize(std::string str) {     //½«ÊäÈëµÄ×Ö·û´®strµÄÊı¾İÌáÈ¡·Åµ½±¾ÉíµÄvalueÀïÃæ
+    bool deserialize(std::string str) {     //å°†è¾“å…¥çš„å­—ç¬¦ä¸²strçš„æ•°æ®æå–æ”¾åˆ°æœ¬èº«çš„valueé‡Œé¢
         this->values.clear();
         std::istringstream is(str);
         std::string item_str;
@@ -175,7 +175,7 @@ class ConfigOptionInts : public ConfigOptionVector<int>  //ÅäÖÃÑ¡ÏîÕûÊıÃÇ£¬Õâ¸öÀ
     };
 };
 
-class ConfigOptionString : public ConfigOption    //ÅäÖÃÑ¡Ïî×Ö·û´®
+class ConfigOptionString : public ConfigOption    //é…ç½®é€‰é¡¹å­—ç¬¦ä¸²
 {
     public:
     std::string value;
@@ -210,7 +210,7 @@ class ConfigOptionString : public ConfigOption    //ÅäÖÃÑ¡Ïî×Ö·û´®
 };
 
 // semicolon-separated strings
-class ConfigOptionStrings : public ConfigOptionVector<std::string>   //ÅäÖÃÑ¡Ïî×Ö·û´®ÏòÁ¿×é
+class ConfigOptionStrings : public ConfigOptionVector<std::string>   //é…ç½®é€‰é¡¹å­—ç¬¦ä¸²å‘é‡ç»„
 {
     public:
 
@@ -238,7 +238,7 @@ class ConfigOptionStrings : public ConfigOptionVector<std::string>   //ÅäÖÃÑ¡Ïî×
     };
 };
 
-class ConfigOptionPercent : public ConfigOption     //ÅäÖÃÑ¡Ïî°Ù·ÖÊı
+class ConfigOptionPercent : public ConfigOption     //é…ç½®é€‰é¡¹ç™¾åˆ†æ•°
 {
     public:
     double value;
@@ -267,7 +267,7 @@ class ConfigOptionPercent : public ConfigOption     //ÅäÖÃÑ¡Ïî°Ù·ÖÊı
     };
 };
 
-class ConfigOptionFloatOrPercent : public ConfigOption   //ÅäÖÃÑ¡Ïî¸¡µãÊı»òÕß°Ù·ÖÊı
+class ConfigOptionFloatOrPercent : public ConfigOption   //é…ç½®é€‰é¡¹æµ®ç‚¹æ•°æˆ–è€…ç™¾åˆ†æ•°
 {
     public:
     double value;
@@ -301,7 +301,7 @@ class ConfigOptionFloatOrPercent : public ConfigOption   //ÅäÖÃÑ¡Ïî¸¡µãÊı»òÕß°Ù·
     };
 };
 
-class ConfigOptionPoint : public ConfigOption   //ÅäÖÃÑ¡Ïîµã
+class ConfigOptionPoint : public ConfigOption   //é…ç½®é€‰é¡¹ç‚¹
 {
     public:
     Pointf point;
@@ -327,7 +327,7 @@ class ConfigOptionPoint : public ConfigOption   //ÅäÖÃÑ¡Ïîµã
     };
 };
 
-class ConfigOptionPoints : public ConfigOptionVector<Pointf>    //ÅäÖÃÑ¡Ïîµã×é³ÉµÄÏòÁ¿×é
+class ConfigOptionPoints : public ConfigOptionVector<Pointf>    //é…ç½®é€‰é¡¹ç‚¹ç»„æˆçš„å‘é‡ç»„
 {
     public:
 
@@ -372,7 +372,7 @@ class ConfigOptionPoints : public ConfigOptionVector<Pointf>    //ÅäÖÃÑ¡Ïîµã×é³É
     };
 };
 
-class ConfigOptionBool : public ConfigOption    //ÅäÖÃÑ¡Ïî²¼¶û
+class ConfigOptionBool : public ConfigOption    //é…ç½®é€‰é¡¹å¸ƒå°”
 {
     public:
     bool value;
@@ -390,7 +390,7 @@ class ConfigOptionBool : public ConfigOption    //ÅäÖÃÑ¡Ïî²¼¶û
     };
 };
 
-class ConfigOptionBools : public ConfigOptionVector<bool>   //ÅäÖÃÑ¡Ïî²¼¶û×é³ÉµÄÏòÁ¿×é
+class ConfigOptionBools : public ConfigOptionVector<bool>   //é…ç½®é€‰é¡¹å¸ƒå°”ç»„æˆçš„å‘é‡ç»„
 {
     public:
 
@@ -424,10 +424,10 @@ class ConfigOptionBools : public ConfigOptionVector<bool>   //ÅäÖÃÑ¡Ïî²¼¶û×é³ÉµÄ
     };
 };
 
-typedef std::map<std::string,int> t_config_enum_values;   //ÅäÖÃÃ¶¾ÙÖµÃÇ£¬¾ÍÊÇmapÀàĞÍstring¡úint
+typedef std::map<std::string,int> t_config_enum_values;   //é…ç½®æšä¸¾å€¼ä»¬ï¼Œå°±æ˜¯mapç±»å‹stringâ†’int
 
 template <class T>
-class ConfigOptionEnum : public ConfigOption   //ÅäÖÃÑ¡ÏîÃ¶¾Ù
+class ConfigOptionEnum : public ConfigOption   //é…ç½®é€‰é¡¹æšä¸¾
 {
     public:
     T value;
@@ -449,12 +449,12 @@ class ConfigOptionEnum : public ConfigOption   //ÅäÖÃÑ¡ÏîÃ¶¾Ù
         return true;
     };
 
-    static t_config_enum_values get_enum_values();  //ÀàÀïÃæµÄ¾²Ì¬º¯ÊıµÄÓÃ·¨£¡£¡
+    static t_config_enum_values get_enum_values();  //ç±»é‡Œé¢çš„é™æ€å‡½æ•°çš„ç”¨æ³•ï¼ï¼
 };
 
 /* We use this one in DynamicConfig objects, otherwise it's better to use
    the specialized ConfigOptionEnum<T> containers. */
-class ConfigOptionEnumGeneric : public ConfigOption   //ÅäÖÃÑ¡ÏîÃ¶¾Ù·ºĞÍ
+class ConfigOptionEnumGeneric : public ConfigOption   //é…ç½®é€‰é¡¹æšä¸¾æ³›å‹
 {
     public:
     int value;
@@ -492,7 +492,7 @@ enum ConfigOptionType {
     coEnum,
 };
 
-class ConfigOptionDef   //ÅäÖÃÑ¡Ïî¶¨Òå
+class ConfigOptionDef   //é…ç½®é€‰é¡¹å®šä¹‰
 {
     public:
     ConfigOptionType type;
@@ -504,7 +504,7 @@ class ConfigOptionDef   //ÅäÖÃÑ¡Ïî¶¨Òå
     std::string tooltip;
     std::string sidetext;
     std::string cli;
-    t_config_option_key ratio_over;   //ÅäÖÃÑ¡Ïî¼ü£¬¼´×Ö·û´®
+    t_config_option_key ratio_over;   //é…ç½®é€‰é¡¹é”®ï¼Œå³å­—ç¬¦ä¸²
     bool multiline;
     bool full_width;
     bool readonly;
@@ -524,7 +524,7 @@ class ConfigOptionDef   //ÅäÖÃÑ¡Ïî¶¨Òå
 
 typedef std::map<t_config_option_key,ConfigOptionDef> t_optiondef_map;
 
-class ConfigBase   //ÅäÖÃ»ùÀà
+class ConfigBase   //é…ç½®åŸºç±»
 {
     public:
     t_optiondef_map* def;
@@ -539,7 +539,7 @@ class ConfigBase   //ÅäÖÃ»ùÀà
     t_config_option_keys diff(ConfigBase &other);
     std::string serialize(const t_config_option_key opt_key);
     bool set_deserialize(const t_config_option_key opt_key, std::string str);
-    //void set_ifndef(t_config_option_key opt_key, SV* value, bool deserialize = false);  //SVµ½µ×ÊÇÊ²Ã´£¿£¡
+    //void set_ifndef(t_config_option_key opt_key, SV* value, bool deserialize = false);  //SVåˆ°åº•æ˜¯ä»€ä¹ˆï¼Ÿï¼
     double get_abs_value(const t_config_option_key opt_key);
     double get_abs_value(const t_config_option_key opt_key, double ratio_over);
     void setenv_();
@@ -553,7 +553,7 @@ class ConfigBase   //ÅäÖÃ»ùÀà
     #endif
 };
 
-class DynamicConfig : public ConfigBase   //¶¯Ì¬ÅäÖÃ
+class DynamicConfig : public ConfigBase   //åŠ¨æ€é…ç½®
 {
     public:
     DynamicConfig() {};
@@ -572,7 +572,7 @@ class DynamicConfig : public ConfigBase   //¶¯Ì¬ÅäÖÃ
     t_options_map options;
 };
 
-class StaticConfig : public ConfigBase    //¾²Ì¬ÅäÖÃ
+class StaticConfig : public ConfigBase    //é™æ€é…ç½®
 {
     public:
     t_config_option_keys keys() const;

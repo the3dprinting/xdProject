@@ -22,7 +22,7 @@ class MotionPlanner
     MotionPlanner(const ExPolygons &islands);
     ~MotionPlanner();   //
     Polyline shortest_path(const Point &from, const Point &to);
-    size_t islands_count() const;  //·µ»ØislandsµÄÊıÄ¿
+    size_t islands_count() const;  //è¿”å›islandsçš„æ•°ç›®
 
     private:
     ExPolygons islands;
@@ -61,7 +61,7 @@ class MotionPlannerGraph
     Polyline shortest_path(size_t from, size_t to);
 };
 
-}   //½áÊøxdÃüÃû¿Õ¼ä
+}   //ç»“æŸxdå‘½åç©ºé—´
 
 #endif // PLANMOTION_H
 

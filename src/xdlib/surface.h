@@ -22,18 +22,18 @@ class Surface
             thickness(-1), thickness_layers(1), bridge_angle(-1), extra_perimeters(0)
         {};
     double area() const;
-    bool is_solid() const;   //返回表面的类型是否是solid类型
-    bool is_external() const;  //返回表面类型是否是external类型
-    bool is_internal() const;  //返回表面类型是否是internal类型
-    bool is_bottom() const;    //返回表面类型是否是bottom类型
-    bool is_bridge() const;    //返回表面类型是否是bridge类型
+    bool is_solid() const;   //杩斿洖琛ㄩ潰鐨勭被鍨嬫槸鍚︽槸solid绫诲瀷
+    bool is_external() const;  //杩斿洖琛ㄩ潰绫诲瀷鏄惁鏄痚xternal绫诲瀷
+    bool is_internal() const;  //杩斿洖琛ㄩ潰绫诲瀷鏄惁鏄痠nternal绫诲瀷
+    bool is_bottom() const;    //杩斿洖琛ㄩ潰绫诲瀷鏄惁鏄痓ottom绫诲瀷
+    bool is_bridge() const;    //杩斿洖琛ㄩ潰绫诲瀷鏄惁鏄痓ridge绫诲瀷
 
 };
 
 typedef std::vector<Surface> Surfaces;
 typedef std::vector<Surface*> SurfacesPtr;
 
-}  //结束xd命名空间
+}  //缁撴潫xd鍛藉悕绌洪棿
 
 
 #endif // SURFACE_H

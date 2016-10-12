@@ -9,28 +9,28 @@
 namespace xd {
 
 class ExPolygonCollection;
-typedef std::vector<ExPolygonCollection> ExPolygonCollections;   //ExPolygonCollectinÀà×é³ÉµÄvector
+typedef std::vector<ExPolygonCollection> ExPolygonCollections;   //ExPolygonCollectinç±»ç»„æˆçš„vector
 
 class ExPolygonCollection
 {
     public:
-    ExPolygons expolygons;    //ÆäËû´úÂëÀïÃæÓĞtypedef std::vector<ExPolygon> ExPolygons
+    ExPolygons expolygons;    //å…¶ä»–ä»£ç é‡Œé¢æœ‰typedef std::vector<ExPolygon> ExPolygons
 
     ExPolygonCollection() {};
     ExPolygonCollection(const ExPolygon &expolygon);
     ExPolygonCollection(const ExPolygons &expolygons) : expolygons(expolygons) {};
-    operator Points() const;  //ÀàĞÍ×ª»»º¯Êı£¬·µ»Ø±¾Éí¹«ÓĞ³ÉÔ±expolygonsÀïµÄËùÓĞµã
-    operator Polygons() const;  //ÀàĞÍ×ª»»º¯Êı£¬·µ»Ø±¾Éí¹«ÓĞ³ÉÔ±expolygonsÀïµÄËùÓĞ¶à±ßĞÎ
-    operator ExPolygons&();   //ÀàĞÍ×ª»»º¯Êı£¬·µ»Ø±¾Éí¹«ÓĞ³ÉÔ±expolygons
-    void scale(double factor);   //½«±¾Éí¹«ÓĞ³ÉÔ±expolygons·Å´ófactor±¶
-    void translate(double x, double y);   //½«±¾Éí¹«ÓĞ³ÉÔ±expolygonsÆ½ÒÆx y¾àÀë
-    void rotate(double angle, const Point &center);   //½«±¾Éí¹«ÓĞ³ÉÔ±expolygonsÈÆcenterÄæÊ±ÕëĞı×ªangle
-    template <class T> bool contains(const T &item) const;  //·µ»ØexpolygonsÊÇ·ñ°üº¬itemµÄº¯Êı£¬°üº¬ÎªÕæ£¬·ñÔò¼Ù
-    bool contains_b(const Point &point) const;   //µãÊÇ·ñÔÚÂÖÀªÄÚ»òÔÚ±ß½çÉÏ¶¼·µ»Øtrue
-    void simplify(double tolerance);   //½«±¾Éí¹«ÓĞ³ÉÔ±expolygons°´ÕÕÏÒ¸ßÎó²îÎªtolerance¼ò»¯
-    Polygon convex_hull() const;     //·µ»Ø±¾Éí¹«ÓĞ³ÉÔ±expolygonsµÄÍ¹°ü
-    Lines lines() const;   //½«expolygonsÀïÃæµÄËùÓĞµÄµã°´ÕÕÏß¶Î·µ»Ø
-    Polygons contours() const;  //½«expolygonsÀïÃæµÄËùÓĞÍâÂÖÀª×é³ÉµÄÏòÁ¿×é·µ»Ø
+    operator Points() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè¿”å›æœ¬èº«å…¬æœ‰æˆå‘˜expolygonsé‡Œçš„æ‰€æœ‰ç‚¹
+    operator Polygons() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè¿”å›æœ¬èº«å…¬æœ‰æˆå‘˜expolygonsé‡Œçš„æ‰€æœ‰å¤šè¾¹å½¢
+    operator ExPolygons&();   //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œè¿”å›æœ¬èº«å…¬æœ‰æˆå‘˜expolygons
+    void scale(double factor);   //å°†æœ¬èº«å…¬æœ‰æˆå‘˜expolygonsæ”¾å¤§factorå€
+    void translate(double x, double y);   //å°†æœ¬èº«å…¬æœ‰æˆå‘˜expolygonså¹³ç§»x yè·ç¦»
+    void rotate(double angle, const Point &center);   //å°†æœ¬èº«å…¬æœ‰æˆå‘˜expolygonsç»•centeré€†æ—¶é’ˆæ—‹è½¬angle
+    template <class T> bool contains(const T &item) const;  //è¿”å›expolygonsæ˜¯å¦åŒ…å«itemçš„å‡½æ•°ï¼ŒåŒ…å«ä¸ºçœŸï¼Œå¦åˆ™å‡
+    bool contains_b(const Point &point) const;   //ç‚¹æ˜¯å¦åœ¨è½®å»“å†…æˆ–åœ¨è¾¹ç•Œä¸Šéƒ½è¿”å›true
+    void simplify(double tolerance);   //å°†æœ¬èº«å…¬æœ‰æˆå‘˜expolygonsæŒ‰ç…§å¼¦é«˜è¯¯å·®ä¸ºtoleranceç®€åŒ–
+    Polygon convex_hull() const;     //è¿”å›æœ¬èº«å…¬æœ‰æˆå‘˜expolygonsçš„å‡¸åŒ…
+    Lines lines() const;   //å°†expolygonsé‡Œé¢çš„æ‰€æœ‰çš„ç‚¹æŒ‰ç…§çº¿æ®µè¿”å›
+    Polygons contours() const;  //å°†expolygonsé‡Œé¢çš„æ‰€æœ‰å¤–è½®å»“ç»„æˆçš„å‘é‡ç»„è¿”å›
 };
 
 }

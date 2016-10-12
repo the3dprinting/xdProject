@@ -121,8 +121,8 @@ Line::distance_to(const Point &point) const
 double
 Line::atan2_() const
 {
-      //ATAN2(a, b) Óë ATAN(a/b)ÉÔÓÐ²»Í¬£¬ATAN2(a,b)µÄÈ¡Öµ·¶Î§½éÓÚ -pi µ½ pi Ö®¼ä£¨²»°üÀ¨ -pi£©
-    //¶øATAN(a/b)µÄÈ¡Öµ·¶Î§½éÓÚ-pi/2µ½pi/2Ö®¼ä£¨²»°üÀ¨¡Àpi/2)
+      //ATAN2(a, b) ä¸Ž ATAN(a/b)ç¨æœ‰ä¸åŒï¼ŒATAN2(a,b)çš„å–å€¼èŒƒå›´ä»‹äºŽ -pi åˆ° pi ä¹‹é—´ï¼ˆä¸åŒ…æ‹¬ -piï¼‰
+    //è€ŒATAN(a/b)çš„å–å€¼èŒƒå›´ä»‹äºŽ-pi/2åˆ°pi/2ä¹‹é—´ï¼ˆä¸åŒ…æ‹¬Â±pi/2)
     return atan2(this->b.y - this->a.y, this->b.x - this->a.x);
 }
 

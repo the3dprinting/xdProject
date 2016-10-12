@@ -48,14 +48,14 @@ stl_generate_shared_vertices(stl_file *stl) {
   int facet_num;
   int vnot;
   int next_edge;
-  int pivot_vertex;  //ÖĞĞÄµã
+  int pivot_vertex;  //ä¸­å¿ƒç‚¹
   int next_facet;
   int reversed;
 
   if (stl->error) return;
 
   /* make sure this function is idempotent and does not leak memory */
-  stl_invalidate_shared_vertices(stl);  //Ê¹µÃ±¾ÉíµÄv_indicesºÍv_sharedÖ¸ÏòNULL
+  stl_invalidate_shared_vertices(stl);  //ä½¿å¾—æœ¬èº«çš„v_indiceså’Œv_sharedæŒ‡å‘NULL
 
   stl->v_indices = (v_indices_struct*)
                    calloc(stl->stats.number_of_facets, sizeof(v_indices_struct));
@@ -63,8 +63,8 @@ stl_generate_shared_vertices(stl_file *stl) {
   stl->v_shared = (stl_vertex*)
                   calloc((stl->stats.number_of_facets / 2), sizeof(stl_vertex));
   if(stl->v_shared == NULL) perror("stl_generate_shared_vertices");
-  stl->stats.shared_malloced = stl->stats.number_of_facets / 2;  //×´Ì¬ÖĞµÄ¹²ÏíÄÚ´æ·ÖÅä´óĞ¡¸³ÖµÎª¸Õ¸Õ·ÖÅäµÄ´óĞ¡£¬¼´ÃæÆ¬ÊıÄ¿µÄÒ»°ë
-  stl->stats.shared_vertices = 0;   //×´Ì¬ÖĞµÄ¹²ÏíµãµÄÊıÄ¿¸³ÖµÎªÁã
+  stl->stats.shared_malloced = stl->stats.number_of_facets / 2;  //çŠ¶æ€ä¸­çš„å…±äº«å†…å­˜åˆ†é…å¤§å°èµ‹å€¼ä¸ºåˆšåˆšåˆ†é…çš„å¤§å°ï¼Œå³é¢ç‰‡æ•°ç›®çš„ä¸€åŠ
+  stl->stats.shared_vertices = 0;   //çŠ¶æ€ä¸­çš„å…±äº«ç‚¹çš„æ•°ç›®èµ‹å€¼ä¸ºé›¶
 
   for(i = 0; i < stl->stats.number_of_facets; i++) {
     stl->v_indices[i].vertex[0] = -1;
@@ -79,21 +79,21 @@ stl_generate_shared_vertices(stl_file *stl) {
       if(stl->v_indices[i].vertex[j] != -1) {
         continue;
       }
-      if(stl->stats.shared_vertices == stl->stats.shared_malloced) { //ÎªÕæËµÃ÷Îª¹²Ïíµã·ÖÅäµÄ¹²ÏíÄÚ´æ²»¹»ÁË£¬ĞèÒªÔö¼Ó
-        stl->stats.shared_malloced += 1024;   //Ò»´ÎÔö¼Ó1024¸öµãµÄÎ»ÖÃ
+      if(stl->stats.shared_vertices == stl->stats.shared_malloced) { //ä¸ºçœŸè¯´æ˜ä¸ºå…±äº«ç‚¹åˆ†é…çš„å…±äº«å†…å­˜ä¸å¤Ÿäº†ï¼Œéœ€è¦å¢åŠ 
+        stl->stats.shared_malloced += 1024;   //ä¸€æ¬¡å¢åŠ 1024ä¸ªç‚¹çš„ä½ç½®
         stl->v_shared = (stl_vertex*)realloc(stl->v_shared,
                                              stl->stats.shared_malloced * sizeof(stl_vertex));
         if(stl->v_shared == NULL) perror("stl_generate_shared_vertices");
       }
-	  //×¢ÒâÏÂÃæÕâ¾ä»°£¬stl->stats.shared_vertices´æ´¢×Åv_sharedÒ»¹²ÓĞ¶àÉÙ¸öµã£¬Òò´Ë£¬Ë÷Òı´ú±í¼ÓÈëÒ»¸öĞÂµÄ¹²ÏíµãµÄÎ»ÖÃ
+	  //æ³¨æ„ä¸‹é¢è¿™å¥è¯ï¼Œstl->stats.shared_verticeså­˜å‚¨ç€v_sharedä¸€å…±æœ‰å¤šå°‘ä¸ªç‚¹ï¼Œå› æ­¤ï¼Œç´¢å¼•ä»£è¡¨åŠ å…¥ä¸€ä¸ªæ–°çš„å…±äº«ç‚¹çš„ä½ç½®
       stl->v_shared[stl->stats.shared_vertices] =
         stl->facet_start[i].vertex[j];
 
       direction = 0;
       reversed = 0;
       facet_num = i;
-      vnot = (j + 2) % 3;  //Õâ¸öÊıÒ»¿ªÊ¼²»¿ÉÄÜ>2
-	  //ÏÂÃæ²»Ì«ºÃÀí½â£¬ÏÈ¼ÙÉèj=0,Ôòvnot=2
+      vnot = (j + 2) % 3;  //è¿™ä¸ªæ•°ä¸€å¼€å§‹ä¸å¯èƒ½>2
+	  //ä¸‹é¢ä¸å¤ªå¥½ç†è§£ï¼Œå…ˆå‡è®¾j=0,åˆ™vnot=2
       for(;;) {
         if(vnot > 2) {
           if(direction == 0) {
@@ -115,7 +115,7 @@ stl_generate_shared_vertices(stl_file *stl) {
           }
         }
         stl->v_indices[facet_num].vertex[pivot_vertex] =
-          stl->stats.shared_vertices;   //±íÃ÷µÚfacet_num¸öÃæÆ¬µÄpivot_vertex£¨ÖĞĞÄµã£©µãµÄË÷ÒıºÅµÈÓÚ×´Ì¬ÖĞµÄshared_vertices
+          stl->stats.shared_vertices;   //è¡¨æ˜ç¬¬facet_numä¸ªé¢ç‰‡çš„pivot_vertexï¼ˆä¸­å¿ƒç‚¹ï¼‰ç‚¹çš„ç´¢å¼•å·ç­‰äºçŠ¶æ€ä¸­çš„shared_vertices
 
         next_facet = stl->neighbors_start[facet_num].neighbor[next_edge];
         if(next_facet == -1) {
@@ -135,7 +135,7 @@ stl_generate_shared_vertices(stl_file *stl) {
           break;
         }
       }
-      stl->stats.shared_vertices += 1;  //ÕâÀï²Å±íÃ÷¹²ÏíµãÕæÕıÔö¼ÓÁËÒ»¸ö
+      stl->stats.shared_vertices += 1;  //è¿™é‡Œæ‰è¡¨æ˜å…±äº«ç‚¹çœŸæ­£å¢åŠ äº†ä¸€ä¸ª
     }
   }
 }

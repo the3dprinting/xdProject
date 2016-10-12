@@ -1,4 +1,4 @@
-//2015_8_13 ÍõÏş¶« ½ñÌìÔÚÖ±ÏßÌî³äËã·¨ÖĞ¼ÓÉÏÁËÌî³ä¾àÀëÌ«¶ÌÔòÉáÈ¥µÄËã·¨£¬ÖÁ´ËÖ±ÏßÌî³äËã·¨»ù±¾ÍêÉÆ£¡£¡£¡£¡»¹È±Ò»µãÊÇ¹ı¹Õ½ÇµãÁ¬Ğø»áÅÜ³ö¼¯ºÏÇøÓò£¡
+//2015_8_13 ç‹æ™“ä¸œ ä»Šå¤©åœ¨ç›´çº¿å¡«å……ç®—æ³•ä¸­åŠ ä¸Šäº†å¡«å……è·ç¦»å¤ªçŸ­åˆ™èˆå»çš„ç®—æ³•ï¼Œè‡³æ­¤ç›´çº¿å¡«å……ç®—æ³•åŸºæœ¬å®Œå–„ï¼ï¼ï¼ï¼è¿˜ç¼ºä¸€ç‚¹æ˜¯è¿‡æ‹è§’ç‚¹è¿ç»­ä¼šè·‘å‡ºé›†åˆåŒºåŸŸï¼
 #include "generate_line.h"
 #define NDEBUG  
 #include <assert.h>   
@@ -6,11 +6,11 @@
 namespace xd
 {
 
-float degrees(float fudu) //·ù¶È×ª»¯Îª½Ç¶ÈµÄº¯Êı
+float degrees(float fudu) //å¹…åº¦è½¬åŒ–ä¸ºè§’åº¦çš„å‡½æ•°
 {
     return(fudu/pi*180);
 }
-float radians(float jiaodu) //½Ç¶È×ª»»Îª·ù¶ÈµÄº¯Êı
+float radians(float jiaodu) //è§’åº¦è½¬æ¢ä¸ºå¹…åº¦çš„å‡½æ•°
 {
     return(jiaodu/180*pi);
 }
@@ -45,7 +45,7 @@ typedef std::vector<outline> outlines;
 
 void ClipperPathToOutline(const ClipperLib::Path & input,outline * output)
 {
-	//output->resize(input.size()+1);   ÔÎ£¬ºóÃæÓÃpush_back£¬ÕâÀïÇ§Íò±ğÓÃresize£¡£¡
+	//output->resize(input.size()+1);   æ™•ï¼Œåé¢ç”¨push_backï¼Œè¿™é‡Œåƒä¸‡åˆ«ç”¨resizeï¼ï¼
 	for(int i=0;i!=input.size();++i)
 	{
         output->push_back(xd::xdpoint(input[i].X*SCALING_FACTOR,input[i].Y*SCALING_FACTOR));
@@ -80,9 +80,9 @@ void OutlinesToClipperPaths(const outlines & input,ClipperLib::Paths * output)
 	}
 }
 
-bool IsContainPoint(std::vector<std::pair<float,float> > &a, xdpoint b)  //ÅĞ¶Á¼«ÖµµãÁĞ±íÀïÊÇ·ñ°üº¬Ä³Ò»¸öµãµÄº¯Êı¡£
+bool IsContainPoint(std::vector<std::pair<float,float> > &a, xdpoint b)  //åˆ¤è¯»æå€¼ç‚¹åˆ—è¡¨é‡Œæ˜¯å¦åŒ…å«æŸä¸€ä¸ªç‚¹çš„å‡½æ•°ã€‚
 {
-    //×¢Òâ£¬list¿ÉÄÜÎªÎª¿Õ£¡
+    //æ³¨æ„ï¼Œlistå¯èƒ½ä¸ºä¸ºç©ºï¼
     for (int i=0;i!=a.size();i++)
     {
         if ((a[i].first==b.x)&&(a[i].second==b.y))
@@ -93,7 +93,7 @@ bool IsContainPoint(std::vector<std::pair<float,float> > &a, xdpoint b)  //ÅĞ¶Á¼
     return false;
 }
 
-int IsLeft(xdpoint p1,xdpoint p2, xdpoint p) //ÅĞ¶ÏpµãÊÇ·ñÔÚÓĞÏòÏß¶Îp1,p2×ó²àµÄº¯Êı¡£
+int IsLeft(xdpoint p1,xdpoint p2, xdpoint p) //åˆ¤æ–­pç‚¹æ˜¯å¦åœ¨æœ‰å‘çº¿æ®µp1,p2å·¦ä¾§çš„å‡½æ•°ã€‚
 {
     float x1=p1.x;
     float y1=p1.y;
@@ -104,18 +104,18 @@ int IsLeft(xdpoint p1,xdpoint p2, xdpoint p) //ÅĞ¶ÏpµãÊÇ·ñÔÚÓĞÏòÏß¶Îp1,p2×ó²àµÄº
     float det=x*y1-x*y2+y*x2-y*x1+x1*y2-x2*y1;
     if(det>0)
     {
-        return(1); //pÔÚ×ó²à¡£
+        return(1); //påœ¨å·¦ä¾§ã€‚
     }
     else if(det<0)
     {
-        return(-1); //pÔÚÓÒ²à¡£
+        return(-1); //påœ¨å³ä¾§ã€‚
     }
     else
     {
-        return(0); //pÓëp1,p2¹²Ïß¡£
+        return(0); //pä¸p1,p2å…±çº¿ã€‚
     }
 }
-bool IsEmpty(std::vector<std::pair<float,std::list<float> > > tem,int & firstV)  //ÅĞ¶ÏÉ¨ÃèÏßÖĞµÄÔªËØÊÇ·ñÈ«²¿È¡ÍêµÄº¯Êı¡£
+bool IsEmpty(std::vector<std::pair<float,std::list<float> > > tem,int & firstV)  //åˆ¤æ–­æ‰«æçº¿ä¸­çš„å…ƒç´ æ˜¯å¦å…¨éƒ¨å–å®Œçš„å‡½æ•°ã€‚
 {
     firstV=0;
     for (int j=0;j<tem.size();j++)
@@ -129,8 +129,8 @@ bool IsEmpty(std::vector<std::pair<float,std::list<float> > > tem,int & firstV) 
     return 1;
 }
 
-void DeleteOddDate(std::vector<std::pair<float,std::list<float> > > & tem)   //½«´æ·ÅÆæÊıµãÊı¾İµÄÉ¨ÃèÏßÉ¾³ıµÄº¯Êı£¬Õı³£Çé¿öÏÂÓÃ²»×Å´Ëº¯Êı¡£
-{                                                           //ÒòÎªÕı³£Çé¿öÏÂ¾Í²»¿ÉÄÜ´æÔÚÆæÊıµãµÄÊı¾İ¡£
+void DeleteOddDate(std::vector<std::pair<float,std::list<float> > > & tem)   //å°†å­˜æ”¾å¥‡æ•°ç‚¹æ•°æ®çš„æ‰«æçº¿åˆ é™¤çš„å‡½æ•°ï¼Œæ­£å¸¸æƒ…å†µä¸‹ç”¨ä¸ç€æ­¤å‡½æ•°ã€‚
+{                                                           //å› ä¸ºæ­£å¸¸æƒ…å†µä¸‹å°±ä¸å¯èƒ½å­˜åœ¨å¥‡æ•°ç‚¹çš„æ•°æ®ã€‚
     int Num=0;
     for (int i=0;i!=tem.size();i++)
     {
@@ -153,20 +153,20 @@ void DeleteOddDate(std::vector<std::pair<float,std::list<float> > > & tem)   //½
     }
 }
 
-bool IsDealFinish(const std::vector<xdpoint> & l,int & i)  //ÅĞ¶ÏÆ½ĞĞÓÚxÖáµÄÖ±ÏßÉÏÊÇ·ñÓĞ¶àÓÚÁ½¸öµãµÄº¯Êı¡£
+bool IsDealFinish(const std::vector<xdpoint> & l,int & i)  //åˆ¤æ–­å¹³è¡Œäºxè½´çš„ç›´çº¿ä¸Šæ˜¯å¦æœ‰å¤šäºä¸¤ä¸ªç‚¹çš„å‡½æ•°ã€‚
 {
-    int n=(int)l.size();          //ÕâÀïµÄnµÄÈ¡ÖµÇ§Íò²»ÄÜ¼õÈ¥1£¬ÒòÎªÆğµãºÍÎ²µãÒÑ¾­Î´±ØÏàµÈÁË£¡
-    for (i=0;i!=l.size();i++)     //×¢Òâ£¬ÕâÀï±ØĞë²»¾­¹ı×îºóÒ»¸öµã£¬ÒòÎª×îºóÒ»¸öµãºÍµÚÒ»¸öµã±ØĞëÏàµÈ£¬Òª¼õÈ¥2£¿
-    {                               //ÏëÏëÎªÊ²Ã´£¿ºÇºÇ£¡³öÏÖÁËÆæ¹ÖµÄÏÖÏñ£¡£¡ÔÚ´Ë´¦Ñ­»·ÒªÈ«²¿±éÀú£¡
+    int n=(int)l.size();          //è¿™é‡Œçš„nçš„å–å€¼åƒä¸‡ä¸èƒ½å‡å»1ï¼Œå› ä¸ºèµ·ç‚¹å’Œå°¾ç‚¹å·²ç»æœªå¿…ç›¸ç­‰äº†ï¼
+    for (i=0;i!=l.size();i++)     //æ³¨æ„ï¼Œè¿™é‡Œå¿…é¡»ä¸ç»è¿‡æœ€åä¸€ä¸ªç‚¹ï¼Œå› ä¸ºæœ€åä¸€ä¸ªç‚¹å’Œç¬¬ä¸€ä¸ªç‚¹å¿…é¡»ç›¸ç­‰ï¼Œè¦å‡å»2ï¼Ÿ
+    {                               //æƒ³æƒ³ä¸ºä»€ä¹ˆï¼Ÿå‘µå‘µï¼å‡ºç°äº†å¥‡æ€ªçš„ç°åƒï¼ï¼åœ¨æ­¤å¤„å¾ªç¯è¦å…¨éƒ¨éå†ï¼
         int benshen=i%n;
         int nextP=(i+1)%n;
         int nextnP=(i+2)%n;
-		float d1=sqrt(pow(l[benshen].x-l[nextP].x,2)+pow(l[benshen].y-l[nextP].y,2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-		float d2=sqrt(pow(l[nextnP].x-l[nextP].x,2)+pow(l[nextnP].y-l[nextP].y,2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-		float cross=std::abs(((l[nextP].y-l[benshen].y)*(l[nextnP].x-l[nextP].x)-(l[nextnP].y-l[nextP].y)*(l[nextP].x-l[benshen].x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
-        if (cross/(d1*d2)<sin(1.0/180*pi))   //Ïà²î1¶È¾ÍÈ¥³ı£¬¼ÇµÃÓÃ1.0
+		float d1=sqrt(pow(l[benshen].x-l[nextP].x,2)+pow(l[benshen].y-l[nextP].y,2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+		float d2=sqrt(pow(l[nextnP].x-l[nextP].x,2)+pow(l[nextnP].y-l[nextP].y,2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+		float cross=std::abs(((l[nextP].y-l[benshen].y)*(l[nextnP].x-l[nextP].x)-(l[nextnP].y-l[nextP].y)*(l[nextP].x-l[benshen].x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
+        if (cross/(d1*d2)<sin(1.0/180*pi))   //ç›¸å·®1åº¦å°±å»é™¤ï¼Œè®°å¾—ç”¨1.0
         {
-            i=nextP; //ÒªÉ¾³ıµÄÔªËØµÄ½Ç±ê¡£
+            i=nextP; //è¦åˆ é™¤çš„å…ƒç´ çš„è§’æ ‡ã€‚
             return 0;
         }
     }
@@ -180,12 +180,12 @@ void DealOneLayer(std::vector<xdpoint> & l)
 	std::vector<xdpoint>::const_iterator benshen = l.begin();
 	std::vector<xdpoint>::const_iterator nextP = benshen + 1;
 	std::vector<xdpoint>::const_iterator nextnP = benshen + 2;
-	float d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-	float d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-	float cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
+	float d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+	float d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+	float cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
 	while (l.size()>3)
 	{
-        if (cross / (d1*d2)<sin(3.0 / 180 * pi))   //Ïà²î1¶È¾ÍÈ¥³ı£¬¼ÇµÃÓÃ1.0
+        if (cross / (d1*d2)<sin(3.0 / 180 * pi))   //ç›¸å·®1åº¦å°±å»é™¤ï¼Œè®°å¾—ç”¨1.0
 		{
 			l.erase(nextP);
 			nextP = benshen + 1;
@@ -193,23 +193,23 @@ void DealOneLayer(std::vector<xdpoint> & l)
 			{
 				nextP = l.begin();
 				nextnP = nextP + 1;
-				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
+				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
 				continue;
 			}
 			nextnP = nextP + 1;
 			if (nextnP == l.end())
 			{
 				nextnP = l.begin();
-				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
+				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
 				continue;
 			}
-			d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-			d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-			cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
+			d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+			d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+			cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
 			continue;
 		}
 		else
@@ -222,25 +222,25 @@ void DealOneLayer(std::vector<xdpoint> & l)
 			{
 				nextP = l.begin();
 				nextnP = nextP + 1;
-				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
+				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
 				continue;
 			}
 			nextnP += 1;
 			if (nextnP == l.end())
 			{
 				nextnP = l.begin();
-				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //µÚÒ»¸öÏòÁ¿µÄ³¤¶È
-				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //µÚ¶ş¸öÏòÁ¿µÄ³¤¶È
-				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //ÏòÁ¿²æ³ËµÄ¾ø¶ÔÖµ
+				d1 = sqrt(pow(benshen->x - nextP->x, 2) + pow(benshen->y - nextP->y, 2));  //ç¬¬ä¸€ä¸ªå‘é‡çš„é•¿åº¦
+				d2 = sqrt(pow(nextnP->x - nextP->x, 2) + pow(nextnP->y - nextP->y, 2));  //ç¬¬äºŒä¸ªå‘é‡çš„é•¿åº¦
+				cross = std::abs(((nextP->y - benshen->y)*(nextnP->x - nextP->x) - (nextnP->y - nextP->y)*(nextP->x - benshen->x))); //å‘é‡å‰ä¹˜çš„ç»å¯¹å€¼
 				continue;
 			}
 		}
 	}
 }
 
-bool exceedExtremum(float bijiaoY1,float bijiaoY2,std::list<float> maxY,std::list<float> minY)  //ÓÃÀ´ÅĞ¶ÏÇ°ºóÁ½ÌõÖ±ÏßÊÇ·ñÔ½¹ıÁË¾Ö²¿¼«ÖµµãµÄº¯Êı
+bool exceedExtremum(float bijiaoY1,float bijiaoY2,std::list<float> maxY,std::list<float> minY)  //ç”¨æ¥åˆ¤æ–­å‰åä¸¤æ¡ç›´çº¿æ˜¯å¦è¶Šè¿‡äº†å±€éƒ¨æå€¼ç‚¹çš„å‡½æ•°
 {
     if (bijiaoY1>bijiaoY2)
     {
@@ -265,10 +265,10 @@ bool exceedExtremum(float bijiaoY1,float bijiaoY2,std::list<float> maxY,std::lis
 
 
 
-void DealCompensate(outline DealData,outline & ResultData,float R) //´¦ÀíÂÖÀªµãÊı¾İ£¬Ê¹Æä±äÎªÓĞ²¹³¥°ë¾¶µÄÂÖÀªµãÊı¾İ¡£ ÈÚÈëµ½×Ô¼ººóÆÚ³ÌĞòÖĞ£¬2015/3/10 ¿ÉÄÜÓĞ´í
+void DealCompensate(outline DealData,outline & ResultData,float R) //å¤„ç†è½®å»“ç‚¹æ•°æ®ï¼Œä½¿å…¶å˜ä¸ºæœ‰è¡¥å¿åŠå¾„çš„è½®å»“ç‚¹æ•°æ®ã€‚ èå…¥åˆ°è‡ªå·±åæœŸç¨‹åºä¸­ï¼Œ2015/3/10 å¯èƒ½æœ‰é”™
 {
     float layerZ=DealData[0].z;
-    auto subscript1=DealData.size()-2;  //ÂÖÀªÊı¾İ×îºóÒ»¸öµãÓëµÚÒ»¸öµãÖØ¸´£¡£¡Ê±¿Ì¼Ç×Å£¡£¡£¡
+    auto subscript1=DealData.size()-2;  //è½®å»“æ•°æ®æœ€åä¸€ä¸ªç‚¹ä¸ç¬¬ä¸€ä¸ªç‚¹é‡å¤ï¼ï¼æ—¶åˆ»è®°ç€ï¼ï¼ï¼
     auto subscript2=0;
     auto subscript3=1;
     CTwoDimensionVector L1(DealData[subscript2].x-DealData[subscript1].x,DealData[subscript2].y-DealData[subscript1].y);
@@ -279,7 +279,7 @@ void DealCompensate(outline DealData,outline & ResultData,float R) //´¦ÀíÂÖÀªµãÊ
         ResultData.push_back(xdpoint((L2.x-L1.x)*R/L1.CrossProduct(L2)+DealData[subscript2].x,(L2.y-L1.y)*R/L1.CrossProduct(L2)+DealData[subscript2].y,layerZ));
 
     }
-    else if((L1.CrossProduct(L2)>-5)) //ÕâÀïÖ÷ÒªÊÇ¿ÉÄÜ³öÏÖ·Ç³£Æ½ĞĞµÄÇé¿ö£¬Ó°ÏìÅĞ¶Ï£¡£¡£¡
+    else if((L1.CrossProduct(L2)>-5)) //è¿™é‡Œä¸»è¦æ˜¯å¯èƒ½å‡ºç°éå¸¸å¹³è¡Œçš„æƒ…å†µï¼Œå½±å“åˆ¤æ–­ï¼ï¼ï¼
     {
         ResultData.push_back(xdpoint((L2.x-L1.x)*R/L1.CrossProduct(L2)+DealData[subscript2].x,(L2.y-L1.y)*R/L1.CrossProduct(L2)+DealData[subscript2].y,layerZ));
     }
@@ -290,7 +290,7 @@ void DealCompensate(outline DealData,outline & ResultData,float R) //´¦ÀíÂÖÀªµãÊ
     else //if((L1.CrossProduct(L2)<0)&&(L1.DotProduct(L2)<0))
     {
         ResultData.push_back(xdpoint((L1.x-L1.y)*R+DealData[subscript2].x,(L1.x+L1.y)*R+DealData[subscript2].y,layerZ));
-       ResultData.push_back(xdpoint(-(L2.x+L2.y)*R+DealData[subscript2].x,(L2.x-L2.y)*R+DealData[subscript2].y,layerZ));  //³öÏÖÁ½¸öµãµÄÊ±ºòÀÛ»ıÒ»¶¨²»ÒªÅª·´ÁË£¡
+       ResultData.push_back(xdpoint(-(L2.x+L2.y)*R+DealData[subscript2].x,(L2.x-L2.y)*R+DealData[subscript2].y,layerZ));  //å‡ºç°ä¸¤ä¸ªç‚¹çš„æ—¶å€™ç´¯ç§¯ä¸€å®šä¸è¦å¼„åäº†ï¼
     } */
 
     ResultData.push_back(xdpoint((L2.x-L1.x)*R/L1.CrossProduct(L2)+DealData[subscript2].x,(L2.y-L1.y)*R/L1.CrossProduct(L2)+DealData[subscript2].y,layerZ));
@@ -314,31 +314,31 @@ void DealCompensate(outline DealData,outline & ResultData,float R) //´¦ÀíÂÖÀªµãÊ
             ResultData.push_back(xdpoint((L2.x-L1.x)*R/L1.CrossProduct(L2)+DealData[subscript2].x,(L2.y-L1.y)*R/L1.CrossProduct(L2)+DealData[subscript2].y,layerZ));
 
         }
-        else if((L1.CrossProduct(L2)>-5))   //ÕâÀïÖ÷ÒªÊÇ¿ÉÄÜ³öÏÖ·Ç³£Æ½ĞĞµÄÇé¿ö£¬Ó°ÏìÅĞ¶Ï£¡£¡£¡
+        else if((L1.CrossProduct(L2)>-5))   //è¿™é‡Œä¸»è¦æ˜¯å¯èƒ½å‡ºç°éå¸¸å¹³è¡Œçš„æƒ…å†µï¼Œå½±å“åˆ¤æ–­ï¼ï¼ï¼
         {
             ResultData.push_back(xdpoint((L2.x-L1.x)*R/L1.CrossProduct(L2)+DealData[subscript2].x,(L2.y-L1.y)*R/L1.CrossProduct(L2)+DealData[subscript2].y,layerZ));
         }
         else if (L1.CrossProduct(L2)==0)
         {
-             //ÕâÖÖÇé¿ö²»¿ÉÄÜ·¢Éú£¬ÒòÎªÇ°ºó¹²ÏßµÄ¿ÉÄÜĞÔÒÑ¾­±»É¾³ıÁË£¡
+             //è¿™ç§æƒ…å†µä¸å¯èƒ½å‘ç”Ÿï¼Œå› ä¸ºå‰åå…±çº¿çš„å¯èƒ½æ€§å·²ç»è¢«åˆ é™¤äº†ï¼
         }
         else //if((L1.CrossProduct(L2)<0)&&(L1.DotProduct(L2)<0))
         {
            ResultData.push_back(xdpoint((L1.x-L1.y)*R+DealData[subscript2].x,(L1.x+L1.y)*R+DealData[subscript2].y,layerZ));
-           ResultData.push_back(xdpoint(-(L2.x+L2.y)*R+DealData[subscript2].x,(L2.x-L2.y)*R+DealData[subscript2].y,layerZ));  //³öÏÖÁ½¸öµãµÄÊ±ºòÀÛ»ıÒ»¶¨²»ÒªÅª·´ÁË£¡
+           ResultData.push_back(xdpoint(-(L2.x+L2.y)*R+DealData[subscript2].x,(L2.x-L2.y)*R+DealData[subscript2].y,layerZ));  //å‡ºç°ä¸¤ä¸ªç‚¹çš„æ—¶å€™ç´¯ç§¯ä¸€å®šä¸è¦å¼„åäº†ï¼
 
         } */
 
          ResultData.push_back(xdpoint((L2.x-L1.x)*R/L1.CrossProduct(L2)+DealData[subscript2].x,(L2.y-L1.y)*R/L1.CrossProduct(L2)+DealData[subscript2].y,layerZ));
     }
-    ResultData.push_back(xdpoint(ResultData[0].x,ResultData[0].y,layerZ));  //±£Ö¤×îºóÒ»¸öµãºÍµÚÒ»¸öµãÏàÍ¬¡£
+    ResultData.push_back(xdpoint(ResultData[0].x,ResultData[0].y,layerZ));  //ä¿è¯æœ€åä¸€ä¸ªç‚¹å’Œç¬¬ä¸€ä¸ªç‚¹ç›¸åŒã€‚
 }
 
-void InfillLine(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo,  float shrinkDistance,float offsetWidth) //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¡£
+void InfillLine(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo,  float shrinkDistance,float offsetWidth) //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°ã€‚
 {
-	if(!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if(!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//½«ÂÖÀªÊı¾İĞı×ªÒ»¸ö½Ç¶È
+		//å°†è½®å»“æ•°æ®æ—‹è½¬ä¸€ä¸ªè§’åº¦
 		for (int i=0;i!=TheOutline.size();++i)
 		{
 			for (int j=0;j!=TheOutline[i].size();++j)
@@ -347,8 +347,8 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 			}
 		}
 
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if(lunkuo!=0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -375,7 +375,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 					{
                         temData.push_back(xd::xdpoint((float)solution[i][j].X*SCALING_FACTOR,(float)solution[i][j].Y*SCALING_FACTOR));
 					}
-                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -385,10 +385,10 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 		}
 		if(TheOutline.size()!=0)     
 		{
-			//µÚÒ»²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+			//ç¬¬ä¸€æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
 			std::list<float> maxY;
 			std::list<float> minY;
-             //×¢Òâ£¬ÕâÀï¼ÓÁËÒ»¸ö¶«Î÷£¡£¡2015_12_6 22:28  ÆøËÀÀ²£¬¹ûÈ»×Ô¼º±àµÄËã·¨×ÜÊÇÓĞÎÊÌâ£¡
+             //æ³¨æ„ï¼Œè¿™é‡ŒåŠ äº†ä¸€ä¸ªä¸œè¥¿ï¼ï¼2015_12_6 22:28  æ°”æ­»å•¦ï¼Œæœç„¶è‡ªå·±ç¼–çš„ç®—æ³•æ€»æ˜¯æœ‰é—®é¢˜ï¼
             float temMax=TheOutline[0][0].y;
             float temMin=TheOutline[0][0].y;
             for (int i=0;i!=TheOutline.size();i++)
@@ -410,12 +410,12 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 			{
 				for (int j=1;j!=TheOutline[i].size();j++)
 				{
-					int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+					int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 					int beforeP=(j-1+n)%n;
 					int beforebP=(j-2+n)%n;
 					int nextP=(j+1+n)%n;
 					int nextnP=(j+2+n)%n;
-					if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+					if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
 					{
 						maxY.push_back(TheOutline[i][j].y);
 						std::pair<float,float> tem;
@@ -423,7 +423,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 						tem.second=TheOutline[i][j].y;
 						maxPoint.push_back(tem);
 					}
-					else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+					else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
 					{
 						minY.push_back(TheOutline[i][j].y);
 						std::pair<float,float> tem;
@@ -433,22 +433,22 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 					}
 					else if (TheOutline[i][j].y==TheOutline[i][beforeP].y)
 					{
-						if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+						if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
 						{
 							maxY.push_back(TheOutline[i][j].y);
 						}
-						if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+						if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
 						{
 							minY.push_back(TheOutline[i][j].y);
 						}
 					}
 					else if (TheOutline[i][j].y==TheOutline[i][nextP].y)
 					{
-						if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+						if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
 						{
 							maxY.push_back(TheOutline[i][j].y);
 						}
-						if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+						if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
 						{
 							minY.push_back(TheOutline[i][j].y);
 						}
@@ -457,11 +457,11 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 			}
 			maxY.sort();
 			minY.sort();
-			maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-			minY.unique();	  //Í¬ÉÏ¡£
-			float MaxY=*max_element(maxY.begin(),maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+			maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+			minY.unique();	  //åŒä¸Šã€‚
+			float MaxY=*max_element(maxY.begin(),maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
 			float MinY=*min_element(minY.begin(),minY.end());
-			//µÚ¶ş²½£¬Éú³ÉÃ¿Ò»ÌõÏßÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+			//ç¬¬äºŒæ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡çº¿å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
 			std::vector<std::pair<float,std::list<float>>> Linedate;
 			for (int i=1;i<(MaxY-MinY)/width-1;i++)
 			{
@@ -469,16 +469,16 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 				tem.first=MinY+width*i;
 				Linedate.push_back(tem);
 			}
-			if(!Linedate.empty())     //¼Ç×¡£¬Linedate¿ÉÄÜÊÇ¿ÕµÄ£¡ 2015_6_17
+			if(!Linedate.empty())     //è®°ä½ï¼ŒLinedateå¯èƒ½æ˜¯ç©ºçš„ï¼ 2015_6_17
 			{
-				if ((MaxY-Linedate[Linedate.size()-1].first)>width*3/2)//ÎªÁËÊ¹µÃ×îºóÒ»¸ùÌî³äÏß²»ÖÁÓÚÓëÂÖÀªÀëµÃÌ«Ô¶£¬Òª¼ÓÒ»¸öÊÇ·ñĞèÒªÔö¼ÓÒ»ÌõÏß¶ÎÅĞ¶Ï
+				if ((MaxY-Linedate[Linedate.size()-1].first)>width*3/2)//ä¸ºäº†ä½¿å¾—æœ€åä¸€æ ¹å¡«å……çº¿ä¸è‡³äºä¸è½®å»“ç¦»å¾—å¤ªè¿œï¼Œè¦åŠ ä¸€ä¸ªæ˜¯å¦éœ€è¦å¢åŠ ä¸€æ¡çº¿æ®µåˆ¤æ–­
 				{
 
 					std::pair<float,std::list<float>> tem;
 					tem.first=(MaxY+Linedate[Linedate.size()-1].first)/2;
 					Linedate.push_back(tem);
 				}
-				else if ((MaxY-Linedate[Linedate.size()-1].first)<=width*3/2&&(MaxY-Linedate[Linedate.size()-1].first)>width)  //ÈÃÃ¿Ò»ÌõÏßµÄ¼ä¾à¶¼Ôö¼ÓÒ»µãµÄ×ÔÊÊÓ¦Ïß¿í²¹³¥
+				else if ((MaxY-Linedate[Linedate.size()-1].first)<=width*3/2&&(MaxY-Linedate[Linedate.size()-1].first)>width)  //è®©æ¯ä¸€æ¡çº¿çš„é—´è·éƒ½å¢åŠ ä¸€ç‚¹çš„è‡ªé€‚åº”çº¿å®½è¡¥å¿
 				{
 					for (int i=0;i!=Linedate.size();++i)
 					{
@@ -489,18 +489,18 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 				for (int i=0;i!=TheOutline.size();i++)
 				{
 
-					for (int j=1;j!=TheOutline[i].size();j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+					for (int j=1;j!=TheOutline[i].size();j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
 					{
-						int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+						int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 						int beforeP=(j-1+n)%n;
 						int beforebP=(j-2+n)%n;
 						int nextP=(j+1+n)%n;
 						int nextnP=(j+2+n)%n;
-						if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+						if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 						{
 							for (int k=0;k!=Linedate.size();k++)
 							{
-								if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+								if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									float x1=TheOutline[i][j].x;
 									float x2=TheOutline[i][nextP].x;
@@ -508,38 +508,38 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 									float y2=TheOutline[i][nextP].y;
 									Linedate[k].second.push_back((x2-x1)/(y2-y1)*(Linedate[k].first-y1)+x1);
 								}
-								else if ((Linedate[k].first==TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+								else if ((Linedate[k].first==TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									if ((!IsContainPoint(maxPoint,TheOutline[i][j]))&&(!IsContainPoint(minPoint,TheOutline[i][j]))&&(TheOutline[i][j].y!=TheOutline[i][beforeP].y))
 									{
-										//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+										//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 										Linedate[k].second.push_back(TheOutline[i][j].x);
 									}
 								}
-								else if ((Linedate[k].first==TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+								else if ((Linedate[k].first==TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									if ((!IsContainPoint(maxPoint,TheOutline[i][nextP]))&&(!IsContainPoint(minPoint,TheOutline[i][nextP]))&&(TheOutline[i][nextP].y!=TheOutline[i][nextnP].y))
 									{
-										//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+										//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 										Linedate[k].second.push_back(TheOutline[i][nextP].x);
 									}
 								}
 							}
 						}
-						else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+						else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 						{
 							for (int k=0;k!=Linedate.size();k++)
 							{
-								if (Linedate[k].first==TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+								if (Linedate[k].first==TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
 								{
-									if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-									{   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+									if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+									{   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
 										Linedate[k].second.push_back(TheOutline[i][j].x);
 										Linedate[k].second.push_back(TheOutline[i][nextP].x);
 									}
 									else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
 									{
-										//Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+										//ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
 									}
 
 									else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
@@ -557,58 +557,58 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 
 				}
 
-				for(int i=0;i!=Linedate.size();i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+				for(int i=0;i!=Linedate.size();i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
 				{
-					Linedate[i].second.sort();    //ÅÅĞò¡£
-					Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+					Linedate[i].second.sort();    //æ’åºã€‚
+					Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
 				}
-				DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
+				DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
 
-				//µÚÈı²½£¬½«Êı¾İ·ÖÇøÓò´æ·Å¡£
+				//ç¬¬ä¸‰æ­¥ï¼Œå°†æ•°æ®åˆ†åŒºåŸŸå­˜æ”¾ã€‚
 				int FirstNonZero;
 				while(!IsEmpty(Linedate,FirstNonZero))
 				{
 					outline tem;
-					int j=0;  //ÓÃÀ´ÅĞ¶ÏÊÇÆæÊıĞĞ»¹ÊÇÅ¼ÊıĞĞµÄ²ÎÊı¡£
+					int j=0;  //ç”¨æ¥åˆ¤æ–­æ˜¯å¥‡æ•°è¡Œè¿˜æ˜¯å¶æ•°è¡Œçš„å‚æ•°ã€‚
 					auto firstIn=Linedate[FirstNonZero].second.begin();
-					float bijiao1=*firstIn;   //µÚÒ»ÌõÏßµÄµÚÒ»¸öµã¡£
+					float bijiao1=*firstIn;   //ç¬¬ä¸€æ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 					tem.push_back(xdpoint(*firstIn,Linedate[FirstNonZero].first,TheOutline[0][0].z));
 					tem.push_back(xdpoint(*(++firstIn),Linedate[FirstNonZero].first,TheOutline[0][0].z));					
-					int i=(FirstNonZero+1)%Linedate.size();  //±ØĞë±£Ö¤µ±µÚÒ»¸ö·ÇÁãÊı¾İµÄÏß¸ÕºÃÊÇ×îºóÒ»ÌõÏßÊ±Ò²²»»á¼Ó1Ô½½ç£¡ËùÒÔÒªÄ£Ò»ÏÂ£¡
-					float bijiao2=*firstIn;  //µÚÒ»ÌõÏßµÄµÚ¶ş¸öµã¡£
-					float bijiaoY1=Linedate[FirstNonZero].first;  //µÚÒ»ÌõÏßµÄY×ø±êÖµ¡£
+					int i=(FirstNonZero+1)%Linedate.size();  //å¿…é¡»ä¿è¯å½“ç¬¬ä¸€ä¸ªéé›¶æ•°æ®çš„çº¿åˆšå¥½æ˜¯æœ€åä¸€æ¡çº¿æ—¶ä¹Ÿä¸ä¼šåŠ 1è¶Šç•Œï¼æ‰€ä»¥è¦æ¨¡ä¸€ä¸‹ï¼
+					float bijiao2=*firstIn;  //ç¬¬ä¸€æ¡çº¿çš„ç¬¬äºŒä¸ªç‚¹ã€‚
+					float bijiaoY1=Linedate[FirstNonZero].first;  //ç¬¬ä¸€æ¡çº¿çš„Yåæ ‡å€¼ã€‚
 					auto tem1s=Linedate[FirstNonZero].second.begin();
 					auto tem1e=tem1s;
 					tem1e++;
 					tem1e++;
 					Linedate[FirstNonZero].second.erase(tem1s,tem1e);
-					if (std::abs(tem[1].x - tem[0].x)<shrinkDistance*2)  //Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+					if (std::abs(tem[1].x - tem[0].x)<shrinkDistance*2)  //å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
 						continue;
 					while ((!Linedate[i].second.empty()))
 					{
-						auto Line2first=Linedate[i].second.begin();  //µÚ¶şÌõÏßµÄµÚÒ»¸öµã¡£
+						auto Line2first=Linedate[i].second.begin();  //ç¬¬äºŒæ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 
-						float bijiaoY2=Linedate[i].first; //µÚ¶ş¸öÌõÖ±ÏßµÄY×ø±êÖµ¡£
+						float bijiaoY2=Linedate[i].first; //ç¬¬äºŒä¸ªæ¡ç›´çº¿çš„Yåæ ‡å€¼ã€‚
 						if (exceedExtremum(bijiaoY1,bijiaoY2,maxY,minY))
 						{
-							//Ç°ºóÁ½ÌõÖ±ÏßÈç¹û¿çÔ½ÁË¾Ö²¿¼«Öµµã£¬Ò²ĞèÒªÍË³ö£¬¼´ĞèÒª·ÖÇø¡£
+							//å‰åä¸¤æ¡ç›´çº¿å¦‚æœè·¨è¶Šäº†å±€éƒ¨æå€¼ç‚¹ï¼Œä¹Ÿéœ€è¦é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒºã€‚
 							break;
 						}
 						bijiaoY1=bijiaoY2;
 						if(*Line2first>bijiao2)
 						{
-							//µÚ¶şÌõÖ±ÏßµÄµÚÒ»¸öµã´óÓÚµÚÒ»ÌõÖ±ÏßµÄµÚ¶ş¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+							//ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹å¤§äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 							break;
 						}
-						if (*(++Line2first)<bijiao1)   //×¢Òâ£ºÕâÀï++±ØĞëÔÚÇ°£¬ÒòÎª¾ÍËãÓĞÀ¨ºÅ£¬++ÔÚºóµÄ»°Ò²»á±È½ÏÍêÔÙ++£¡£¡£¡
+						if (*(++Line2first)<bijiao1)   //æ³¨æ„ï¼šè¿™é‡Œ++å¿…é¡»åœ¨å‰ï¼Œå› ä¸ºå°±ç®—æœ‰æ‹¬å·ï¼Œ++åœ¨åçš„è¯ä¹Ÿä¼šæ¯”è¾ƒå®Œå†++ï¼ï¼ï¼
 						{
-							//µÚ¶şÌõÖ±ÏßµÄµÚ¶ş¸öµãĞ¡ÓÚµÚÒ»ÌõÖ±ÏßµÄµÚÒ»¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+							//ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹å°äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 							break;
 						}
 						auto tem2s=Linedate[i].second.begin();
 						auto tem2e=tem2s;
 						tem2e++;
-						if (std::abs(*tem2e - *tem2s)<shrinkDistance*2)//Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+						if (std::abs(*tem2e - *tem2s)<shrinkDistance*2)//å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
 							break;
 						if (j%2==0)
 						{
@@ -617,7 +617,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 							tem2e++;*/
 							float vectorY=Linedate[i].first-tem.back().y;
 							float vectorX=*tem2e-tem.back().x;
-							if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+							if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 							{
 								break;
 							}
@@ -631,7 +631,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 							tem2e++;*/
 							float vectorY=Linedate[i].first-tem.back().y;
 							float vectorX=*tem2s-tem.back().x;
-							if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+							if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 							{
 								break;
 							}
@@ -655,7 +655,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 					TheResult.push_back(tem);
 				}
 
-				//Ôö¼ÓÒ»²½£¬ÎªÁËÊÊÓ¦FDMµÄ¸ñÊ½£¬Ã¿¸öÏß¶ÎÒªËõ¶ÌÒ»¸ö°ë¾¶²¹³¥
+				//å¢åŠ ä¸€æ­¥ï¼Œä¸ºäº†é€‚åº”FDMçš„æ ¼å¼ï¼Œæ¯ä¸ªçº¿æ®µè¦ç¼©çŸ­ä¸€ä¸ªåŠå¾„è¡¥å¿
 				for (int i=0;i!=TheResult.size();++i)
 				{
 					for (int j=0;j!=TheResult[i].size();++j)
@@ -663,7 +663,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 
 						if (j%4==3||j%4==0)
 						{
-							TheResult[i][j].x += shrinkDistance;    //´Ë´¦ÊÇÄ¬ÈÏÖµ¡£
+							TheResult[i][j].x += shrinkDistance;    //æ­¤å¤„æ˜¯é»˜è®¤å€¼ã€‚
 
 						}
 						else
@@ -675,7 +675,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 			}
 		}
 			
-		//¼ÇµÃ×îºó¼ÓÉÏÆ«ÖÃÂÖÀª¡£
+		//è®°å¾—æœ€ååŠ ä¸Šåç½®è½®å»“ã€‚
 		if(lunkuo!=0)
 		{
 			for(int i=0;i!=dataOffsets.size();++i)
@@ -686,7 +686,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 				}
 			}
 		}
-		//Ìî³äÏßµÄ½á¹û×ª»ØÑ¡Ôñ½Ç¶È
+		//å¡«å……çº¿çš„ç»“æœè½¬å›é€‰æ‹©è§’åº¦
 		for (int i=0;i!=TheResult.size();++i)
 		{
 			for (int j=0;j!=TheResult[i].size();++j)
@@ -699,9 +699,9 @@ void InfillLine(outlines TheOutline, outlines & TheResult, float width, float de
 
 void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth)
 {
-	if (!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if (!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//½«ÂÖÀªÊı¾İĞı×ªÒ»¸ö½Ç¶È
+		//å°†è½®å»“æ•°æ®æ—‹è½¬ä¸€ä¸ªè§’åº¦
 		for (int i = 0; i != TheOutline.size(); ++i)
 		{
 			for (int j = 0; j != TheOutline[i].size(); ++j)
@@ -710,8 +710,8 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 			}
 		}
 
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if (lunkuo != 0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -738,7 +738,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 					{
 						temData.push_back(xd::xdpoint((float)solution[i][j].X / 1000000.0, (float)solution[i][j].Y / 1000000.0));
 					}
-					temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+					temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -748,7 +748,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 		}
 		if (TheOutline.size() != 0)
 		{
-			//µÚÒ»²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+			//ç¬¬ä¸€æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
 			std::list<float> maxY;
 			std::list<float> minY;
 			std::vector<std::pair<float, float>> maxPoint;
@@ -757,12 +757,12 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 			{
 				for (int j = 1; j != TheOutline[i].size(); j++)
 				{
-					int n = (int)TheOutline[i].size() - 1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+					int n = (int)TheOutline[i].size() - 1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 					int beforeP = (j - 1 + n) % n;
 					int beforebP = (j - 2 + n) % n;
 					int nextP = (j + 1 + n) % n;
 					int nextnP = (j + 2 + n) % n;
-					if ((TheOutline[i][j].y>TheOutline[i][beforeP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+					if ((TheOutline[i][j].y>TheOutline[i][beforeP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
 					{
 						maxY.push_back(TheOutline[i][j].y);
 						std::pair<float, float> tem;
@@ -770,7 +770,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 						tem.second = TheOutline[i][j].y;
 						maxPoint.push_back(tem);
 					}
-					else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+					else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
 					{
 						minY.push_back(TheOutline[i][j].y);
 						std::pair<float, float> tem;
@@ -780,22 +780,22 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 					}
 					else if (TheOutline[i][j].y == TheOutline[i][beforeP].y)
 					{
-						if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+						if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
 						{
 							maxY.push_back(TheOutline[i][j].y);
 						}
-						if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+						if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
 						{
 							minY.push_back(TheOutline[i][j].y);
 						}
 					}
 					else if (TheOutline[i][j].y == TheOutline[i][nextP].y)
 					{
-						if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y) && (TheOutline[i][j].y>TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+						if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y) && (TheOutline[i][j].y>TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
 						{
 							maxY.push_back(TheOutline[i][j].y);
 						}
-						if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y) && (TheOutline[i][j].y<TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+						if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y) && (TheOutline[i][j].y<TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
 						{
 							minY.push_back(TheOutline[i][j].y);
 						}
@@ -804,11 +804,11 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 			}
 			maxY.sort();
 			minY.sort();
-			maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-			minY.unique();	  //Í¬ÉÏ¡£
-			float MaxY = *max_element(maxY.begin(), maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+			maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+			minY.unique();	  //åŒä¸Šã€‚
+			float MaxY = *max_element(maxY.begin(), maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
 			float MinY = *min_element(minY.begin(), minY.end());
-			//µÚ¶ş²½£¬Éú³ÉÃ¿Ò»ÌõÏßÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+			//ç¬¬äºŒæ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡çº¿å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
 			std::vector<std::pair<float, std::list<float>>> Linedate;
 			for (int i = 1; i<(MaxY - MinY) / width - 1; i++)
 			{
@@ -816,16 +816,16 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 				tem.first = MinY + width*i;
 				Linedate.push_back(tem);
 			}
-			if (!Linedate.empty())     //¼Ç×¡£¬Linedate¿ÉÄÜÊÇ¿ÕµÄ£¡ 2015_6_17
+			if (!Linedate.empty())     //è®°ä½ï¼ŒLinedateå¯èƒ½æ˜¯ç©ºçš„ï¼ 2015_6_17
 			{
-				if ((MaxY - Linedate[Linedate.size() - 1].first)>width * 3 / 2)//ÎªÁËÊ¹µÃ×îºóÒ»¸ùÌî³äÏß²»ÖÁÓÚÓëÂÖÀªÀëµÃÌ«Ô¶£¬Òª¼ÓÒ»¸öÊÇ·ñĞèÒªÔö¼ÓÒ»ÌõÏß¶ÎÅĞ¶Ï
+				if ((MaxY - Linedate[Linedate.size() - 1].first)>width * 3 / 2)//ä¸ºäº†ä½¿å¾—æœ€åä¸€æ ¹å¡«å……çº¿ä¸è‡³äºä¸è½®å»“ç¦»å¾—å¤ªè¿œï¼Œè¦åŠ ä¸€ä¸ªæ˜¯å¦éœ€è¦å¢åŠ ä¸€æ¡çº¿æ®µåˆ¤æ–­
 				{
 
 					std::pair<float, std::list<float>> tem;
 					tem.first = (MaxY + Linedate[Linedate.size() - 1].first) / 2;
 					Linedate.push_back(tem);
 				}
-				else if ((MaxY - Linedate[Linedate.size() - 1].first) <= width * 3 / 2 && (MaxY - Linedate[Linedate.size() - 1].first)>width)  //ÈÃÃ¿Ò»ÌõÏßµÄ¼ä¾à¶¼Ôö¼ÓÒ»µãµÄ×ÔÊÊÓ¦Ïß¿í²¹³¥
+				else if ((MaxY - Linedate[Linedate.size() - 1].first) <= width * 3 / 2 && (MaxY - Linedate[Linedate.size() - 1].first)>width)  //è®©æ¯ä¸€æ¡çº¿çš„é—´è·éƒ½å¢åŠ ä¸€ç‚¹çš„è‡ªé€‚åº”çº¿å®½è¡¥å¿
 				{
 					for (int i = 0; i != Linedate.size(); ++i)
 					{
@@ -836,18 +836,18 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 				for (int i = 0; i != TheOutline.size(); i++)
 				{
 
-					for (int j = 1; j != TheOutline[i].size(); j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+					for (int j = 1; j != TheOutline[i].size(); j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
 					{
-						int n = (int)TheOutline[i].size() - 1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+						int n = (int)TheOutline[i].size() - 1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 						int beforeP = (j - 1 + n) % n;
 						int beforebP = (j - 2 + n) % n;
 						int nextP = (j + 1 + n) % n;
 						int nextnP = (j + 2 + n) % n;
-						if (TheOutline[i][j].y != TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+						if (TheOutline[i][j].y != TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 						{
 							for (int k = 0; k != Linedate.size(); k++)
 							{
-								if ((Linedate[k].first - TheOutline[i][j].y)*(Linedate[k].first - TheOutline[i][nextP].y)<0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+								if ((Linedate[k].first - TheOutline[i][j].y)*(Linedate[k].first - TheOutline[i][nextP].y)<0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									float x1 = TheOutline[i][j].x;
 									float x2 = TheOutline[i][nextP].x;
@@ -855,38 +855,38 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 									float y2 = TheOutline[i][nextP].y;
 									Linedate[k].second.push_back((x2 - x1) / (y2 - y1)*(Linedate[k].first - y1) + x1);
 								}
-								else if ((Linedate[k].first == TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+								else if ((Linedate[k].first == TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									if ((!IsContainPoint(maxPoint, TheOutline[i][j])) && (!IsContainPoint(minPoint, TheOutline[i][j])) && (TheOutline[i][j].y != TheOutline[i][beforeP].y))
 									{
-										//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+										//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 										Linedate[k].second.push_back(TheOutline[i][j].x);
 									}
 								}
-								else if ((Linedate[k].first == TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+								else if ((Linedate[k].first == TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									if ((!IsContainPoint(maxPoint, TheOutline[i][nextP])) && (!IsContainPoint(minPoint, TheOutline[i][nextP])) && (TheOutline[i][nextP].y != TheOutline[i][nextnP].y))
 									{
-										//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+										//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 										Linedate[k].second.push_back(TheOutline[i][nextP].x);
 									}
 								}
 							}
 						}
-						else if (TheOutline[i][j].y == TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+						else if (TheOutline[i][j].y == TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 						{
 							for (int k = 0; k != Linedate.size(); k++)
 							{
-								if (Linedate[k].first == TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+								if (Linedate[k].first == TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
 								{
-									if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == -1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-									{   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+									if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == -1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+									{   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
 										Linedate[k].second.push_back(TheOutline[i][j].x);
 										Linedate[k].second.push_back(TheOutline[i][nextP].x);
 									}
 									else if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == 1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == 1))
 									{
-										//Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+										//ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
 									}
 
 									else if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == 1))
@@ -904,58 +904,58 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 
 				}
 
-				for (int i = 0; i != Linedate.size(); i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+				for (int i = 0; i != Linedate.size(); i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
 				{
-					Linedate[i].second.sort();    //ÅÅĞò¡£
-					Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+					Linedate[i].second.sort();    //æ’åºã€‚
+					Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
 				}
-				DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
+				DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
 
-				//µÚÈı²½£¬½«Êı¾İ·ÖÇøÓò´æ·Å¡£
+				//ç¬¬ä¸‰æ­¥ï¼Œå°†æ•°æ®åˆ†åŒºåŸŸå­˜æ”¾ã€‚
 				int FirstNonZero;
 				while (!IsEmpty(Linedate, FirstNonZero))
 				{
 					outline tem;
-					int j = 0;  //ÓÃÀ´ÅĞ¶ÏÊÇÆæÊıĞĞ»¹ÊÇÅ¼ÊıĞĞµÄ²ÎÊı¡£
+					int j = 0;  //ç”¨æ¥åˆ¤æ–­æ˜¯å¥‡æ•°è¡Œè¿˜æ˜¯å¶æ•°è¡Œçš„å‚æ•°ã€‚
 					auto firstIn = Linedate[FirstNonZero].second.begin();
-					float bijiao1 = *firstIn;   //µÚÒ»ÌõÏßµÄµÚÒ»¸öµã¡£
+					float bijiao1 = *firstIn;   //ç¬¬ä¸€æ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 					tem.push_back(xdpoint(*firstIn, Linedate[FirstNonZero].first, TheOutline[0][0].z));
 					tem.push_back(xdpoint(*(++firstIn), Linedate[FirstNonZero].first, TheOutline[0][0].z));
-					int i = (FirstNonZero + 1) % Linedate.size();  //±ØĞë±£Ö¤µ±µÚÒ»¸ö·ÇÁãÊı¾İµÄÏß¸ÕºÃÊÇ×îºóÒ»ÌõÏßÊ±Ò²²»»á¼Ó1Ô½½ç£¡ËùÒÔÒªÄ£Ò»ÏÂ£¡
-					float bijiao2 = *firstIn;  //µÚÒ»ÌõÏßµÄµÚ¶ş¸öµã¡£
-					float bijiaoY1 = Linedate[FirstNonZero].first;  //µÚÒ»ÌõÏßµÄY×ø±êÖµ¡£
+					int i = (FirstNonZero + 1) % Linedate.size();  //å¿…é¡»ä¿è¯å½“ç¬¬ä¸€ä¸ªéé›¶æ•°æ®çš„çº¿åˆšå¥½æ˜¯æœ€åä¸€æ¡çº¿æ—¶ä¹Ÿä¸ä¼šåŠ 1è¶Šç•Œï¼æ‰€ä»¥è¦æ¨¡ä¸€ä¸‹ï¼
+					float bijiao2 = *firstIn;  //ç¬¬ä¸€æ¡çº¿çš„ç¬¬äºŒä¸ªç‚¹ã€‚
+					float bijiaoY1 = Linedate[FirstNonZero].first;  //ç¬¬ä¸€æ¡çº¿çš„Yåæ ‡å€¼ã€‚
 					auto tem1s = Linedate[FirstNonZero].second.begin();
 					auto tem1e = tem1s;
 					tem1e++;
 					tem1e++;
 					Linedate[FirstNonZero].second.erase(tem1s, tem1e);
-					if (std::abs(tem[1].x - tem[0].x)<shrinkDistance * 2)  //Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+					if (std::abs(tem[1].x - tem[0].x)<shrinkDistance * 2)  //å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
 						continue;
 					while ((!Linedate[i].second.empty()))
 					{
-						auto Line2first = Linedate[i].second.begin();  //µÚ¶şÌõÏßµÄµÚÒ»¸öµã¡£
+						auto Line2first = Linedate[i].second.begin();  //ç¬¬äºŒæ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 
-						float bijiaoY2 = Linedate[i].first; //µÚ¶ş¸öÌõÖ±ÏßµÄY×ø±êÖµ¡£
+						float bijiaoY2 = Linedate[i].first; //ç¬¬äºŒä¸ªæ¡ç›´çº¿çš„Yåæ ‡å€¼ã€‚
 						if (exceedExtremum(bijiaoY1, bijiaoY2, maxY, minY))
 						{
-							//Ç°ºóÁ½ÌõÖ±ÏßÈç¹û¿çÔ½ÁË¾Ö²¿¼«Öµµã£¬Ò²ĞèÒªÍË³ö£¬¼´ĞèÒª·ÖÇø¡£
+							//å‰åä¸¤æ¡ç›´çº¿å¦‚æœè·¨è¶Šäº†å±€éƒ¨æå€¼ç‚¹ï¼Œä¹Ÿéœ€è¦é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒºã€‚
 							break;
 						}
 						bijiaoY1 = bijiaoY2;
 						if (*Line2first>bijiao2)
 						{
-							//µÚ¶şÌõÖ±ÏßµÄµÚÒ»¸öµã´óÓÚµÚÒ»ÌõÖ±ÏßµÄµÚ¶ş¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+							//ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹å¤§äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 							break;
 						}
-						if (*(++Line2first)<bijiao1)   //×¢Òâ£ºÕâÀï++±ØĞëÔÚÇ°£¬ÒòÎª¾ÍËãÓĞÀ¨ºÅ£¬++ÔÚºóµÄ»°Ò²»á±È½ÏÍêÔÙ++£¡£¡£¡
+						if (*(++Line2first)<bijiao1)   //æ³¨æ„ï¼šè¿™é‡Œ++å¿…é¡»åœ¨å‰ï¼Œå› ä¸ºå°±ç®—æœ‰æ‹¬å·ï¼Œ++åœ¨åçš„è¯ä¹Ÿä¼šæ¯”è¾ƒå®Œå†++ï¼ï¼ï¼
 						{
-							//µÚ¶şÌõÖ±ÏßµÄµÚ¶ş¸öµãĞ¡ÓÚµÚÒ»ÌõÖ±ÏßµÄµÚÒ»¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+							//ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹å°äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 							break;
 						}
 						auto tem2s = Linedate[i].second.begin();
 						auto tem2e = tem2s;
 						tem2e++;
-						if (std::abs(*tem2e - *tem2s)<shrinkDistance * 2)//Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+						if (std::abs(*tem2e - *tem2s)<shrinkDistance * 2)//å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
 							break;
 						if (j % 2 == 0)
 						{
@@ -964,7 +964,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 							tem2e++;*/
 							float vectorY = Linedate[i].first - tem.back().y;
 							float vectorX = *tem2e - tem.back().x;
-							if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+							if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 							{
 								break;
 							}
@@ -978,7 +978,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 							tem2e++;*/
 							float vectorY = Linedate[i].first - tem.back().y;
 							float vectorX = *tem2s - tem.back().x;
-							if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+							if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 							{
 								break;
 							}
@@ -1002,7 +1002,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 					TheResult.push_back(tem);
 				}
 
-				//Ôö¼ÓÒ»²½£¬ÎªÁËÊÊÓ¦FDMµÄ¸ñÊ½£¬Ã¿¸öÏß¶ÎÒªËõ¶ÌÒ»¸ö°ë¾¶²¹³¥
+				//å¢åŠ ä¸€æ­¥ï¼Œä¸ºäº†é€‚åº”FDMçš„æ ¼å¼ï¼Œæ¯ä¸ªçº¿æ®µè¦ç¼©çŸ­ä¸€ä¸ªåŠå¾„è¡¥å¿
 				for (int i = 0; i != TheResult.size(); ++i)
 				{
 					for (int j = 0; j != TheResult[i].size(); ++j)
@@ -1010,7 +1010,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 
 						if (j % 4 == 3 || j % 4 == 0)
 						{
-							TheResult[i][j].x += shrinkDistance;    //´Ë´¦ÊÇÄ¬ÈÏÖµ¡£
+							TheResult[i][j].x += shrinkDistance;    //æ­¤å¤„æ˜¯é»˜è®¤å€¼ã€‚
 
 						}
 						else
@@ -1022,7 +1022,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 			}
 		}
 
-		//¼ÇµÃ×îºó¼ÓÉÏÆ«ÖÃÂÖÀª¡£
+		//è®°å¾—æœ€ååŠ ä¸Šåç½®è½®å»“ã€‚
 		if (lunkuo != 0)
 		{
 			for (int i = 0; i != dataOffsets.size(); ++i)
@@ -1033,7 +1033,7 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 				}
 			}
 		}
-		//Ìî³äÏßµÄ½á¹û×ª»ØÑ¡Ôñ½Ç¶È
+		//å¡«å……çº¿çš„ç»“æœè½¬å›é€‰æ‹©è§’åº¦
 		for (int i = 0; i != TheResult.size(); ++i)
 		{
 			for (int j = 0; j != TheResult[i].size(); ++j)
@@ -1051,11 +1051,11 @@ void InfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutline
 	}
 }
 
-void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo,  float shrinkDistance,float offsetWidth) //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¡£
+void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float degree, int lunkuo,  float shrinkDistance,float offsetWidth) //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°ã€‚
 {
-    if(!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+    if(!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
     {
-        //½«ÂÖÀªÊı¾İĞı×ªÒ»¸ö½Ç¶È
+        //å°†è½®å»“æ•°æ®æ—‹è½¬ä¸€ä¸ªè§’åº¦
         for (int i=0;i!=TheOutline.size();++i)
         {
             for (int j=0;j!=TheOutline[i].size();++j)
@@ -1064,8 +1064,8 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
             }
         }
 
-        //ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-        std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+        //éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+        std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
         if(lunkuo!=0)
         {
             ClipperLib::ClipperOffset temO;
@@ -1092,7 +1092,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                     {
                         temData.push_back(xd::xdpoint((float)solution[i][j].X*SCALING_FACTOR,(float)solution[i][j].Y*SCALING_FACTOR));
                     }
-                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
                     dataOffset.push_back(temData);
                 }
                 dataOffsets.push_back(dataOffset);
@@ -1102,12 +1102,12 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
         }
         if(TheOutline.size()!=0)
         {
-            //µÚÒ»²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+            //ç¬¬ä¸€æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
             std::list<float> maxY;
             std::list<float> minY;
             std::vector<std::pair<float,float>> maxPoint;
             std::vector<std::pair<float,float>> minPoint;
-            //×¢Òâ£¬ÕâÀï¼ÓÁËÒ»¸ö¶«Î÷£¡£¡2015_12_6 22:28  ÆøËÀÀ²£¬¹ûÈ»×Ô¼º±àµÄËã·¨×ÜÊÇÓĞÎÊÌâ£¡
+            //æ³¨æ„ï¼Œè¿™é‡ŒåŠ äº†ä¸€ä¸ªä¸œè¥¿ï¼ï¼2015_12_6 22:28  æ°”æ­»å•¦ï¼Œæœç„¶è‡ªå·±ç¼–çš„ç®—æ³•æ€»æ˜¯æœ‰é—®é¢˜ï¼
             float temMax=TheOutline[0][0].y;
             float temMin=TheOutline[0][0].y;
             for (int i=0;i!=TheOutline.size();i++)
@@ -1127,12 +1127,12 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
             {
                 for (int j=1;j!=TheOutline[i].size();j++)
                 {
-                    int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+                    int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
                     int beforeP=(j-1+n)%n;
                     int beforebP=(j-2+n)%n;
                     int nextP=(j+1+n)%n;
                     int nextnP=(j+2+n)%n;
-                    if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+                    if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
                     {
                         maxY.push_back(TheOutline[i][j].y);
                         std::pair<float,float> tem;
@@ -1140,7 +1140,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                         tem.second=TheOutline[i][j].y;
                         maxPoint.push_back(tem);
                     }
-                    else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+                    else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
                     {
                         minY.push_back(TheOutline[i][j].y);
                         std::pair<float,float> tem;
@@ -1150,22 +1150,22 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                     }
                     else if (TheOutline[i][j].y==TheOutline[i][beforeP].y)
                     {
-                        if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+                        if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                         {
                             maxY.push_back(TheOutline[i][j].y);
                         }
-                        if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+                        if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                         {
                             minY.push_back(TheOutline[i][j].y);
                         }
                     }
                     else if (TheOutline[i][j].y==TheOutline[i][nextP].y)
                     {
-                        if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+                        if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                         {
                             maxY.push_back(TheOutline[i][j].y);
                         }
-                        if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+                        if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                         {
                             minY.push_back(TheOutline[i][j].y);
                         }
@@ -1174,11 +1174,11 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
             }
             maxY.sort();
             minY.sort();
-            maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-            minY.unique();	  //Í¬ÉÏ¡£
-            float MaxY=*max_element(maxY.begin(),maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+            maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+            minY.unique();	  //åŒä¸Šã€‚
+            float MaxY=*max_element(maxY.begin(),maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
             float MinY=*min_element(minY.begin(),minY.end());
-            //µÚ¶ş²½£¬Éú³ÉÃ¿Ò»ÌõÏßÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+            //ç¬¬äºŒæ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡çº¿å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
             std::vector<std::pair<float,std::list<float>>> Linedate;
             for (int i=1;i<(MaxY-MinY)/width-1;i++)
             {
@@ -1186,16 +1186,16 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                 tem.first=MinY+width*i;
                 Linedate.push_back(tem);
             }
-            if(!Linedate.empty())     //¼Ç×¡£¬Linedate¿ÉÄÜÊÇ¿ÕµÄ£¡ 2015_6_17
+            if(!Linedate.empty())     //è®°ä½ï¼ŒLinedateå¯èƒ½æ˜¯ç©ºçš„ï¼ 2015_6_17
             {
-                if ((MaxY-Linedate[Linedate.size()-1].first)>width*3/2)//ÎªÁËÊ¹µÃ×îºóÒ»¸ùÌî³äÏß²»ÖÁÓÚÓëÂÖÀªÀëµÃÌ«Ô¶£¬Òª¼ÓÒ»¸öÊÇ·ñĞèÒªÔö¼ÓÒ»ÌõÏß¶ÎÅĞ¶Ï
+                if ((MaxY-Linedate[Linedate.size()-1].first)>width*3/2)//ä¸ºäº†ä½¿å¾—æœ€åä¸€æ ¹å¡«å……çº¿ä¸è‡³äºä¸è½®å»“ç¦»å¾—å¤ªè¿œï¼Œè¦åŠ ä¸€ä¸ªæ˜¯å¦éœ€è¦å¢åŠ ä¸€æ¡çº¿æ®µåˆ¤æ–­
                 {
 
                     std::pair<float,std::list<float>> tem;
                     tem.first=(MaxY+Linedate[Linedate.size()-1].first)/2;
                     Linedate.push_back(tem);
                 }
-                else if ((MaxY-Linedate[Linedate.size()-1].first)<=width*3/2&&(MaxY-Linedate[Linedate.size()-1].first)>width)  //ÈÃÃ¿Ò»ÌõÏßµÄ¼ä¾à¶¼Ôö¼ÓÒ»µãµÄ×ÔÊÊÓ¦Ïß¿í²¹³¥
+                else if ((MaxY-Linedate[Linedate.size()-1].first)<=width*3/2&&(MaxY-Linedate[Linedate.size()-1].first)>width)  //è®©æ¯ä¸€æ¡çº¿çš„é—´è·éƒ½å¢åŠ ä¸€ç‚¹çš„è‡ªé€‚åº”çº¿å®½è¡¥å¿
                 {
                     for (int i=0;i!=Linedate.size();++i)
                     {
@@ -1206,18 +1206,18 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                 for (int i=0;i!=TheOutline.size();i++)
                 {
 
-                    for (int j=1;j!=TheOutline[i].size();j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+                    for (int j=1;j!=TheOutline[i].size();j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
                     {
-                        int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+                        int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
                         int beforeP=(j-1+n)%n;
                         int beforebP=(j-2+n)%n;
                         int nextP=(j+1+n)%n;
                         int nextnP=(j+2+n)%n;
-                        if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+                        if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
                         {
                             for (int k=0;k!=Linedate.size();k++)
                             {
-                                if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+                                if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
                                 {
                                     float x1=TheOutline[i][j].x;
                                     float x2=TheOutline[i][nextP].x;
@@ -1225,38 +1225,38 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                                     float y2=TheOutline[i][nextP].y;
                                     Linedate[k].second.push_back((x2-x1)/(y2-y1)*(Linedate[k].first-y1)+x1);
                                 }
-                                else if ((Linedate[k].first==TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+                                else if ((Linedate[k].first==TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
                                 {
                                     if ((!IsContainPoint(maxPoint,TheOutline[i][j]))&&(!IsContainPoint(minPoint,TheOutline[i][j]))&&(TheOutline[i][j].y!=TheOutline[i][beforeP].y))
                                     {
-                                        //Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+                                        //è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
                                         Linedate[k].second.push_back(TheOutline[i][j].x);
                                     }
                                 }
-                                else if ((Linedate[k].first==TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+                                else if ((Linedate[k].first==TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
                                 {
                                     if ((!IsContainPoint(maxPoint,TheOutline[i][nextP]))&&(!IsContainPoint(minPoint,TheOutline[i][nextP]))&&(TheOutline[i][nextP].y!=TheOutline[i][nextnP].y))
                                     {
-                                        //Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+                                        //è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
                                         Linedate[k].second.push_back(TheOutline[i][nextP].x);
                                     }
                                 }
                             }
                         }
-                        else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+                        else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
                         {
                             for (int k=0;k!=Linedate.size();k++)
                             {
-                                if (Linedate[k].first==TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+                                if (Linedate[k].first==TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
                                 {
-                                    if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-                                    {   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+                                    if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+                                    {   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
                                         Linedate[k].second.push_back(TheOutline[i][j].x);
                                         Linedate[k].second.push_back(TheOutline[i][nextP].x);
                                     }
                                     else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
                                     {
-                                        //Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+                                        //ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
                                     }
 
                                     else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
@@ -1274,64 +1274,64 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
 
                 }
 
-                for(int i=0;i!=Linedate.size();i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+                for(int i=0;i!=Linedate.size();i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
                 {
-                    Linedate[i].second.sort();    //ÅÅĞò¡£
-                    Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+                    Linedate[i].second.sort();    //æ’åºã€‚
+                    Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
                 }
-                DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
+                DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
 
-                //µÚÈı²½£¬½«Êı¾İ·ÖÇøÓò´æ·Å¡£
+                //ç¬¬ä¸‰æ­¥ï¼Œå°†æ•°æ®åˆ†åŒºåŸŸå­˜æ”¾ã€‚
                 int FirstNonZero;
                 while(!IsEmpty(Linedate,FirstNonZero))
                 {
                     outline tem;
-                    int j=0;  //ÓÃÀ´ÅĞ¶ÏÊÇÆæÊıĞĞ»¹ÊÇÅ¼ÊıĞĞµÄ²ÎÊı¡£
+                    int j=0;  //ç”¨æ¥åˆ¤æ–­æ˜¯å¥‡æ•°è¡Œè¿˜æ˜¯å¶æ•°è¡Œçš„å‚æ•°ã€‚
                     auto firstIn=Linedate[FirstNonZero].second.begin();
-                    float bijiao1=*firstIn;   //µÚÒ»ÌõÏßµÄµÚÒ»¸öµã¡£
+                    float bijiao1=*firstIn;   //ç¬¬ä¸€æ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
                     tem.push_back(xdpoint(*firstIn,Linedate[FirstNonZero].first,TheOutline[0][0].z));
                     tem.push_back(xdpoint(*(++firstIn),Linedate[FirstNonZero].first,TheOutline[0][0].z));
-                    int i=(FirstNonZero+1)%Linedate.size();  //±ØĞë±£Ö¤µ±µÚÒ»¸ö·ÇÁãÊı¾İµÄÏß¸ÕºÃÊÇ×îºóÒ»ÌõÏßÊ±Ò²²»»á¼Ó1Ô½½ç£¡ËùÒÔÒªÄ£Ò»ÏÂ£¡
-                    float bijiao2=*firstIn;  //µÚÒ»ÌõÏßµÄµÚ¶ş¸öµã¡£
-                    float bijiaoY1=Linedate[FirstNonZero].first;  //µÚÒ»ÌõÏßµÄY×ø±êÖµ¡£
+                    int i=(FirstNonZero+1)%Linedate.size();  //å¿…é¡»ä¿è¯å½“ç¬¬ä¸€ä¸ªéé›¶æ•°æ®çš„çº¿åˆšå¥½æ˜¯æœ€åä¸€æ¡çº¿æ—¶ä¹Ÿä¸ä¼šåŠ 1è¶Šç•Œï¼æ‰€ä»¥è¦æ¨¡ä¸€ä¸‹ï¼
+                    float bijiao2=*firstIn;  //ç¬¬ä¸€æ¡çº¿çš„ç¬¬äºŒä¸ªç‚¹ã€‚
+                    float bijiaoY1=Linedate[FirstNonZero].first;  //ç¬¬ä¸€æ¡çº¿çš„Yåæ ‡å€¼ã€‚
                     auto tem1s=Linedate[FirstNonZero].second.begin();
                     auto tem1e=tem1s;
                     tem1e++;
                     tem1e++;
                     Linedate[FirstNonZero].second.erase(tem1s,tem1e);
-                    if (std::abs(tem[1].x - tem[0].x)<shrinkDistance*2)  //Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+                    if (std::abs(tem[1].x - tem[0].x)<shrinkDistance*2)  //å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
                         continue;
                     while ((!Linedate[i].second.empty()))
                     {
-                        auto Line2first=Linedate[i].second.begin();  //µÚ¶şÌõÏßµÄµÚÒ»¸öµã¡£
+                        auto Line2first=Linedate[i].second.begin();  //ç¬¬äºŒæ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 
-                        float bijiaoY2=Linedate[i].first; //µÚ¶ş¸öÌõÖ±ÏßµÄY×ø±êÖµ¡£
+                        float bijiaoY2=Linedate[i].first; //ç¬¬äºŒä¸ªæ¡ç›´çº¿çš„Yåæ ‡å€¼ã€‚
 //                        if (exceedExtremum(bijiaoY1,bijiaoY2,maxY,minY))
 //                        {
-//                            //Ç°ºóÁ½ÌõÖ±ÏßÈç¹û¿çÔ½ÁË¾Ö²¿¼«Öµµã£¬Ò²ĞèÒªÍË³ö£¬¼´ĞèÒª·ÖÇø¡£
+//                            //å‰åä¸¤æ¡ç›´çº¿å¦‚æœè·¨è¶Šäº†å±€éƒ¨æå€¼ç‚¹ï¼Œä¹Ÿéœ€è¦é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒºã€‚
 //                            break;
 //                        }
 //                        bijiaoY1=bijiaoY2;
 //                        if(*Line2first>bijiao2)
 //                        {
-//                            //µÚ¶şÌõÖ±ÏßµÄµÚÒ»¸öµã´óÓÚµÚÒ»ÌõÖ±ÏßµÄµÚ¶ş¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+//                            //ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹å¤§äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 //                            break;
 //                        }
-//                        if (*(++Line2first)<bijiao1)   //×¢Òâ£ºÕâÀï++±ØĞëÔÚÇ°£¬ÒòÎª¾ÍËãÓĞÀ¨ºÅ£¬++ÔÚºóµÄ»°Ò²»á±È½ÏÍêÔÙ++£¡£¡£¡
+//                        if (*(++Line2first)<bijiao1)   //æ³¨æ„ï¼šè¿™é‡Œ++å¿…é¡»åœ¨å‰ï¼Œå› ä¸ºå°±ç®—æœ‰æ‹¬å·ï¼Œ++åœ¨åçš„è¯ä¹Ÿä¼šæ¯”è¾ƒå®Œå†++ï¼ï¼ï¼
 //                        {
-//                            //µÚ¶şÌõÖ±ÏßµÄµÚ¶ş¸öµãĞ¡ÓÚµÚÒ»ÌõÖ±ÏßµÄµÚÒ»¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+//                            //ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹å°äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 //                            break;
 //                        }
                         auto tem2s=Linedate[i].second.begin();
                         auto tem2e=tem2s;
                         tem2e++;
-                        if (std::abs(*tem2e - *tem2s)<shrinkDistance*2)//Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+                        if (std::abs(*tem2e - *tem2s)<shrinkDistance*2)//å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
                             break;
                         if (j%2==0)
                         {
                             float vectorY=Linedate[i].first-tem.back().y;
                             float vectorX=*tem2e-tem.back().x;
-//                            if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+//                            if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 //                            {
 //                                break;
 //                            }
@@ -1342,7 +1342,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                         {
                             float vectorY=Linedate[i].first-tem.back().y;
                             float vectorX=*tem2s-tem.back().x;
-//                            if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+//                            if (abs(vectorY/sqrt(pow(vectorX,2)+pow(vectorY,2)))<sin(5.0/180*pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 //                            {
 //                                break;
 //                            }
@@ -1366,7 +1366,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                     TheResult.push_back(tem);
                 }
 
-                //Ã¿¸öÏß¶ÎÒªËõ¶ÌÒ»¸ö°ë¾¶²¹³¥
+                //æ¯ä¸ªçº¿æ®µè¦ç¼©çŸ­ä¸€ä¸ªåŠå¾„è¡¥å¿
                 for (int i=0;i!=TheResult.size();++i)
                 {
                     for (int j=0;j!=TheResult[i].size();++j)
@@ -1374,7 +1374,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
 
                         if (j%4==3||j%4==0)
                         {
-                            TheResult[i][j].x += shrinkDistance;    //´Ë´¦ÊÇÄ¬ÈÏÖµ¡£
+                            TheResult[i][j].x += shrinkDistance;    //æ­¤å¤„æ˜¯é»˜è®¤å€¼ã€‚
 
                         }
                         else
@@ -1383,7 +1383,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                         }
                     }
                 }
-                //ÎªÁËÊÊÓ¦SLA£¬Ã¿¸öµã¶¼Òª·Ö¿ª¼ÓÈë£¡
+                //ä¸ºäº†é€‚åº”SLAï¼Œæ¯ä¸ªç‚¹éƒ½è¦åˆ†å¼€åŠ å…¥ï¼
                 outlines temS;
                 for(const outline & ol : TheResult)
                 {
@@ -1403,7 +1403,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
             }
         }
 
-        //¼ÇµÃ×îºó¼ÓÉÏÆ«ÖÃÂÖÀª¡£
+        //è®°å¾—æœ€ååŠ ä¸Šåç½®è½®å»“ã€‚
         if(lunkuo!=0)
         {
             for(int i=0;i!=dataOffsets.size();++i)
@@ -1414,7 +1414,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
                 }
             }
         }
-        //Ìî³äÏßµÄ½á¹û×ª»ØÑ¡Ôñ½Ç¶È
+        //å¡«å……çº¿çš„ç»“æœè½¬å›é€‰æ‹©è§’åº¦
         for (int i=0;i!=TheResult.size();++i)
         {
             for (int j=0;j!=TheResult[i].size();++j)
@@ -1427,9 +1427,9 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, float width, float
 
 void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth)
 {
-    if (!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+    if (!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
     {
-        //½«ÂÖÀªÊı¾İĞı×ªÒ»¸ö½Ç¶È
+        //å°†è½®å»“æ•°æ®æ—‹è½¬ä¸€ä¸ªè§’åº¦
         for (int i = 0; i != TheOutline.size(); ++i)
         {
             for (int j = 0; j != TheOutline[i].size(); ++j)
@@ -1438,8 +1438,8 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
             }
         }
 
-        //ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-        std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+        //éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+        std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
         if (lunkuo != 0)
         {
             ClipperLib::ClipperOffset temO;
@@ -1466,7 +1466,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                     {
                         temData.push_back(xd::xdpoint((float)solution[i][j].X / 1000000.0, (float)solution[i][j].Y / 1000000.0));
                     }
-                    temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                    temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
                     dataOffset.push_back(temData);
                 }
                 dataOffsets.push_back(dataOffset);
@@ -1476,10 +1476,10 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
         }
         if (TheOutline.size() != 0)
         {
-            //µÚÒ»²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+            //ç¬¬ä¸€æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
             std::list<float> maxY;
             std::list<float> minY;
-             //×¢Òâ£¬ÕâÀï¼ÓÁËÒ»¸ö¶«Î÷£¡£¡2015_12_6 22:28  ÆøËÀÀ²£¬¹ûÈ»×Ô¼º±àµÄËã·¨×ÜÊÇÓĞÎÊÌâ£¡
+             //æ³¨æ„ï¼Œè¿™é‡ŒåŠ äº†ä¸€ä¸ªä¸œè¥¿ï¼ï¼2015_12_6 22:28  æ°”æ­»å•¦ï¼Œæœç„¶è‡ªå·±ç¼–çš„ç®—æ³•æ€»æ˜¯æœ‰é—®é¢˜ï¼
             float temMax=TheOutline[0][0].y;
             float temMin=TheOutline[0][0].y;
             for (int i=0;i!=TheOutline.size();i++)
@@ -1501,12 +1501,12 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
             {
                 for (int j = 1; j != TheOutline[i].size(); j++)
                 {
-                    int n = (int)TheOutline[i].size() - 1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+                    int n = (int)TheOutline[i].size() - 1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
                     int beforeP = (j - 1 + n) % n;
                     int beforebP = (j - 2 + n) % n;
                     int nextP = (j + 1 + n) % n;
                     int nextnP = (j + 2 + n) % n;
-                    if ((TheOutline[i][j].y>TheOutline[i][beforeP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+                    if ((TheOutline[i][j].y>TheOutline[i][beforeP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
                     {
                         maxY.push_back(TheOutline[i][j].y);
                         std::pair<float, float> tem;
@@ -1514,7 +1514,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                         tem.second = TheOutline[i][j].y;
                         maxPoint.push_back(tem);
                     }
-                    else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+                    else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
                     {
                         minY.push_back(TheOutline[i][j].y);
                         std::pair<float, float> tem;
@@ -1524,22 +1524,22 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                     }
                     else if (TheOutline[i][j].y == TheOutline[i][beforeP].y)
                     {
-                        if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+                        if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y) && (TheOutline[i][j].y>TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                         {
                             maxY.push_back(TheOutline[i][j].y);
                         }
-                        if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+                        if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                         {
                             minY.push_back(TheOutline[i][j].y);
                         }
                     }
                     else if (TheOutline[i][j].y == TheOutline[i][nextP].y)
                     {
-                        if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y) && (TheOutline[i][j].y>TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+                        if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y) && (TheOutline[i][j].y>TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                         {
                             maxY.push_back(TheOutline[i][j].y);
                         }
-                        if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y) && (TheOutline[i][j].y<TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+                        if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y) && (TheOutline[i][j].y<TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                         {
                             minY.push_back(TheOutline[i][j].y);
                         }
@@ -1548,11 +1548,11 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
             }
             maxY.sort();
             minY.sort();
-            maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-            minY.unique();	  //Í¬ÉÏ¡£
-            float MaxY = *max_element(maxY.begin(), maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+            maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+            minY.unique();	  //åŒä¸Šã€‚
+            float MaxY = *max_element(maxY.begin(), maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
             float MinY = *min_element(minY.begin(), minY.end());
-            //µÚ¶ş²½£¬Éú³ÉÃ¿Ò»ÌõÏßÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+            //ç¬¬äºŒæ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡çº¿å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
             std::vector<std::pair<float, std::list<float>>> Linedate;
             for (int i = 1; i<(MaxY - MinY) / width - 1; i++)
             {
@@ -1560,16 +1560,16 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                 tem.first = MinY + width*i;
                 Linedate.push_back(tem);
             }
-            if (!Linedate.empty())     //¼Ç×¡£¬Linedate¿ÉÄÜÊÇ¿ÕµÄ£¡ 2015_6_17
+            if (!Linedate.empty())     //è®°ä½ï¼ŒLinedateå¯èƒ½æ˜¯ç©ºçš„ï¼ 2015_6_17
             {
-                if ((MaxY - Linedate[Linedate.size() - 1].first)>width * 3 / 2)//ÎªÁËÊ¹µÃ×îºóÒ»¸ùÌî³äÏß²»ÖÁÓÚÓëÂÖÀªÀëµÃÌ«Ô¶£¬Òª¼ÓÒ»¸öÊÇ·ñĞèÒªÔö¼ÓÒ»ÌõÏß¶ÎÅĞ¶Ï
+                if ((MaxY - Linedate[Linedate.size() - 1].first)>width * 3 / 2)//ä¸ºäº†ä½¿å¾—æœ€åä¸€æ ¹å¡«å……çº¿ä¸è‡³äºä¸è½®å»“ç¦»å¾—å¤ªè¿œï¼Œè¦åŠ ä¸€ä¸ªæ˜¯å¦éœ€è¦å¢åŠ ä¸€æ¡çº¿æ®µåˆ¤æ–­
                 {
 
                     std::pair<float, std::list<float>> tem;
                     tem.first = (MaxY + Linedate[Linedate.size() - 1].first) / 2;
                     Linedate.push_back(tem);
                 }
-                else if ((MaxY - Linedate[Linedate.size() - 1].first) <= width * 3 / 2 && (MaxY - Linedate[Linedate.size() - 1].first)>width)  //ÈÃÃ¿Ò»ÌõÏßµÄ¼ä¾à¶¼Ôö¼ÓÒ»µãµÄ×ÔÊÊÓ¦Ïß¿í²¹³¥
+                else if ((MaxY - Linedate[Linedate.size() - 1].first) <= width * 3 / 2 && (MaxY - Linedate[Linedate.size() - 1].first)>width)  //è®©æ¯ä¸€æ¡çº¿çš„é—´è·éƒ½å¢åŠ ä¸€ç‚¹çš„è‡ªé€‚åº”çº¿å®½è¡¥å¿
                 {
                     for (int i = 0; i != Linedate.size(); ++i)
                     {
@@ -1580,18 +1580,18 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                 for (int i = 0; i != TheOutline.size(); i++)
                 {
 
-                    for (int j = 1; j != TheOutline[i].size(); j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+                    for (int j = 1; j != TheOutline[i].size(); j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
                     {
-                        int n = (int)TheOutline[i].size() - 1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+                        int n = (int)TheOutline[i].size() - 1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
                         int beforeP = (j - 1 + n) % n;
                         int beforebP = (j - 2 + n) % n;
                         int nextP = (j + 1 + n) % n;
                         int nextnP = (j + 2 + n) % n;
-                        if (TheOutline[i][j].y != TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+                        if (TheOutline[i][j].y != TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
                         {
                             for (int k = 0; k != Linedate.size(); k++)
                             {
-                                if ((Linedate[k].first - TheOutline[i][j].y)*(Linedate[k].first - TheOutline[i][nextP].y)<0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+                                if ((Linedate[k].first - TheOutline[i][j].y)*(Linedate[k].first - TheOutline[i][nextP].y)<0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
                                 {
                                     float x1 = TheOutline[i][j].x;
                                     float x2 = TheOutline[i][nextP].x;
@@ -1599,38 +1599,38 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                                     float y2 = TheOutline[i][nextP].y;
                                     Linedate[k].second.push_back((x2 - x1) / (y2 - y1)*(Linedate[k].first - y1) + x1);
                                 }
-                                else if ((Linedate[k].first == TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+                                else if ((Linedate[k].first == TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
                                 {
                                     if ((!IsContainPoint(maxPoint, TheOutline[i][j])) && (!IsContainPoint(minPoint, TheOutline[i][j])) && (TheOutline[i][j].y != TheOutline[i][beforeP].y))
                                     {
-                                        //Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+                                        //è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
                                         Linedate[k].second.push_back(TheOutline[i][j].x);
                                     }
                                 }
-                                else if ((Linedate[k].first == TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+                                else if ((Linedate[k].first == TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
                                 {
                                     if ((!IsContainPoint(maxPoint, TheOutline[i][nextP])) && (!IsContainPoint(minPoint, TheOutline[i][nextP])) && (TheOutline[i][nextP].y != TheOutline[i][nextnP].y))
                                     {
-                                        //Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+                                        //è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
                                         Linedate[k].second.push_back(TheOutline[i][nextP].x);
                                     }
                                 }
                             }
                         }
-                        else if (TheOutline[i][j].y == TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+                        else if (TheOutline[i][j].y == TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
                         {
                             for (int k = 0; k != Linedate.size(); k++)
                             {
-                                if (Linedate[k].first == TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+                                if (Linedate[k].first == TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
                                 {
-                                    if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == -1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-                                    {   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+                                    if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == -1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+                                    {   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
                                         Linedate[k].second.push_back(TheOutline[i][j].x);
                                         Linedate[k].second.push_back(TheOutline[i][nextP].x);
                                     }
                                     else if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == 1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == 1))
                                     {
-                                        //Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+                                        //ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
                                     }
 
                                     else if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == 1))
@@ -1648,64 +1648,64 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 
                 }
 
-                for (int i = 0; i != Linedate.size(); i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+                for (int i = 0; i != Linedate.size(); i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
                 {
-                    Linedate[i].second.sort();    //ÅÅĞò¡£
-                    Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+                    Linedate[i].second.sort();    //æ’åºã€‚
+                    Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
                 }
-                DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
+                DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
 
-                //µÚÈı²½£¬½«Êı¾İ·ÖÇøÓò´æ·Å¡£
+                //ç¬¬ä¸‰æ­¥ï¼Œå°†æ•°æ®åˆ†åŒºåŸŸå­˜æ”¾ã€‚
                 int FirstNonZero;
                 while (!IsEmpty(Linedate, FirstNonZero))
                 {
                     outline tem;
-                    int j = 0;  //ÓÃÀ´ÅĞ¶ÏÊÇÆæÊıĞĞ»¹ÊÇÅ¼ÊıĞĞµÄ²ÎÊı¡£
+                    int j = 0;  //ç”¨æ¥åˆ¤æ–­æ˜¯å¥‡æ•°è¡Œè¿˜æ˜¯å¶æ•°è¡Œçš„å‚æ•°ã€‚
                     auto firstIn = Linedate[FirstNonZero].second.begin();
-                    //float bijiao1 = *firstIn;   //µÚÒ»ÌõÏßµÄµÚÒ»¸öµã¡£
+                    //float bijiao1 = *firstIn;   //ç¬¬ä¸€æ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
                     tem.push_back(xdpoint(*firstIn, Linedate[FirstNonZero].first, TheOutline[0][0].z));
                     tem.push_back(xdpoint(*(++firstIn), Linedate[FirstNonZero].first, TheOutline[0][0].z));
-                    int i = (FirstNonZero + 1) % Linedate.size();  //±ØĞë±£Ö¤µ±µÚÒ»¸ö·ÇÁãÊı¾İµÄÏß¸ÕºÃÊÇ×îºóÒ»ÌõÏßÊ±Ò²²»»á¼Ó1Ô½½ç£¡ËùÒÔÒªÄ£Ò»ÏÂ£¡
-                    //float bijiao2 = *firstIn;  //µÚÒ»ÌõÏßµÄµÚ¶ş¸öµã¡£
-                    //float bijiaoY1 = Linedate[FirstNonZero].first;  //µÚÒ»ÌõÏßµÄY×ø±êÖµ¡£
+                    int i = (FirstNonZero + 1) % Linedate.size();  //å¿…é¡»ä¿è¯å½“ç¬¬ä¸€ä¸ªéé›¶æ•°æ®çš„çº¿åˆšå¥½æ˜¯æœ€åä¸€æ¡çº¿æ—¶ä¹Ÿä¸ä¼šåŠ 1è¶Šç•Œï¼æ‰€ä»¥è¦æ¨¡ä¸€ä¸‹ï¼
+                    //float bijiao2 = *firstIn;  //ç¬¬ä¸€æ¡çº¿çš„ç¬¬äºŒä¸ªç‚¹ã€‚
+                    //float bijiaoY1 = Linedate[FirstNonZero].first;  //ç¬¬ä¸€æ¡çº¿çš„Yåæ ‡å€¼ã€‚
                     auto tem1s = Linedate[FirstNonZero].second.begin();
                     auto tem1e = tem1s;
                     tem1e++;
                     tem1e++;
                     Linedate[FirstNonZero].second.erase(tem1s, tem1e);
-                    if (std::abs(tem[1].x - tem[0].x)<shrinkDistance * 2)  //Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+                    if (std::abs(tem[1].x - tem[0].x)<shrinkDistance * 2)  //å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
                         continue;
                     while ((!Linedate[i].second.empty()))
                     {
- //                       auto Line2first = Linedate[i].second.begin();  //µÚ¶şÌõÏßµÄµÚÒ»¸öµã¡£
+ //                       auto Line2first = Linedate[i].second.begin();  //ç¬¬äºŒæ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 //
- //                       float bijiaoY2 = Linedate[i].first; //µÚ¶ş¸öÌõÖ±ÏßµÄY×ø±êÖµ¡£
+ //                       float bijiaoY2 = Linedate[i].first; //ç¬¬äºŒä¸ªæ¡ç›´çº¿çš„Yåæ ‡å€¼ã€‚
 //                        if (exceedExtremum(bijiaoY1, bijiaoY2, maxY, minY))
 //                        {
-//                            //Ç°ºóÁ½ÌõÖ±ÏßÈç¹û¿çÔ½ÁË¾Ö²¿¼«Öµµã£¬Ò²ĞèÒªÍË³ö£¬¼´ĞèÒª·ÖÇø¡£
+//                            //å‰åä¸¤æ¡ç›´çº¿å¦‚æœè·¨è¶Šäº†å±€éƒ¨æå€¼ç‚¹ï¼Œä¹Ÿéœ€è¦é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒºã€‚
 //                            break;
 //                        }
 //                        bijiaoY1 = bijiaoY2;
 //                        if (*Line2first>bijiao2)
 //                        {
-//                            //µÚ¶şÌõÖ±ÏßµÄµÚÒ»¸öµã´óÓÚµÚÒ»ÌõÖ±ÏßµÄµÚ¶ş¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+//                            //ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹å¤§äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 //                            break;
 //                        }
-//                        if (*(++Line2first)<bijiao1)   //×¢Òâ£ºÕâÀï++±ØĞëÔÚÇ°£¬ÒòÎª¾ÍËãÓĞÀ¨ºÅ£¬++ÔÚºóµÄ»°Ò²»á±È½ÏÍêÔÙ++£¡£¡£¡
+//                        if (*(++Line2first)<bijiao1)   //æ³¨æ„ï¼šè¿™é‡Œ++å¿…é¡»åœ¨å‰ï¼Œå› ä¸ºå°±ç®—æœ‰æ‹¬å·ï¼Œ++åœ¨åçš„è¯ä¹Ÿä¼šæ¯”è¾ƒå®Œå†++ï¼ï¼ï¼
 //                        {
-//                            //µÚ¶şÌõÖ±ÏßµÄµÚ¶ş¸öµãĞ¡ÓÚµÚÒ»ÌõÖ±ÏßµÄµÚÒ»¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+//                            //ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹å°äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 //                            break;
 //                        }
-                        auto tem2s = Linedate[i].second.begin();  //µÚ¶şÌõÏßµÄµÚÒ»¸öµã¡£
-                        auto tem2e = tem2s;   //µÚ¶şÌõÏßµÄµÚ¶ş¸öµã¡£
+                        auto tem2s = Linedate[i].second.begin();  //ç¬¬äºŒæ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
+                        auto tem2e = tem2s;   //ç¬¬äºŒæ¡çº¿çš„ç¬¬äºŒä¸ªç‚¹ã€‚
                         tem2e++;
-                        if (std::abs(*tem2e - *tem2s)<shrinkDistance * 2)//Èç¹ûÁ½¸öµãµÄ¾àÀëÌ«½üÁË£¬Ôò²»ÓÃÌî³äÁË£¡£¡important£¡£¡£¡
+                        if (std::abs(*tem2e - *tem2s)<shrinkDistance * 2)//å¦‚æœä¸¤ä¸ªç‚¹çš„è·ç¦»å¤ªè¿‘äº†ï¼Œåˆ™ä¸ç”¨å¡«å……äº†ï¼ï¼importantï¼ï¼ï¼
                             break;
                         if (j % 2 == 0)
                         {
                             //float vectorY = Linedate[i].first - tem.back().y;
                             //float vectorX = *tem2e - tem.back().x;
-//                            if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+//                            if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 //                            {
 //                                break;
 //                            }
@@ -1716,7 +1716,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                         {
                            // float vectorY = Linedate[i].first - tem.back().y;
                             //float vectorX = *tem2s - tem.back().x;
-//                            if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //Á¬½ÓÏßºÍË®Æ½ÏßÏà²î1¶È¾Í·ÖÇø£¬¼ÇµÃÓÃ1.0
+//                            if (abs(vectorY / sqrt(pow(vectorX, 2) + pow(vectorY, 2)))<sin(5.0 / 180 * pi))   //è¿æ¥çº¿å’Œæ°´å¹³çº¿ç›¸å·®1åº¦å°±åˆ†åŒºï¼Œè®°å¾—ç”¨1.0
 //                            {
 //                                break;
 //                            }
@@ -1740,7 +1740,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                     TheResult.push_back(tem);
                 }
 
-                //Ã¿¸öÏß¶ÎÒªËõ¶ÌÒ»¸ö°ë¾¶²¹³¥
+                //æ¯ä¸ªçº¿æ®µè¦ç¼©çŸ­ä¸€ä¸ªåŠå¾„è¡¥å¿
                 for (int i = 0; i != TheResult.size(); ++i)
                 {
                     for (int j = 0; j != TheResult[i].size(); ++j)
@@ -1757,7 +1757,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                         }
                     }
                 }
-                //ÎªÁËÊÊÓ¦SLA£¬Ã¿¸öµã¶¼Òª·Ö¿ª¼ÓÈë£¡
+                //ä¸ºäº†é€‚åº”SLAï¼Œæ¯ä¸ªç‚¹éƒ½è¦åˆ†å¼€åŠ å…¥ï¼
                 outlines temS;
                 for(const outline & ol : TheResult)
                 {
@@ -1777,7 +1777,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
             }
         }
 
-        //¼ÇµÃ×îºó¼ÓÉÏÆ«ÖÃÂÖÀª¡£
+        //è®°å¾—æœ€ååŠ ä¸Šåç½®è½®å»“ã€‚
         if (lunkuo != 0)
         {
             for (int i = 0; i != dataOffsets.size(); ++i)
@@ -1788,7 +1788,7 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
                 }
             }
         }
-        //Ìî³äÏßµÄ½á¹û×ª»ØÑ¡Ôñ½Ç¶È
+        //å¡«å……çº¿çš„ç»“æœè½¬å›é€‰æ‹©è§’åº¦
         for (int i = 0; i != TheResult.size(); ++i)
         {
             for (int j = 0; j != TheResult[i].size(); ++j)
@@ -1806,11 +1806,11 @@ void InfillLineSLA(outlines TheOutline, outlines & TheResult, outlines & TheOutl
     }
 }
 
-void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth)//²»·ÖÇøµÄÌî³äËã·¨£¬ÎªÁË¼ÓËÙ
+void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, float degree, int lunkuo, float shrinkDistance, float offsetWidth)//ä¸åˆ†åŒºçš„å¡«å……ç®—æ³•ï¼Œä¸ºäº†åŠ é€Ÿ
 {
-	if (!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if (!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//½«ÂÖÀªÊı¾İĞı×ªÒ»¸ö½Ç¶È
+		//å°†è½®å»“æ•°æ®æ—‹è½¬ä¸€ä¸ªè§’åº¦
 		for (int i = 0; i != TheOutline.size(); ++i)
 		{
 			for (int j = 0; j != TheOutline[i].size(); ++j)
@@ -1819,8 +1819,8 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 			}
 		}
 
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if (lunkuo != 0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -1847,7 +1847,7 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 					{
 						temData.push_back(xd::xdpoint((float)solution[i][j].X / 1000000.0, (float)solution[i][j].Y / 1000000.0));
 					}
-					temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+					temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -1857,7 +1857,7 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 		}
 		if (TheOutline.size() != 0)
 		{
-			//µÚÒ»²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+			//ç¬¬ä¸€æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
 			std::list<float> maxY;
 			std::list<float> minY;
 			std::vector<std::pair<float, float>> maxPoint;
@@ -1866,12 +1866,12 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 			{
 				for (int j = 1; j != TheOutline[i].size(); j++)
 				{
-					int n = (int)TheOutline[i].size() - 1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+					int n = (int)TheOutline[i].size() - 1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 					int beforeP = (j - 1 + n) % n;
 					int beforebP = (j - 2 + n) % n;
 					int nextP = (j + 1 + n) % n;
 					int nextnP = (j + 2 + n) % n;
-					if ((TheOutline[i][j].y > TheOutline[i][beforeP].y) && (TheOutline[i][j].y > TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+					if ((TheOutline[i][j].y > TheOutline[i][beforeP].y) && (TheOutline[i][j].y > TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
 					{
 						maxY.push_back(TheOutline[i][j].y);
 						std::pair<float, float> tem;
@@ -1879,7 +1879,7 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 						tem.second = TheOutline[i][j].y;
 						maxPoint.push_back(tem);
 					}
-					else if ((TheOutline[i][j].y < TheOutline[i][beforeP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+					else if ((TheOutline[i][j].y < TheOutline[i][beforeP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
 					{
 						minY.push_back(TheOutline[i][j].y);
 						std::pair<float, float> tem;
@@ -1889,22 +1889,22 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 					}
 					else if (TheOutline[i][j].y == TheOutline[i][beforeP].y)
 					{
-						if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y) && (TheOutline[i][j].y > TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+						if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y) && (TheOutline[i][j].y > TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
 						{
 							maxY.push_back(TheOutline[i][j].y);
 						}
-						if ((TheOutline[i][beforeP].y < TheOutline[i][beforebP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+						if ((TheOutline[i][beforeP].y < TheOutline[i][beforebP].y) && (TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
 						{
 							minY.push_back(TheOutline[i][j].y);
 						}
 					}
 					else if (TheOutline[i][j].y == TheOutline[i][nextP].y)
 					{
-						if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y) && (TheOutline[i][j].y > TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+						if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y) && (TheOutline[i][j].y > TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
 						{
 							maxY.push_back(TheOutline[i][j].y);
 						}
-						if ((TheOutline[i][nextP].y < TheOutline[i][nextnP].y) && (TheOutline[i][j].y < TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+						if ((TheOutline[i][nextP].y < TheOutline[i][nextnP].y) && (TheOutline[i][j].y < TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
 						{
 							minY.push_back(TheOutline[i][j].y);
 						}
@@ -1913,11 +1913,11 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 			}
 			maxY.sort();
 			minY.sort();
-			maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-			minY.unique();	  //Í¬ÉÏ¡£
-			float MaxY = *max_element(maxY.begin(), maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+			maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+			minY.unique();	  //åŒä¸Šã€‚
+			float MaxY = *max_element(maxY.begin(), maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
 			float MinY = *min_element(minY.begin(), minY.end());
-			//µÚ¶ş²½£¬Éú³ÉÃ¿Ò»ÌõÏßÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+			//ç¬¬äºŒæ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡çº¿å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
 			std::vector<std::pair<float, std::list<float>>> Linedate;
 			for (int i = 1; i < (MaxY - MinY) / width - 1; i++)
 			{
@@ -1925,16 +1925,16 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 				tem.first = MinY + width*i;
 				Linedate.push_back(tem);
 			}
-			if (!Linedate.empty())     //¼Ç×¡£¬Linedate¿ÉÄÜÊÇ¿ÕµÄ£¡ 2015_6_17
+			if (!Linedate.empty())     //è®°ä½ï¼ŒLinedateå¯èƒ½æ˜¯ç©ºçš„ï¼ 2015_6_17
 			{
-				if ((MaxY - Linedate[Linedate.size() - 1].first) > width * 3 / 2)//ÎªÁËÊ¹µÃ×îºóÒ»¸ùÌî³äÏß²»ÖÁÓÚÓëÂÖÀªÀëµÃÌ«Ô¶£¬Òª¼ÓÒ»¸öÊÇ·ñĞèÒªÔö¼ÓÒ»ÌõÏß¶ÎÅĞ¶Ï
+				if ((MaxY - Linedate[Linedate.size() - 1].first) > width * 3 / 2)//ä¸ºäº†ä½¿å¾—æœ€åä¸€æ ¹å¡«å……çº¿ä¸è‡³äºä¸è½®å»“ç¦»å¾—å¤ªè¿œï¼Œè¦åŠ ä¸€ä¸ªæ˜¯å¦éœ€è¦å¢åŠ ä¸€æ¡çº¿æ®µåˆ¤æ–­
 				{
 
 					std::pair<float, std::list<float>> tem;
 					tem.first = (MaxY + Linedate[Linedate.size() - 1].first) / 2;
 					Linedate.push_back(tem);
 				}
-				else if ((MaxY - Linedate[Linedate.size() - 1].first) <= width * 3 / 2 && (MaxY - Linedate[Linedate.size() - 1].first) > width)  //ÈÃÃ¿Ò»ÌõÏßµÄ¼ä¾à¶¼Ôö¼ÓÒ»µãµÄ×ÔÊÊÓ¦Ïß¿í²¹³¥
+				else if ((MaxY - Linedate[Linedate.size() - 1].first) <= width * 3 / 2 && (MaxY - Linedate[Linedate.size() - 1].first) > width)  //è®©æ¯ä¸€æ¡çº¿çš„é—´è·éƒ½å¢åŠ ä¸€ç‚¹çš„è‡ªé€‚åº”çº¿å®½è¡¥å¿
 				{
 					for (int i = 0; i != Linedate.size(); ++i)
 					{
@@ -1945,18 +1945,18 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 				for (int i = 0; i != TheOutline.size(); i++)
 				{
 
-					for (int j = 1; j != TheOutline[i].size(); j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+					for (int j = 1; j != TheOutline[i].size(); j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
 					{
-						int n = (int)TheOutline[i].size() - 1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+						int n = (int)TheOutline[i].size() - 1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 						int beforeP = (j - 1 + n) % n;
 						int beforebP = (j - 2 + n) % n;
 						int nextP = (j + 1 + n) % n;
 						int nextnP = (j + 2 + n) % n;
-						if (TheOutline[i][j].y != TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+						if (TheOutline[i][j].y != TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 						{
 							for (int k = 0; k != Linedate.size(); k++)
 							{
-								if ((Linedate[k].first - TheOutline[i][j].y)*(Linedate[k].first - TheOutline[i][nextP].y) < 0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+								if ((Linedate[k].first - TheOutline[i][j].y)*(Linedate[k].first - TheOutline[i][nextP].y) < 0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									float x1 = TheOutline[i][j].x;
 									float x2 = TheOutline[i][nextP].x;
@@ -1964,38 +1964,38 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 									float y2 = TheOutline[i][nextP].y;
 									Linedate[k].second.push_back((x2 - x1) / (y2 - y1)*(Linedate[k].first - y1) + x1);
 								}
-								else if ((Linedate[k].first == TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+								else if ((Linedate[k].first == TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									if ((!IsContainPoint(maxPoint, TheOutline[i][j])) && (!IsContainPoint(minPoint, TheOutline[i][j])) && (TheOutline[i][j].y != TheOutline[i][beforeP].y))
 									{
-										//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+										//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 										Linedate[k].second.push_back(TheOutline[i][j].x);
 									}
 								}
-								else if ((Linedate[k].first == TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+								else if ((Linedate[k].first == TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 								{
 									if ((!IsContainPoint(maxPoint, TheOutline[i][nextP])) && (!IsContainPoint(minPoint, TheOutline[i][nextP])) && (TheOutline[i][nextP].y != TheOutline[i][nextnP].y))
 									{
-										//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏàµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+										//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸ç›¸ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 										Linedate[k].second.push_back(TheOutline[i][nextP].x);
 									}
 								}
 							}
 						}
-						else if (TheOutline[i][j].y == TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+						else if (TheOutline[i][j].y == TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 						{
 							for (int k = 0; k != Linedate.size(); k++)
 							{
-								if (Linedate[k].first == TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+								if (Linedate[k].first == TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
 								{
-									if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == -1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-									{   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+									if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == -1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+									{   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
 										Linedate[k].second.push_back(TheOutline[i][j].x);
 										Linedate[k].second.push_back(TheOutline[i][nextP].x);
 									}
 									else if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == 1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == 1))
 									{
-										//Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+										//ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
 									}
 
 									else if ((IsLeft(TheOutline[i][beforeP], TheOutline[i][j], TheOutline[i][nextP]) == -1) && (IsLeft(TheOutline[i][j], TheOutline[i][nextP], TheOutline[i][nextnP]) == 1))
@@ -2013,14 +2013,14 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 
 				}
 
-				for (int i = 0; i != Linedate.size(); i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+				for (int i = 0; i != Linedate.size(); i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
 				{
-					Linedate[i].second.sort();    //ÅÅĞò¡£
-					Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+					Linedate[i].second.sort();    //æ’åºã€‚
+					Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
 				}
-				DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
+				DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
 
-				for (int i = 0; i != Linedate.size(); ++i)  //É¾³ı·ÖÇøµÄ»°¼ÓÉÏÕâ¸ö¾ÍºÃÀ²£¡Í¬Ê±°ë¾¶²¹³¥Ò²¿ÉÒÔÉ¾³ı£¡£¡
+				for (int i = 0; i != Linedate.size(); ++i)  //åˆ é™¤åˆ†åŒºçš„è¯åŠ ä¸Šè¿™ä¸ªå°±å¥½å•¦ï¼åŒæ—¶åŠå¾„è¡¥å¿ä¹Ÿå¯ä»¥åˆ é™¤ï¼ï¼
 				{
 					for (std::list<float>::const_iterator j = Linedate[i].second.begin(); j != Linedate[i].second.end(); ++j)
 					{
@@ -2036,7 +2036,7 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 			}
 		}
 
-		//¼ÇµÃ×îºó¼ÓÉÏÆ«ÖÃÂÖÀª¡£
+		//è®°å¾—æœ€ååŠ ä¸Šåç½®è½®å»“ã€‚
 		if (lunkuo != 0)
 		{
 			for (int i = 0; i != dataOffsets.size(); ++i)
@@ -2047,7 +2047,7 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 				}
 			}
 		}
-		//Ìî³äÏßµÄ½á¹û×ª»ØÑ¡Ôñ½Ç¶È
+		//å¡«å……çº¿çš„ç»“æœè½¬å›é€‰æ‹©è§’åº¦
 		for (int i = 0; i != TheResult.size(); ++i)
 		{
 			for (int j = 0; j != TheResult[i].size(); ++j)
@@ -2065,12 +2065,12 @@ void notInfillLine(outlines TheOutline, outlines & TheResult, outlines & TheOutl
 	}
 }
 
-void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, int lunkuo,  float offsetWidth) //×Ô¼º±àĞ´µÄÍ¬ĞÄÌî³äº¯Êı
+void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheOutlineResult, float width, int lunkuo,  float offsetWidth) //è‡ªå·±ç¼–å†™çš„åŒå¿ƒå¡«å……å‡½æ•°
 {
-	if (!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if (!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if (lunkuo != 0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -2097,7 +2097,7 @@ void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheO
 					{
 						temData.push_back(xd::xdpoint((float)solution[i][j].X / 1000000.0, (float)solution[i][j].Y / 1000000.0));
 					}
-					temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+					temData.push_back(xd::xdpoint((float)solution[i][0].X / 1000000.0, (float)solution[i][0].Y / 1000000.0));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -2109,7 +2109,7 @@ void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheO
 		{
 			InfillOffset(TheOutline, TheResult, width);
 		}
-		//¼ÇµÃ×îºó¼ÓÉÏÆ«ÖÃÂÖÀª¡£
+		//è®°å¾—æœ€ååŠ ä¸Šåç½®è½®å»“ã€‚
 		if (lunkuo != 0)
 		{
 			for (int i = 0; i != dataOffsets.size(); ++i)
@@ -2123,9 +2123,9 @@ void InfillConcentric(outlines TheOutline, outlines & TheResult, outlines & TheO
 	}
 }
 
-void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float degree ) //×Ô¼º±àĞ´µÄÌî³äÏßÉú³Éº¯Êı¡£
+void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float degree ) //è‡ªå·±ç¼–å†™çš„å¡«å……çº¿ç”Ÿæˆå‡½æ•°ã€‚
 {
-    //½«ÂÖÀªÊı¾İĞı×ªÒ»¸ö½Ç¶È
+    //å°†è½®å»“æ•°æ®æ—‹è½¬ä¸€ä¸ªè§’åº¦
     for (int i=0;i!=TheOutline.size();++i)
     {
         for (int j=0;j!=TheOutline[i].size();++j)
@@ -2134,7 +2134,7 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
         }
     }
 
-    //µÚÒ»²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+    //ç¬¬ä¸€æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
     std::list<float> maxY;
     std::list<float> minY;
     std::vector<std::pair<float,float>> maxPoint;
@@ -2143,12 +2143,12 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
     {
         for (int j=1;j!=TheOutline[i].size();j++)
         {
-            int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+            int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
             int beforeP=(j-1+n)%n;
             int beforebP=(j-2+n)%n;
             int nextP=(j+1+n)%n;
             int nextnP=(j+2+n)%n;
-            if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+            if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
             {
                 maxY.push_back(TheOutline[i][j].y);
                 std::pair<float,float> tem;
@@ -2156,7 +2156,7 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
                 tem.second=TheOutline[i][j].y;
                 maxPoint.push_back(tem);
             }
-            else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+            else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
             {
                 minY.push_back(TheOutline[i][j].y);
                 std::pair<float,float> tem;
@@ -2166,22 +2166,22 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
             }
             else if (TheOutline[i][j].y==TheOutline[i][beforeP].y)
             {
-                if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+                if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                 {
                     maxY.push_back(TheOutline[i][j].y);
                 }
-                if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+                if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                 {
                     minY.push_back(TheOutline[i][j].y);
                 }
             }
             else if (TheOutline[i][j].y==TheOutline[i][nextP].y)
             {
-                if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+                if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                 {
                     maxY.push_back(TheOutline[i][j].y);
                 }
-                if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+                if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                 {
                     minY.push_back(TheOutline[i][j].y);
                 }
@@ -2190,11 +2190,11 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
     }
     maxY.sort();
     minY.sort();
-    maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-    minY.unique();	  //Í¬ÉÏ¡£
-    float MaxY=*max_element(maxY.begin(),maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+    maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+    minY.unique();	  //åŒä¸Šã€‚
+    float MaxY=*max_element(maxY.begin(),maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
     float MinY=*min_element(minY.begin(),minY.end());
-    //µÚ¶ş²½£¬Éú³ÉÃ¿Ò»ÌõÏßÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+    //ç¬¬äºŒæ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡çº¿å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
     std::vector<std::pair<float,std::list<float>>> Linedate;
     for (int i=1;i<(MaxY-MinY)/width-1;i++)
     {
@@ -2202,16 +2202,16 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
         tem.first=MinY+width*i;
         Linedate.push_back(tem);
     }
-	if(!Linedate.empty())       //2015_6_17   ¼Ç×¡£¬Linedate¿ÉÄÜÊÇ¿ÕµÄ£¡£¡
+	if(!Linedate.empty())       //2015_6_17   è®°ä½ï¼ŒLinedateå¯èƒ½æ˜¯ç©ºçš„ï¼ï¼
 	{
-		if ((MaxY-Linedate[Linedate.size()-1].first)>width*3/2)//ÎªÁËÊ¹µÃ×îºóÒ»¸ùÌî³äÏß²»ÖÁÓÚÓëÂÖÀªÀëµÃÌ«Ô¶£¬Òª¼ÓÒ»¸öÊÇ·ñĞèÒªÔö¼ÓÒ»ÌõÏß¶ÎÅĞ¶Ï
+		if ((MaxY-Linedate[Linedate.size()-1].first)>width*3/2)//ä¸ºäº†ä½¿å¾—æœ€åä¸€æ ¹å¡«å……çº¿ä¸è‡³äºä¸è½®å»“ç¦»å¾—å¤ªè¿œï¼Œè¦åŠ ä¸€ä¸ªæ˜¯å¦éœ€è¦å¢åŠ ä¸€æ¡çº¿æ®µåˆ¤æ–­
 		{
 
 			std::pair<float,std::list<float>> tem;
 			tem.first=(MaxY+Linedate[Linedate.size()-1].first)/2;
 			Linedate.push_back(tem);
 		}
-		else if ((MaxY-Linedate[Linedate.size()-1].first)<=width*3/2&&(MaxY-Linedate[Linedate.size()-1].first)>width)  //ÈÃÃ¿Ò»ÌõÏßµÄ¼ä¾à¶¼Ôö¼ÓÒ»µãµÄ×ÔÊÊÓ¦Ïß¿í²¹³¥
+		else if ((MaxY-Linedate[Linedate.size()-1].first)<=width*3/2&&(MaxY-Linedate[Linedate.size()-1].first)>width)  //è®©æ¯ä¸€æ¡çº¿çš„é—´è·éƒ½å¢åŠ ä¸€ç‚¹çš„è‡ªé€‚åº”çº¿å®½è¡¥å¿
 		{
 			for (int i=0;i!=Linedate.size();++i)
 			{
@@ -2222,18 +2222,18 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
 		for(int i=0;i!=TheOutline.size();i++)
 		{
 
-			for (int j=1;j!=TheOutline[i].size();j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+			for (int j=1;j!=TheOutline[i].size();j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
 			{
-				int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+				int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
 				int beforeP=(j-1+n)%n;
 				int beforebP=(j-2+n)%n;
 				int nextP=(j+1+n)%n;
 				int nextnP=(j+2+n)%n;
-				if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+				if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 				{
 					for (int k=0;k!=Linedate.size();k++)
 					{
-						if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+						if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
 						{
 							float x1=TheOutline[i][j].x;
 							float x2=TheOutline[i][nextP].x;
@@ -2241,38 +2241,38 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
 							float y2=TheOutline[i][nextP].y;
 							Linedate[k].second.push_back((x2-x1)/(y2-y1)*(Linedate[k].first-y1)+x1);
 						}
-						else if ((Linedate[k].first==TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+						else if ((Linedate[k].first==TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 						{
 							if ((!IsContainPoint(maxPoint,TheOutline[i][j]))&&(!IsContainPoint(minPoint,TheOutline[i][j]))&&(TheOutline[i][j].y!=TheOutline[i][beforeP].y))
 							{
-								//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏëµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+								//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸æƒ³ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 								Linedate[k].second.push_back(TheOutline[i][j].x);
 							}
 						}
-						else if ((Linedate[k].first==TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+						else if ((Linedate[k].first==TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
 						{
 							if ((!IsContainPoint(maxPoint,TheOutline[i][nextP]))&&(!IsContainPoint(minPoint,TheOutline[i][nextP]))&&(TheOutline[i][nextP].y!=TheOutline[i][nextnP].y))
 							{
-								//Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏëµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+								//è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸æƒ³ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
 								Linedate[k].second.push_back(TheOutline[i][nextP].x);
 							}
 						}
 					}
 				}
-				else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+				else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
 				{
 					for (int k=0;k!=Linedate.size();k++)
 					{
-						if (Linedate[k].first==TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+						if (Linedate[k].first==TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
 						{
-							if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-							{   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+							if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+							{   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
 								Linedate[k].second.push_back(TheOutline[i][j].x);
 								Linedate[k].second.push_back(TheOutline[i][nextP].x);
 							}
 							else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
 							{
-								//Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+								//ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
 							}
 
 							else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
@@ -2290,26 +2290,26 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
 
 		}
 
-		for(int i=0;i!=Linedate.size();i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+		for(int i=0;i!=Linedate.size();i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
 		{
-			Linedate[i].second.sort();    //ÅÅĞò¡£
-			Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+			Linedate[i].second.sort();    //æ’åºã€‚
+			Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
 		}
-		//	DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
+		//	DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
 
-		//µÚÈı²½£¬½«Êı¾İ·ÖÇøÓò´æ·Å¡£
+		//ç¬¬ä¸‰æ­¥ï¼Œå°†æ•°æ®åˆ†åŒºåŸŸå­˜æ”¾ã€‚
 		int FirstNonZero;
 		while(!IsEmpty(Linedate,FirstNonZero))
 		{
 			outline tem;
-			int j=0;  //ÓÃÀ´ÅĞ¶ÏÊÇÆæÊıĞĞ»¹ÊÇÅ¼ÊıĞĞµÄ²ÎÊı¡£
+			int j=0;  //ç”¨æ¥åˆ¤æ–­æ˜¯å¥‡æ•°è¡Œè¿˜æ˜¯å¶æ•°è¡Œçš„å‚æ•°ã€‚
 			auto firstIn=Linedate[FirstNonZero].second.begin();
-			float bijiao1=*firstIn;   //µÚÒ»ÌõÏßµÄµÚÒ»¸öµã¡£
+			float bijiao1=*firstIn;   //ç¬¬ä¸€æ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 			tem.push_back(xdpoint(*firstIn,Linedate[FirstNonZero].first,TheOutline[0][0].z));
 			tem.push_back(xdpoint(*(++firstIn),Linedate[FirstNonZero].first,TheOutline[0][0].z));
-			int i=(FirstNonZero+1)%Linedate.size();  //±ØĞë±£Ö¤µ±µÚÒ»¸ö·ÇÁãÊı¾İµÄÏß¸ÕºÃÊÇ×îºóÒ»ÌõÏßÊ±Ò²²»»á¼Ó1Ô½½ç£¡ËùÒÔÒªÄ£Ò»ÏÂ£¡
-			float bijiao2=*firstIn;  //µÚÒ»ÌõÏßµÄµÚ¶ş¸öµã¡£
-			float bijiaoY1=Linedate[FirstNonZero].first;  //µÚÒ»ÌõÏßµÃY×ø±êÖµ¡£
+			int i=(FirstNonZero+1)%Linedate.size();  //å¿…é¡»ä¿è¯å½“ç¬¬ä¸€ä¸ªéé›¶æ•°æ®çš„çº¿åˆšå¥½æ˜¯æœ€åä¸€æ¡çº¿æ—¶ä¹Ÿä¸ä¼šåŠ 1è¶Šç•Œï¼æ‰€ä»¥è¦æ¨¡ä¸€ä¸‹ï¼
+			float bijiao2=*firstIn;  //ç¬¬ä¸€æ¡çº¿çš„ç¬¬äºŒä¸ªç‚¹ã€‚
+			float bijiaoY1=Linedate[FirstNonZero].first;  //ç¬¬ä¸€æ¡çº¿å¾—Yåæ ‡å€¼ã€‚
 			auto tem1s=Linedate[FirstNonZero].second.begin();
 			auto tem1e=tem1s;
 			tem1e++;
@@ -2317,24 +2317,24 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
 			Linedate[FirstNonZero].second.erase(tem1s,tem1e);
 			while ((!Linedate[i].second.empty()))
 			{
-				auto Line2first=Linedate[i].second.begin();  //µÚ¶şÌõÏßµÄµÚÒ»¸öµã¡£
+				auto Line2first=Linedate[i].second.begin();  //ç¬¬äºŒæ¡çº¿çš„ç¬¬ä¸€ä¸ªç‚¹ã€‚
 
-				float bijiaoY2=Linedate[i].first; //µÚ¶ş¸öÌõÖ±ÏßµÄY×ø±êÖµ¡£
+				float bijiaoY2=Linedate[i].first; //ç¬¬äºŒä¸ªæ¡ç›´çº¿çš„Yåæ ‡å€¼ã€‚
 				if (exceedExtremum(bijiaoY1,bijiaoY2,maxY,minY))
 				{
-					//Ç°ºóÁ½ÌõÖ±ÏßÈç¹û¿çÔ½ÁË¾Ö²¿¼«Öµµã£¬Ò²ĞèÒªÍË³ö£¬¼´ĞèÒª·ÖÇø¡£
+					//å‰åä¸¤æ¡ç›´çº¿å¦‚æœè·¨è¶Šäº†å±€éƒ¨æå€¼ç‚¹ï¼Œä¹Ÿéœ€è¦é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒºã€‚
 					break;
 				}
 				bijiaoY1=bijiaoY2;
 
 				if(*Line2first>bijiao2)
 				{
-					//µÚ¶şÌõÖ±ÏßµÄµÚÒ»¸öµã´óÓÚµÚÒ»ÌõÖ±ÏßµÄµÚ¶ş¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+					//ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹å¤§äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 					break;
 				}
-				if (*(++Line2first)<bijiao1)   //×¢Òâ£ºÕâÀï++±ØĞëÔÚÇ°£¬ÒòÎª¾ÍËãÓĞÀ¨ºÅ£¬++ÔÚºóµÄ»°Ò²»á±È½ÏÍêÔÙ++£¡£¡£¡
+				if (*(++Line2first)<bijiao1)   //æ³¨æ„ï¼šè¿™é‡Œ++å¿…é¡»åœ¨å‰ï¼Œå› ä¸ºå°±ç®—æœ‰æ‹¬å·ï¼Œ++åœ¨åçš„è¯ä¹Ÿä¼šæ¯”è¾ƒå®Œå†++ï¼ï¼ï¼
 				{
-					//µÚ¶şÌõÖ±ÏßµÄµÚ¶ş¸öµãĞ¡ÓÚµÚÒ»ÌõÖ±ÏßµÄµÚÒ»¸öµãÔòÍË³ö£¬¼´ĞèÒª·ÖÇø
+					//ç¬¬äºŒæ¡ç›´çº¿çš„ç¬¬äºŒä¸ªç‚¹å°äºç¬¬ä¸€æ¡ç›´çº¿çš„ç¬¬ä¸€ä¸ªç‚¹åˆ™é€€å‡ºï¼Œå³éœ€è¦åˆ†åŒº
 					break;
 				}
 				if (j%2==0)
@@ -2372,7 +2372,7 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
 	}
    
 
-    //Ôö¼ÓÒ»²½£¬ÎªÁËÊÊÓ¦FDMµÄ¸ñÊ½£¬Ã¿¸öÏß¶ÎÒªËõ¶ÌÒ»¸ö°ë¾¶²¹³¥,µ«ÊÇÕâ¸öº¯Êı²»¼Ó²¹³¥°ë¾¶£¡
+    //å¢åŠ ä¸€æ­¥ï¼Œä¸ºäº†é€‚åº”FDMçš„æ ¼å¼ï¼Œæ¯ä¸ªçº¿æ®µè¦ç¼©çŸ­ä¸€ä¸ªåŠå¾„è¡¥å¿,ä½†æ˜¯è¿™ä¸ªå‡½æ•°ä¸åŠ è¡¥å¿åŠå¾„ï¼
     //for (int i=0;i!=TheResult.size();++i)
     //{
     //	for (int j=0;j!=TheResult[i].size();++j)
@@ -2380,7 +2380,7 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
 
     //		if (j%4==3||j%4==0)
     //		{
-    //			TheResult[i][j].x+=0.28;    //´Ë´¦ÊÇÄ¬ÈÏÖµ¡£
+    //			TheResult[i][j].x+=0.28;    //æ­¤å¤„æ˜¯é»˜è®¤å€¼ã€‚
 
     //		}
     //		else
@@ -2390,7 +2390,7 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
     //	}
     //}
 
-    //Ìî³äÏßµÄ½á¹û×ª»ØÑ¡Ôñ½Ç¶È
+    //å¡«å……çº¿çš„ç»“æœè½¬å›é€‰æ‹©è§’åº¦
     for (int i=0;i!=TheResult.size();++i)
     {
         for (int j=0;j!=TheResult[i].size();++j)
@@ -2400,10 +2400,10 @@ void InfillLineIn(outlines TheOutline,outlines & TheResult,float width,float deg
     }
 }
 
-void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int piex,int size ) //×Ô¼º±àĞ´µÄbmpÉú³Éº¯Êı¡£
+void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int piex,int size ) //è‡ªå·±ç¼–å†™çš„bmpç”Ÿæˆå‡½æ•°ã€‚
 {
-    float amplificationFactor=(float)piex/size;  //¶¨Òå·Å´ó±¶Êı£¬140ÊÇ¼Ó¹¤¼«ÏŞ³ß´ç¡£×¢Òâ£¬Ò»¶¨ÒªÏÔÊ¾±äÎªfloat£¬·ñÔòµÃ³öµÄÊÇÒ»¸öÕûÊı¡£
-    //µÚÒ»²½£¬·Å´óÊı¾İ¡£
+    float amplificationFactor=(float)piex/size;  //å®šä¹‰æ”¾å¤§å€æ•°ï¼Œ140æ˜¯åŠ å·¥æé™å°ºå¯¸ã€‚æ³¨æ„ï¼Œä¸€å®šè¦æ˜¾ç¤ºå˜ä¸ºfloatï¼Œå¦åˆ™å¾—å‡ºçš„æ˜¯ä¸€ä¸ªæ•´æ•°ã€‚
+    //ç¬¬ä¸€æ­¥ï¼Œæ”¾å¤§æ•°æ®ã€‚
     for (int i=0;i!=TheOutline.size();++i)
     {
         for (int j=0;j!=TheOutline[i].size();++j)
@@ -2412,7 +2412,7 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
             TheOutline[i][j].y*=amplificationFactor;
         }
     }
-    //µÚ¶ş²½£¬È¡µÃÂÖÀªÊı¾İĞÍĞÄ¡£
+    //ç¬¬äºŒæ­¥ï¼Œå–å¾—è½®å»“æ•°æ®å‹å¿ƒã€‚
     xd::xdpoint limitPositionA(TheOutline[0][0].x,TheOutline[0][0].y),limitPositionB(TheOutline[0][0].x,TheOutline[0][0].y);
     for (int i=0;i!=TheOutline.size();++i)
     {
@@ -2440,7 +2440,7 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
     float centroidY=(limitPositionA.y+limitPositionB.y)/2;
     float offsetX=piex/2-centroidX;
     float offsetY=piex/2-centroidY;
-    //µÚÈı²½£¬Æ½ÒÆÊı¾İ¡£
+    //ç¬¬ä¸‰æ­¥ï¼Œå¹³ç§»æ•°æ®ã€‚
     for (int i=0;i!=TheOutline.size();++i)
     {
         for (int j=0;j!=TheOutline[i].size();++j)
@@ -2449,7 +2449,7 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
             TheOutline[i][j].y+=offsetY;
         }
     }
-    //µÚËÄ²½£¬ÂÖÀªµãµÄ¾Ö²¿¼«´ó¼«Ğ¡Öµµã£¬·ÅÔÚÒ»¸öË«ÏòÁ´±íÖĞ¡£×¢Òâ£ºÑ¡ÔñË«ÏòÁ´±íµÄÔ­ÒòÊÇÆäÈÎÒâÎ»ÖÃÉ¾³ıºÍÌí¼ÓÔªËØ·Ç³£¿ì½İ£¬½µµÍÊ±¼ä¸´ÔÓ¶È¡£
+    //ç¬¬å››æ­¥ï¼Œè½®å»“ç‚¹çš„å±€éƒ¨æå¤§æå°å€¼ç‚¹ï¼Œæ”¾åœ¨ä¸€ä¸ªåŒå‘é“¾è¡¨ä¸­ã€‚æ³¨æ„ï¼šé€‰æ‹©åŒå‘é“¾è¡¨çš„åŸå› æ˜¯å…¶ä»»æ„ä½ç½®åˆ é™¤å’Œæ·»åŠ å…ƒç´ éå¸¸å¿«æ·ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦ã€‚
     std::list<float> maxY;
     std::list<float> minY;
     std::vector<std::pair<float,float>> maxPoint;
@@ -2458,12 +2458,12 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
     {
         for (int j=1;j!=TheOutline[i].size();j++)
         {
-            int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+            int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
             int beforeP=(j-1+n)%n;
             int beforebP=(j-2+n)%n;
             int nextP=(j+1+n)%n;
             int nextnP=(j+2+n)%n;
-            if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //Õâ¸öµãµÄyÖµ´óÓÚÇ°ºóµÄµãµÄyÖµ¡£
+            if ((TheOutline[i][j].y>TheOutline[i][beforeP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y))  //è¿™ä¸ªç‚¹çš„yå€¼å¤§äºå‰åçš„ç‚¹çš„yå€¼ã€‚
             {
                 maxY.push_back(TheOutline[i][j].y);
                 std::pair<float,float> tem;
@@ -2471,7 +2471,7 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
                 tem.second=TheOutline[i][j].y;
                 maxPoint.push_back(tem);
             }
-            else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãµÄyÖµĞ¡ÓÚÇ°ºóµÄµãµÄyÖµ¡£
+            else if ((TheOutline[i][j].y<TheOutline[i][beforeP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹çš„yå€¼å°äºå‰åçš„ç‚¹çš„yå€¼ã€‚
             {
                 minY.push_back(TheOutline[i][j].y);
                 std::pair<float,float> tem;
@@ -2481,22 +2481,22 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
             }
             else if (TheOutline[i][j].y==TheOutline[i][beforeP].y)
             {
-                if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµ´ó¡£
+                if ((TheOutline[i][beforeP].y>TheOutline[i][beforebP].y)&&(TheOutline[i][j].y>TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                 {
                     maxY.push_back(TheOutline[i][j].y);
                 }
-                if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //Õâ¸öµãºÍÇ°Ò»¸öµãµÄyÖµĞ¡¡£
+                if ((TheOutline[i][beforeP].y<TheOutline[i][beforebP].y)&&(TheOutline[i][j].y<TheOutline[i][nextP].y)) //è¿™ä¸ªç‚¹å’Œå‰ä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                 {
                     minY.push_back(TheOutline[i][j].y);
                 }
             }
             else if (TheOutline[i][j].y==TheOutline[i][nextP].y)
             {
-                if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµ´ó¡£
+                if ((TheOutline[i][nextP].y>TheOutline[i][nextnP].y)&&(TheOutline[i][j].y>TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å¤§ã€‚
                 {
                     maxY.push_back(TheOutline[i][j].y);
                 }
-                if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //Õâ¸öµãºÍºóÒ»¸öµãµÄyÖµĞ¡¡£
+                if ((TheOutline[i][nextP].y<TheOutline[i][nextnP].y)&&(TheOutline[i][j].y<TheOutline[i][beforeP].y))  //è¿™ä¸ªç‚¹å’Œåä¸€ä¸ªç‚¹çš„yå€¼å°ã€‚
                 {
                     minY.push_back(TheOutline[i][j].y);
                 }
@@ -2505,33 +2505,33 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
     }
     maxY.sort();
     minY.sort();
-    maxY.unique();    //½«Á´±íÖĞÖØ¸´µÄµãÉ¾³ıµÄº¯Êı£¬ÊôÓÚSTLµÄ±äÒ×Ëã·¨¡£
-    minY.unique();	  //Í¬ÉÏ¡£
-    float MaxY=*max_element(maxY.begin(),maxY.end());   //µ÷ÓÃÇóÁ´±íÖĞÇó×î´óÔªËØµÄº¯Êı¡£
+    maxY.unique();    //å°†é“¾è¡¨ä¸­é‡å¤çš„ç‚¹åˆ é™¤çš„å‡½æ•°ï¼Œå±äºSTLçš„å˜æ˜“ç®—æ³•ã€‚
+    minY.unique();	  //åŒä¸Šã€‚
+    float MaxY=*max_element(maxY.begin(),maxY.end());   //è°ƒç”¨æ±‚é“¾è¡¨ä¸­æ±‚æœ€å¤§å…ƒç´ çš„å‡½æ•°ã€‚
     float MinY=*min_element(minY.begin(),minY.end());
-    //µÚÎå²½£¬Éú³ÉÃ¿Ò»ÌõÏñËØÌî³äÏßÓëÂÖÀªÏßµÄ½»µã£¬·Ö±ğ´æ´¢ÔÚË«ÏòÁ´±íÖĞ¡£
+    //ç¬¬äº”æ­¥ï¼Œç”Ÿæˆæ¯ä¸€æ¡åƒç´ å¡«å……çº¿ä¸è½®å»“çº¿çš„äº¤ç‚¹ï¼Œåˆ†åˆ«å­˜å‚¨åœ¨åŒå‘é“¾è¡¨ä¸­ã€‚
     std::vector<std::pair<float,std::list<float>>> Linedate;
     for (int i=1;i<=piex;i++)
     {
         std::pair<float,std::list<float>> tem;
-        tem.first=(i+i-1)/2;    //ÕâÀï½üËÆÓÃÏñËØµÄÖĞµã×÷ÎªÉ¨ÃèÏßµÃyÖµ
+        tem.first=(i+i-1)/2;    //è¿™é‡Œè¿‘ä¼¼ç”¨åƒç´ çš„ä¸­ç‚¹ä½œä¸ºæ‰«æçº¿å¾—yå€¼
         Linedate.push_back(tem);
     }
 
     for (int i=0;i!=TheOutline.size();i++)
     {
-        for (int j=1;j!=TheOutline[i].size();j++)  //j=1£¬ËµÃ÷Òª´ÓµÚ¶ş¸öµã¿ªÊ¼Ñ­»·£¬Ö±µ½µÚÒ»¸öµã¡£
+        for (int j=1;j!=TheOutline[i].size();j++)  //j=1ï¼Œè¯´æ˜è¦ä»ç¬¬äºŒä¸ªç‚¹å¼€å§‹å¾ªç¯ï¼Œç›´åˆ°ç¬¬ä¸€ä¸ªç‚¹ã€‚
         {
-            int n=(int)TheOutline[i].size()-1;  //ÂÖÀªÊı¾İµÄ×îºóÒ»¸öµãÊÇµÚÒ»¸öµã£¬Òò´ËÒª¼õÈ¥1¡£
+            int n=(int)TheOutline[i].size()-1;  //è½®å»“æ•°æ®çš„æœ€åä¸€ä¸ªç‚¹æ˜¯ç¬¬ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¦å‡å»1ã€‚
             int beforeP=(j-1+n)%n;
             int beforebP=(j-2+n)%n;
             int nextP=(j+1+n)%n;
             int nextnP=(j+2+n)%n;
-            if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //ÂÖÀªÏß¶Î²»Æ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+            if (TheOutline[i][j].y!=TheOutline[i][nextP].y) //è½®å»“çº¿æ®µä¸å¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
             {
                 for (int k=0;k!=Linedate.size();k++)
                 {
-                    if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //ÏßÓëÂÖÀªÏß¶ÎÏà½»µÄÇé¿ö¡£
+                    if ((Linedate[k].first-TheOutline[i][j].y)*(Linedate[k].first-TheOutline[i][nextP].y)<0) //çº¿ä¸è½®å»“çº¿æ®µç›¸äº¤çš„æƒ…å†µã€‚
                     {
                         float x1=TheOutline[i][j].x;
                         float x2=TheOutline[i][nextP].x;
@@ -2539,38 +2539,38 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
                         float y2=TheOutline[i][nextP].y;
                         Linedate[k].second.push_back((x2-x1)/(y2-y1)*(Linedate[k].first-y1)+x1);
                     }
-                    else if ((Linedate[k].first==TheOutline[i][j].y))    //ÏßÓëÂÖÀªÏß¶ÎÇ°Ò»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+                    else if ((Linedate[k].first==TheOutline[i][j].y))    //çº¿ä¸è½®å»“çº¿æ®µå‰ä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
                     {
                         if ((!IsContainPoint(maxPoint,TheOutline[i][j]))&&(!IsContainPoint(minPoint,TheOutline[i][j]))&&(TheOutline[i][j].y!=TheOutline[i][beforeP].y))
                         {
-                            //Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±Õâ¸öµãÓëÇ°Ò»¸öµãµÄyÖµ¶¼²»ÏëµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+                            //è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶è¿™ä¸ªç‚¹ä¸å‰ä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸æƒ³ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
                             Linedate[k].second.push_back(TheOutline[i][j].x);
                         }
                     }
-                    else if ((Linedate[k].first==TheOutline[i][nextP].y))   //ÏßÓëÂÖÀªÏß¶ÎºóÒ»¸ö¶¥µãÏà½»µÄÇé¿ö¡£
+                    else if ((Linedate[k].first==TheOutline[i][nextP].y))   //çº¿ä¸è½®å»“çº¿æ®µåä¸€ä¸ªé¡¶ç‚¹ç›¸äº¤çš„æƒ…å†µã€‚
                     {
                         if ((!IsContainPoint(maxPoint,TheOutline[i][nextP]))&&(!IsContainPoint(minPoint,TheOutline[i][nextP]))&&(TheOutline[i][nextP].y!=TheOutline[i][nextnP].y))
                         {
-                            //Õâ¸ö¶¥µãÍ¬Ê±ÓÖ²»ÊÇ¼«ÖµµãÊ±¡£Í¬Ê±ºóÒ»¸öµãÓëºóºóÒ»¸öµãµÄyÖµ¶¼²»ÏëµÈ²ÅĞĞ£¬ÒòÎªÏàµÈÊ±µÄÇé¿öÒÑ¾­ÒÑ¾­±»ºóÃæµÄÂß¼­¿¼ÂÇ¹ıÁË£¡£¡£¡
+                            //è¿™ä¸ªé¡¶ç‚¹åŒæ—¶åˆä¸æ˜¯æå€¼ç‚¹æ—¶ã€‚åŒæ—¶åä¸€ä¸ªç‚¹ä¸ååä¸€ä¸ªç‚¹çš„yå€¼éƒ½ä¸æƒ³ç­‰æ‰è¡Œï¼Œå› ä¸ºç›¸ç­‰æ—¶çš„æƒ…å†µå·²ç»å·²ç»è¢«åé¢çš„é€»è¾‘è€ƒè™‘è¿‡äº†ï¼ï¼ï¼
                             Linedate[k].second.push_back(TheOutline[i][nextP].x);
                         }
                     }
                 }
             }
-            else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //ÂÖÀªÏß¶ÎÆ½ĞĞÓÚxÖáµÄÇé¿ö¡£
+            else if(TheOutline[i][j].y==TheOutline[i][nextP].y) //è½®å»“çº¿æ®µå¹³è¡Œäºxè½´çš„æƒ…å†µã€‚
             {
                 for (int k=0;k!=Linedate.size();k++)
                 {
-                    if (Linedate[k].first==TheOutline[i][j].y)  //ÓĞÌî³äÏßÇ¡ºÃÓëÆ½ĞĞÓÚxÖáµÄÂÖÀªÏßÏà½»¡£
+                    if (Linedate[k].first==TheOutline[i][j].y)  //æœ‰å¡«å……çº¿æ°å¥½ä¸å¹³è¡Œäºxè½´çš„è½®å»“çº¿ç›¸äº¤ã€‚
                     {
-                        if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //Õâ¸öÂÖÀªÏßµÄÁ½µãÍ¬Ê±ÊÇÄÚµãÊ±¡£
-                        {   //Ë³Ê±ÕëÏòÓÒ×ªÊÇÄÚµã¡£
+                        if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==-1))  //è¿™ä¸ªè½®å»“çº¿çš„ä¸¤ç‚¹åŒæ—¶æ˜¯å†…ç‚¹æ—¶ã€‚
+                        {   //é¡ºæ—¶é’ˆå‘å³è½¬æ˜¯å†…ç‚¹ã€‚
                             Linedate[k].second.push_back(TheOutline[i][j].x);
                             Linedate[k].second.push_back(TheOutline[i][nextP].x);
                         }
                         else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
                         {
-                            //Á½¸öµã¶¼²»ÊÇÄÚµã£¬Á½µã¶¼ÉáÈ¥£¬»»¾ä»°Ëµ¾ÍÊÇÊ²Ã´Ò²²»×ö£¬ÆäÊµ²»ÓÃĞ´Õâ¶Î´úÂë£¬ÎªÁËÒÔºóºÃÀí½âËùÒÔĞ´ÉÏÁË¡£
+                            //ä¸¤ä¸ªç‚¹éƒ½ä¸æ˜¯å†…ç‚¹ï¼Œä¸¤ç‚¹éƒ½èˆå»ï¼Œæ¢å¥è¯è¯´å°±æ˜¯ä»€ä¹ˆä¹Ÿä¸åšï¼Œå…¶å®ä¸ç”¨å†™è¿™æ®µä»£ç ï¼Œä¸ºäº†ä»¥åå¥½ç†è§£æ‰€ä»¥å†™ä¸Šäº†ã€‚
                         }
 
                         else if((IsLeft(TheOutline[i][beforeP],TheOutline[i][j],TheOutline[i][nextP])==-1)&&(IsLeft(TheOutline[i][j],TheOutline[i][nextP],TheOutline[i][nextnP])==1))
@@ -2588,14 +2588,14 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
 
     }
 
-    for(int i=0;i!=Linedate.size();i++)  //½«´æ´¢ºÃµÄÊı¾İÖØ¸´µÄÔªËØÉ¾³ı£¬²¢ÇÒÅÅĞò¡£
+    for(int i=0;i!=Linedate.size();i++)  //å°†å­˜å‚¨å¥½çš„æ•°æ®é‡å¤çš„å…ƒç´ åˆ é™¤ï¼Œå¹¶ä¸”æ’åºã€‚
     {
-        Linedate[i].second.sort();    //ÅÅĞò¡£
-        Linedate[i].second.unique();  //½«¶àÓàµÄµãÈ¡³öÀ´¡£
+        Linedate[i].second.sort();    //æ’åºã€‚
+        Linedate[i].second.unique();  //å°†å¤šä½™çš„ç‚¹å–å‡ºæ¥ã€‚
     }
-    //	DeleteOddDate(Linedate);    //ÔİÊ±¼ÓÉÏ£¬¿´¿´Çé¿ö£¡
-    //µÚÁù²½£¬½«¶ÔÓÚĞèÒªÌî³äµÄĞòÁĞºÅÌáÈ¡µ½½á¹ûÖĞÈ¥¡£
-    for (int i=0;i!=piex;++i)   //ÏÈ½«ÏñËØ³õÊ¼»¯Îª0
+    //	DeleteOddDate(Linedate);    //æš‚æ—¶åŠ ä¸Šï¼Œçœ‹çœ‹æƒ…å†µï¼
+    //ç¬¬å…­æ­¥ï¼Œå°†å¯¹äºéœ€è¦å¡«å……çš„åºåˆ—å·æå–åˆ°ç»“æœä¸­å»ã€‚
+    for (int i=0;i!=piex;++i)   //å…ˆå°†åƒç´ åˆå§‹åŒ–ä¸º0
     {
         std::vector<int> temData;
         for (int j=0;j!=piex;++j)
@@ -2635,7 +2635,7 @@ void InfillBMP(outlines TheOutline,std::vector<std::vector<int>> & TheResult,int
     }
 }
 
-void InfillOffset(outlines theOutline,outlines & theResult,float width)  //½øĞĞÆ«ÖÃÌî³äµÄº¯Êı¡£  Î´ÑéÖ¤
+void InfillOffset(outlines theOutline,outlines & theResult,float width)  //è¿›è¡Œåç½®å¡«å……çš„å‡½æ•°ã€‚  æœªéªŒè¯
 {
 	if (!theOutline.empty())
 	{
@@ -2649,14 +2649,14 @@ void InfillOffset(outlines theOutline,outlines & theResult,float width)  //½øĞĞÆ
 			}
 			temO.AddPath(temP,ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
 		}
-		int temi=1; //Ã¿´ÎÆ«ÖÃ¶àÒ»´ÎµÄº¯Êı
-		bool flag=true; //Æ«ÖÃÊÇ·ñ½áÊøµÄ±êÖ¾
+		int temi=1; //æ¯æ¬¡åç½®å¤šä¸€æ¬¡çš„å‡½æ•°
+		bool flag=true; //åç½®æ˜¯å¦ç»“æŸçš„æ ‡å¿—
 		while(flag)
 		{
 			ClipperLib::Paths solution; 		
             temO.Execute(solution, -width/SCALING_FACTOR*temi);
 			temi+=1;
-			xd::outlines dataOffset;  //ÓÃÀ´´æ´¢ÀªÆ«ÖÃºóµÄÂÖÀªÊı¾İ
+			xd::outlines dataOffset;  //ç”¨æ¥å­˜å‚¨å»“åç½®åçš„è½®å»“æ•°æ®
 			for (int i=0;i!=solution.size();++i)
 			{
 				xd::outline temData;
@@ -2665,34 +2665,34 @@ void InfillOffset(outlines theOutline,outlines & theResult,float width)  //½øĞĞÆ
                     temData.push_back(xd::xdpoint((float)solution[i][j].X*SCALING_FACTOR,(float)solution[i][j].Y*SCALING_FACTOR));
 				}
 
-                temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 				dataOffset.push_back(temData);
 				theResult.push_back(temData);
 			}			
 			if (dataOffset.empty())
 			{
-				flag=false;  //Èç¹ûÆ«ÖÃÊı¾İÃ»ÓĞÁË£¬ÔòËµÃ÷²»ĞèÒªÔÙ´ÎÆ«ÖÃÁË¡£
+				flag=false;  //å¦‚æœåç½®æ•°æ®æ²¡æœ‰äº†ï¼Œåˆ™è¯´æ˜ä¸éœ€è¦å†æ¬¡åç½®äº†ã€‚
 			}		   
 		}	
 	}				  	
 }
 
-void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float width)  //½øĞĞÆ«ÖÃÌî³äµÄº¯Êı¡£  Î´ÑéÖ¤
-{//Èç¹ûÆ«ÖÃ½á¹ûÊÇ3¸öµã£¬ÇÒÆäÖĞÁ½¸öµãÏàµÈ£¬Ôò²»ÓÃÕâ¸ö½á¹û
+void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float width)  //è¿›è¡Œåç½®å¡«å……çš„å‡½æ•°ã€‚  æœªéªŒè¯
+{//å¦‚æœåç½®ç»“æœæ˜¯3ä¸ªç‚¹ï¼Œä¸”å…¶ä¸­ä¸¤ä¸ªç‚¹ç›¸ç­‰ï¼Œåˆ™ä¸ç”¨è¿™ä¸ªç»“æœ
 	if (!theOutline.empty())
 	{
 		ClipperLib::ClipperOffset temO;
-		ClipperLib::CleanPolygons(theOutline,1.415);    //Æ«ÖÃÇ°×îºÃ¼ÓÉÏÕâ¾ä»°
-		ClipperLib::SimplifyPolygons(theOutline,ClipperLib::pftEvenOdd);   //ºÜÆæ¹Ö£¬Æ«ÖÃÇ°×îºÃ±£Ö¤ÊÇ¼òµ¥¶à±ßĞÎ£¬·ñÔò¿ÉÄÜÓÀÔ¶Ñ­»·£¡
+		ClipperLib::CleanPolygons(theOutline,1.415);    //åç½®å‰æœ€å¥½åŠ ä¸Šè¿™å¥è¯
+		ClipperLib::SimplifyPolygons(theOutline,ClipperLib::pftEvenOdd);   //å¾ˆå¥‡æ€ªï¼Œåç½®å‰æœ€å¥½ä¿è¯æ˜¯ç®€å•å¤šè¾¹å½¢ï¼Œå¦åˆ™å¯èƒ½æ°¸è¿œå¾ªç¯ï¼
 		temO.AddPaths(theOutline,ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
-		int temi=1; //Ã¿´ÎÆ«ÖÃ¶àÒ»´ÎµÄ±êÖ¾
-		bool flag=true; //Æ«ÖÃÊÇ·ñ½áÊøµÄ±êÖ¾
+		int temi=1; //æ¯æ¬¡åç½®å¤šä¸€æ¬¡çš„æ ‡å¿—
+		bool flag=true; //åç½®æ˜¯å¦ç»“æŸçš„æ ‡å¿—
 		while(flag)
 		{
 			ClipperLib::Paths solution; 		
             temO.Execute(solution, -width/SCALING_FACTOR*temi);
 			temi+=1;
-			xd::outlines dataOffset;  //ÓÃÀ´´æ´¢ÀªÆ«ÖÃºóµÄÂÖÀªÊı¾İ
+			xd::outlines dataOffset;  //ç”¨æ¥å­˜å‚¨å»“åç½®åçš„è½®å»“æ•°æ®
 			for (int i=0;i!=solution.size();++i)
 			{
 				xd::outline temData;
@@ -2706,16 +2706,16 @@ void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float widt
                 {
                     if(temData[0]==temData[1]||temData[1]==temData[2]||temData[2]==temData[0])
                         continue;
-                    if(temData[0].isDifference(temData[1])||temData[1].isDifference(temData[2])||temData[2].isDifference(temData[0])) //Õâ¸öÒÔºó¿Ï¶¨Òª¸Ä£¡
+                    if(temData[0].isDifference(temData[1])||temData[1].isDifference(temData[2])||temData[2].isDifference(temData[0])) //è¿™ä¸ªä»¥åè‚¯å®šè¦æ”¹ï¼
                         continue;
                 }
-                temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 				dataOffset.push_back(temData);
 				theResult.push_back(temData);
 			}			
 			if (dataOffset.empty())
 			{
-				flag=false;  //Èç¹ûÆ«ÖÃÊı¾İÃ»ÓĞÁË£¬ÔòËµÃ÷²»ĞèÒªÔÙ´ÎÆ«ÖÃÁË¡£
+				flag=false;  //å¦‚æœåç½®æ•°æ®æ²¡æœ‰äº†ï¼Œåˆ™è¯´æ˜ä¸éœ€è¦å†æ¬¡åç½®äº†ã€‚
 			}		   
 		}	
 	}				  	
@@ -2723,7 +2723,7 @@ void InfillOffsetIn(ClipperLib::Paths theOutline,outlines & theResult,float widt
 
 void PickUpLayer(std::vector<xd::outlines> theOutline,std::vector<int> & theResult)
 {	
-	//Ê×ÏÈÒª±éÀúÃ¿Á½²ãµÄÂÖÀª½øĞĞ±È½Ï
+	//é¦–å…ˆè¦éå†æ¯ä¸¤å±‚çš„è½®å»“è¿›è¡Œæ¯”è¾ƒ
 	for (int i=0;i!=theOutline.size()-1;++i)
 	{	
 		ClipperLib::Paths subject;
@@ -2749,21 +2749,21 @@ void PickUpLayer(std::vector<xd::outlines> theOutline,std::vector<int> & theResu
 		ClipperLib::Clipper clipper(ClipperLib::ioStrictlySimple | ClipperLib::ioPreserveCollinear); 
 		clipper.AddPaths(subject,ClipperLib::ptSubject,true);
 		clipper.AddPaths(clip,ClipperLib::ptClip,true);
-		ClipperLib::Paths solution; //´æ·ÅÂ·¾¶½á¹û
+		ClipperLib::Paths solution; //å­˜æ”¾è·¯å¾„ç»“æœ
 		clipper.Execute(ClipperLib::ctXor,solution,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);
 		double areaSum=0;
 		for (int i=0;i!=solution.size();++i)
 		{
 			areaSum+=ClipperLib::Area(solution[i]);
 		}
-        if (areaSum>100*1000000000000)   //100Æ½·½ºÁÃ×
+        if (areaSum>100*1000000000000)   //100å¹³æ–¹æ¯«ç±³
 		{
 			theResult.push_back(i+1);
 		}
 	}
 }
 
-bool IsSingleInfill(int layerNumber,std::vector<int> needInfillLayer)  //ÅĞ¶Ï¸ÃÌî³ä²ãÊÇ·ñÊÇµ¥²ãÌî³äµÄº¯Êı
+bool IsSingleInfill(int layerNumber,std::vector<int> needInfillLayer)  //åˆ¤æ–­è¯¥å¡«å……å±‚æ˜¯å¦æ˜¯å•å±‚å¡«å……çš„å‡½æ•°
 {
 	if (needInfillLayer.empty())
 	{
@@ -2783,8 +2783,8 @@ bool IsSingleInfill(int layerNumber,std::vector<int> needInfillLayer)  //ÅĞ¶Ï¸ÃÌ
 }
 void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::outputOutlines> &result,float width,float shrinkDistance)
 {
-	unsigned int N=theOutline.size();    //Ò»¹²¸ôN²ãÌî³äÒ»´Î¡£
-	//µÚÒ»²½£ºÏÈ½ø½«Êı¾İ´¢´æµ½clipper×¨ÓÃµÄpathsÀï	
+	unsigned int N=theOutline.size();    //ä¸€å…±éš”Nå±‚å¡«å……ä¸€æ¬¡ã€‚
+	//ç¬¬ä¸€æ­¥ï¼šå…ˆè¿›å°†æ•°æ®å‚¨å­˜åˆ°clipperä¸“ç”¨çš„pathsé‡Œ	
 	std::vector<ClipperLib::Paths> nPaths;
 	for (int i=0;i!=N;++i)
 	{
@@ -2800,7 +2800,7 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 		}
 		nPaths.push_back(temPaths);
 	}
-	//µÚ¶ş²½£ºÇóN²ã½ØÃæµÄ½»¼¯ÇøÓò
+	//ç¬¬äºŒæ­¥ï¼šæ±‚Nå±‚æˆªé¢çš„äº¤é›†åŒºåŸŸ
 	ClipperLib::Paths areaA; 
 	ClipperLib::Clipper clipper(ClipperLib::ioStrictlySimple | ClipperLib::ioPreserveCollinear);
 	clipper.AddPaths(nPaths[0],ClipperLib::ptSubject,true);
@@ -2818,22 +2818,22 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 			clipper.Clear();
 		}
 	}
-	//µÚÈı²½£ºµÚN²ãÌî³ä²ãÏÈºÍ²¢¼¯ÇøÓòÇóÒì»ò£¬Ö®ºóµÚN²ãÆ«ÖÃÒ»´ÎºóºÍ²¢¼¯ÇóÒì»ò
-	std::vector<ClipperLib::Paths> offsetResult;   //´æ·ÅËùÓĞÆ«ÖÃ½á¹û
-	ClipperLib::Paths xorResult;                   //´æ·ÅÒì»òºóµÄ½á¹û
+	//ç¬¬ä¸‰æ­¥ï¼šç¬¬Nå±‚å¡«å……å±‚å…ˆå’Œå¹¶é›†åŒºåŸŸæ±‚å¼‚æˆ–ï¼Œä¹‹åç¬¬Nå±‚åç½®ä¸€æ¬¡åå’Œå¹¶é›†æ±‚å¼‚æˆ–
+	std::vector<ClipperLib::Paths> offsetResult;   //å­˜æ”¾æ‰€æœ‰åç½®ç»“æœ
+	ClipperLib::Paths xorResult;                   //å­˜æ”¾å¼‚æˆ–åçš„ç»“æœ
 	clipper.AddPaths(nPaths[N-1],ClipperLib::ptSubject,true);
 	clipper.AddPaths(areaA,ClipperLib::ptClip,true);
 	clipper.Execute(ClipperLib::ctXor, xorResult,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);
 	clipper.Clear();
-	double xorAreaFormer=0;  //´æ·ÅÇ°Ò»´ÎÒì»òºóµÄÃæ»ı
-	double xorAreaLater=0;   //´æ·ÅºóÒ»´ÎÒì»òºóµÄÃæ»ı
+	double xorAreaFormer=0;  //å­˜æ”¾å‰ä¸€æ¬¡å¼‚æˆ–åçš„é¢ç§¯
+	double xorAreaLater=0;   //å­˜æ”¾åä¸€æ¬¡å¼‚æˆ–åçš„é¢ç§¯
 	for (int i=0;i!=xorResult.size();++i)
 	{
 		xorAreaFormer+=ClipperLib::Area(xorResult[i]);
 	}
-	ClipperLib::ClipperOffset clipperOffset;     //½øĞĞÆ«ÖÃµÄÀà
-	ClipperLib::Paths onceOffset;     //´æ·ÅÃ¿Ò»´ÎÆ«ÖÃµÄ½á¹û
-	clipperOffset.AddPaths(nPaths[N-1], ClipperLib::jtMiter, ClipperLib::etClosedPolygon);  //Ê¹ÓÃ×î¼ò»¯µÄÆ«ÖÃ
+	ClipperLib::ClipperOffset clipperOffset;     //è¿›è¡Œåç½®çš„ç±»
+	ClipperLib::Paths onceOffset;     //å­˜æ”¾æ¯ä¸€æ¬¡åç½®çš„ç»“æœ
+	clipperOffset.AddPaths(nPaths[N-1], ClipperLib::jtMiter, ClipperLib::etClosedPolygon);  //ä½¿ç”¨æœ€ç®€åŒ–çš„åç½®
 	clipperOffset.Execute(onceOffset,-width);
 	clipperOffset.Clear();
 	clipper.AddPaths(onceOffset,ClipperLib::ptSubject,true);
@@ -2845,17 +2845,17 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 	{
 		xorAreaLater+=ClipperLib::Area(xorResult[i]);
 	}
-	//µÚËÄ²½£º½øĞĞ¹Ø¼üµÄÑ­»·²¿·Ö£¬ÓÃÀ´È·¶¨ĞèÒªÆ«ÖÃ¶àÉÙ´Î¡£
+	//ç¬¬å››æ­¥ï¼šè¿›è¡Œå…³é”®çš„å¾ªç¯éƒ¨åˆ†ï¼Œç”¨æ¥ç¡®å®šéœ€è¦åç½®å¤šå°‘æ¬¡ã€‚
 	while(xorAreaLater<xorAreaFormer)
 	{
-		offsetResult.push_back(onceOffset);   //ÏÈ´æ´¢Æ«ÖÃÂ·¾¶£¬ÎªÁËÊä³ö
-		xorAreaFormer=xorAreaLater;     //Ç°Ò»´ÎµÄÃæ»ı±ä³ÉºóÒ»´ÎµÄÃæ»ı
-		xorAreaLater=0;					//ºóÒ»´ÎµÄÃæ»ıÒª¹éÁã´ÓĞÂËã
-		clipperOffset.AddPaths(onceOffset, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);  //Ê¹ÓÃÉÏ´ÎÆ«ÖÃÂ·¾¶×÷ÎªÕâ´ÎÊäÈëÂ·¾¶¡£
-		onceOffset.clear();             //¿ÉÒÔÉ¾³ıÆ«ÖÃÂ·¾¶ÁË
+		offsetResult.push_back(onceOffset);   //å…ˆå­˜å‚¨åç½®è·¯å¾„ï¼Œä¸ºäº†è¾“å‡º
+		xorAreaFormer=xorAreaLater;     //å‰ä¸€æ¬¡çš„é¢ç§¯å˜æˆåä¸€æ¬¡çš„é¢ç§¯
+		xorAreaLater=0;					//åä¸€æ¬¡çš„é¢ç§¯è¦å½’é›¶ä»æ–°ç®—
+		clipperOffset.AddPaths(onceOffset, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);  //ä½¿ç”¨ä¸Šæ¬¡åç½®è·¯å¾„ä½œä¸ºè¿™æ¬¡è¾“å…¥è·¯å¾„ã€‚
+		onceOffset.clear();             //å¯ä»¥åˆ é™¤åç½®è·¯å¾„äº†
 		clipperOffset.Execute(onceOffset,-width);
 		clipperOffset.Clear();
-		clipper.AddPaths(onceOffset,ClipperLib::ptSubject,true);  //Æ«ÖÃºÍ²¢¼¯ÇóÒì»ò
+		clipper.AddPaths(onceOffset,ClipperLib::ptSubject,true);  //åç½®å’Œå¹¶é›†æ±‚å¼‚æˆ–
 		clipper.AddPaths(areaA,ClipperLib::ptClip,true);
 		xorResult.clear();
 		clipper.Execute(ClipperLib::ctXor, xorResult,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);
@@ -2865,7 +2865,7 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 			xorAreaLater+=ClipperLib::Area(xorResult[i]);
 		}
 	}
-	//µÚÎå²½£º×îºóÒ»´ÎµÄÆ«ÖÃÃ»ÓĞÌî³ä£¬Òò´ËÒªÊ¹ÓÃ´æ´¢Æ«ÖÃµÄ×îºóÒ»¸öÂÖÀªÊı¾İ×÷Îª¶à²ãÌî³äÇøÓò¡££¨ÏÈ×ª»»ÎªÆÕÍ¨Â·¾¶£¬¼ÇµÃ¼ÓÉÏ×îºóÒ»¸öµã£©
+	//ç¬¬äº”æ­¥ï¼šæœ€åä¸€æ¬¡çš„åç½®æ²¡æœ‰å¡«å……ï¼Œå› æ­¤è¦ä½¿ç”¨å­˜å‚¨åç½®çš„æœ€åä¸€ä¸ªè½®å»“æ•°æ®ä½œä¸ºå¤šå±‚å¡«å……åŒºåŸŸã€‚ï¼ˆå…ˆè½¬æ¢ä¸ºæ™®é€šè·¯å¾„ï¼Œè®°å¾—åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼‰
 	if (!offsetResult.empty())
 	{
 		for (int i=0;i!=offsetResult.size();++i)
@@ -2878,7 +2878,7 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 				{
                     temOutline.push_back(xd::xdpoint(offsetResult[i][j][k].X*SCALING_FACTOR,offsetResult[i][j][k].Y*SCALING_FACTOR));
 				}
-                temOutline.push_back(xd::xdpoint(offsetResult[i][j][0].X*SCALING_FACTOR,offsetResult[i][j][0].Y*SCALING_FACTOR));  //¼ÓÉÏ×îºóÒ»¸öµã
+                temOutline.push_back(xd::xdpoint(offsetResult[i][j][0].X*SCALING_FACTOR,offsetResult[i][j][0].Y*SCALING_FACTOR));  //åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹
 				std::pair<outline,unsigned int> temPair;
 				temPair.first=temOutline;
 				temPair.second=1;
@@ -2887,7 +2887,7 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 			result.push_back(temOutputOutlines);
 		}
 	}
-	//µÚÁù²½£º×îºóĞèÒª¼ÓÉÏÌî³äÇøÓòµÄÂ·¾¶
+	//ç¬¬å…­æ­¥ï¼šæœ€åéœ€è¦åŠ ä¸Šå¡«å……åŒºåŸŸçš„è·¯å¾„
 	if (!result.empty())
 	{
 		if (!result[result.size()-1].empty())
@@ -2923,19 +2923,19 @@ void OutlinesOffsetMethod(std::vector<xd::outlines> theOutline,std::vector<xd::o
 			temOutputOutlines.push_back(temPair);
 		}
 		result.push_back(temOutputOutlines);
-		//½á¹ûÊı¾İ½á¹¹ÓĞÎÊÌâ£¬ĞèÒªÊ¹ÓÃµ¥²ãÊı¾İ£¬ÕâÑù´¦ÀíÒ²ÓĞºÃ´¦£¬·Ö¿ªÁËÂÖÀªÆ«ÖÃÌî³äºÍÖ±ÏßÌî³ä¡£
+		//ç»“æœæ•°æ®ç»“æ„æœ‰é—®é¢˜ï¼Œéœ€è¦ä½¿ç”¨å•å±‚æ•°æ®ï¼Œè¿™æ ·å¤„ç†ä¹Ÿæœ‰å¥½å¤„ï¼Œåˆ†å¼€äº†è½®å»“åç½®å¡«å……å’Œç›´çº¿å¡«å……ã€‚
 	}
 }
 
 void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::outputOutlines> &result,float width,float shrinkDistance,float degree)
 {
-	unsigned int N=theOutline.size();    //Ò»¹²¸ôN²ãÌî³äÒ»´Î¡£
-	if(1==N)   //Èç¹û¾ÍÊÇ1²ã£¬ÄÇÖ»ÄÜÖ±½ÓÈ«²¿Ìî³äÁË¡£ »¹Ã»±àºÃÕâ²¿·Ö³ÌĞò¡£
+	unsigned int N=theOutline.size();    //ä¸€å…±éš”Nå±‚å¡«å……ä¸€æ¬¡ã€‚
+	if(1==N)   //å¦‚æœå°±æ˜¯1å±‚ï¼Œé‚£åªèƒ½ç›´æ¥å…¨éƒ¨å¡«å……äº†ã€‚ è¿˜æ²¡ç¼–å¥½è¿™éƒ¨åˆ†ç¨‹åºã€‚
 	{
 		return; 
 		assert(1!=N);
 	}
-	//µÚÒ»²½£ºÏÈ½ø½«Êı¾İ´¢´æµ½clipper×¨ÓÃµÄpathsÀï	
+	//ç¬¬ä¸€æ­¥ï¼šå…ˆè¿›å°†æ•°æ®å‚¨å­˜åˆ°clipperä¸“ç”¨çš„pathsé‡Œ	
 	std::vector<ClipperLib::Paths> nPaths;
 	for (int i=0;i!=N;++i)
 	{
@@ -2951,8 +2951,8 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 		}
 		nPaths.push_back(temPaths);
 	}
-	//µÚ¶ş²½£ºÇóN²ã½ØÃæµÄ½»¼¯ÇøÓò
-	ClipperLib::Paths areaA;   //¶¨Òå½»¼¯ÇøÓòA
+	//ç¬¬äºŒæ­¥ï¼šæ±‚Nå±‚æˆªé¢çš„äº¤é›†åŒºåŸŸ
+	ClipperLib::Paths areaA;   //å®šä¹‰äº¤é›†åŒºåŸŸA
 	ClipperLib::Clipper clipper(ClipperLib::ioStrictlySimple | ClipperLib::ioPreserveCollinear);
 	clipper.AddPaths(nPaths[0],ClipperLib::ptSubject,true);
 	clipper.AddPaths(nPaths[1],ClipperLib::ptClip,true);
@@ -2969,7 +2969,7 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 			clipper.Clear();
 		}
 	}
-	//µÚÈı²½£ºÃ¿Ò»²ã£¨³ıÁË×îºóÒ»²ã£©ºÍ²¢¼¯Çó²¼¶û²îÔËËã£¬½á¹ûÊ¹ÓÃÂÖÀªÆ«ÖÃÌî³ä·¨£¬·ÅÔÚ¶ÔÓ¦²ãµÄÌî³äÂ·¾¶ÀïÃæ¡£
+	//ç¬¬ä¸‰æ­¥ï¼šæ¯ä¸€å±‚ï¼ˆé™¤äº†æœ€åä¸€å±‚ï¼‰å’Œå¹¶é›†æ±‚å¸ƒå°”å·®è¿ç®—ï¼Œç»“æœä½¿ç”¨è½®å»“åç½®å¡«å……æ³•ï¼Œæ”¾åœ¨å¯¹åº”å±‚çš„å¡«å……è·¯å¾„é‡Œé¢ã€‚
 	for (int i=0;i!=N-1;++i)
 	{
 		ClipperLib::Paths offsetOutline;
@@ -2978,7 +2978,7 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 		clipper.Execute(ClipperLib::ctDifference, offsetOutline,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);
 		xd::outlines offsetResult;
 		xd::InfillOffsetIn(offsetOutline,offsetResult,width);
-		xd::outputOutlines temOutputOutlines;   //´æ·ÅÒ»²ãµÄ²Ã¼ôºóµÄÆ«ÖÃÂÖÀªµÄÊı¾İ
+		xd::outputOutlines temOutputOutlines;   //å­˜æ”¾ä¸€å±‚çš„è£å‰ªåçš„åç½®è½®å»“çš„æ•°æ®
 		for (int j=0;j!=offsetResult.size();++j)
 		{
 			std::pair<outline,unsigned int> temPair;
@@ -2989,14 +2989,14 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 		result.push_back(temOutputOutlines);
 		clipper.Clear();
 	}
-	//µÚËÄ²½£º¼ÓÈë×îºóÒ»²ãµÄÌî³äÊı¾İ£¬°üÀ¨µ¥²ãÌî³äºÍ¶à²ãÌî³ä¡£
+	//ç¬¬å››æ­¥ï¼šåŠ å…¥æœ€åä¸€å±‚çš„å¡«å……æ•°æ®ï¼ŒåŒ…æ‹¬å•å±‚å¡«å……å’Œå¤šå±‚å¡«å……ã€‚
 	ClipperLib::Paths offsetOutline;
 	clipper.AddPaths(nPaths[N-1],ClipperLib::ptSubject,true);
 	clipper.AddPaths(areaA,ClipperLib::ptClip,true);
 	clipper.Execute(ClipperLib::ctDifference, offsetOutline,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);
 	xd::outlines offsetResult;
 	xd::InfillOffsetIn(offsetOutline,offsetResult,width);
-    xd::outputOutlines temOutputOutlines;   //´æ·Å×îºóÒ»²ãµÄ²Ã¼ôºóµÄÆ«ÖÃÂÖÀªµÄÊı¾İºÍ½»¼¯areaAµÄÌî³äÊı¾İ
+    xd::outputOutlines temOutputOutlines;   //å­˜æ”¾æœ€åä¸€å±‚çš„è£å‰ªåçš„åç½®è½®å»“çš„æ•°æ®å’Œäº¤é›†areaAçš„å¡«å……æ•°æ®
 	for (int j=0;j!=offsetResult.size();++j)
 	{
 		std::pair<outline,unsigned int> temPair;
@@ -3006,7 +3006,7 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 	}
 	//result.push_back(temOutputOutlines);
 	clipper.Clear();
-//	for (int i=0;i!=areaA.size();++i) //ĞèÒªÊ¹ÓÃ¶à²ãÌî³ä¼ÓÈëÇøÓòAµÄÂÖÀªÂ·¾¶
+//	for (int i=0;i!=areaA.size();++i) //éœ€è¦ä½¿ç”¨å¤šå±‚å¡«å……åŠ å…¥åŒºåŸŸAçš„è½®å»“è·¯å¾„
 //	{
 //		std::pair<outline,unsigned int> temPair;
 //		xd::outline temOutline;
@@ -3014,23 +3014,23 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 //		{
 //			temOutline.push_back(xd::xdpoint(areaA[i][j].X*SCALING_FACTOR,areaA[i][j].Y*SCALING_FACTOR));
 //		}
-//		temOutline.push_back(xd::xdpoint(areaA[i][0].X*SCALING_FACTOR,areaA[i][0].Y*SCALING_FACTOR));   //¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+//		temOutline.push_back(xd::xdpoint(areaA[i][0].X*SCALING_FACTOR,areaA[i][0].Y*SCALING_FACTOR));   //åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 //		temPair.first=temOutline;
 //		temPair.second=N;
 //		temOutputOutlines.push_back(temPair);
 //	}
 	xd::outlines outlinesIn,outlinesO;
-	for (int i=0;i!=areaA.size();++i)  //ĞèÒªÊ¹ÓÃ¶à²ãÌî³ä¼ÓÈëÇøÓòAµÄÌî³äÂ·¾¶  ĞèÒªÏÈ·Ö¿ª£¬ÔÙÌî³ä£¡
+	for (int i=0;i!=areaA.size();++i)  //éœ€è¦ä½¿ç”¨å¤šå±‚å¡«å……åŠ å…¥åŒºåŸŸAçš„å¡«å……è·¯å¾„  éœ€è¦å…ˆåˆ†å¼€ï¼Œå†å¡«å……ï¼
 	{
 		xd::outline temPush;
 		for (int j=0;j!=areaA[i].size();++j)
 		{
             temPush.push_back(xd::xdpoint(areaA[i][j].X*SCALING_FACTOR,areaA[i][j].Y*SCALING_FACTOR));
 		}
-        temPush.push_back(xd::xdpoint(areaA[i][0].X*SCALING_FACTOR,areaA[i][0].Y*SCALING_FACTOR));  //¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+        temPush.push_back(xd::xdpoint(areaA[i][0].X*SCALING_FACTOR,areaA[i][0].Y*SCALING_FACTOR));  //åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 		outlinesIn.push_back(temPush);
 	}
-    //Ê¹ÓÃÖ±ÏßËã·¨Ç°Òª±£Ö¤Ò»ÌõÏßÉÏÃ»ÓĞ¶àÓàµã£¡
+    //ä½¿ç”¨ç›´çº¿ç®—æ³•å‰è¦ä¿è¯ä¸€æ¡çº¿ä¸Šæ²¡æœ‰å¤šä½™ç‚¹ï¼
     for(int i=0;i!=outlinesIn.size();++i)
     {
         DealOneLayer(outlinesIn[i]);
@@ -3045,15 +3045,15 @@ void OutlinesClipperMethod(std::vector<xd::outlines> theOutline,std::vector<xd::
 		temPair.second=N;
 		temOutputOutlines.push_back(temPair);
 	}
-	result.push_back(temOutputOutlines);   //×îºó¼ÓÈëÂ·¾¶µ½½á¹û
+	result.push_back(temOutputOutlines);   //æœ€ååŠ å…¥è·¯å¾„åˆ°ç»“æœ
 }
 
 void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::vector<outlines> & dataOffsets,float width,int M,int N,int lunkuo,float overlap)
 {
-	if(!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if(!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		//std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		//std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if(lunkuo!=0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -3080,7 +3080,7 @@ void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::
 					{
                         temData.push_back(xd::xdpoint((float)solution[i][j].X*SCALING_FACTOR,(float)solution[i][j].Y*SCALING_FACTOR));
 					}
-                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -3103,23 +3103,23 @@ void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::
 			}
 			splitArea.AddPaths(subjectPaths,ClipperLib::ptSubject,true);
 			ClipperLib::IntRect AABB=splitArea.GetBounds();			
-            if(((AABB.bottom-AABB.top)<10/SCALING_FACTOR)||(AABB.right-AABB.left<10/SCALING_FACTOR))  //Èç¹ûÍâ°üÎ§ºĞ³¤»ò¿íĞ¡ÓÚ10mm£¬Ôò²»»®·ÖÁË£¡´Ë´¦¿ÉÒÔĞŞ¸Ä
+            if(((AABB.bottom-AABB.top)<10/SCALING_FACTOR)||(AABB.right-AABB.left<10/SCALING_FACTOR))  //å¦‚æœå¤–åŒ…å›´ç›’é•¿æˆ–å®½å°äº10mmï¼Œåˆ™ä¸åˆ’åˆ†äº†ï¼æ­¤å¤„å¯ä»¥ä¿®æ”¹
 			{
 				theResult.push_back(TheOutline);
 				return;
 			}
-			ClipperLib::cInt lineUnit=(AABB.bottom-AABB.top)/(ClipperLib::cInt)M;  //ĞĞµ¥ÔªµÄ´óĞ¡£¬×¢Òâ£ºclipper¿âbottom>top! yÖáÏòÏÂ£¡
-			ClipperLib::cInt rowUnit=(AABB.right-AABB.left)/(ClipperLib::cInt)N;   //ÁĞµ¥ÔªµÄ´óĞ¡
+			ClipperLib::cInt lineUnit=(AABB.bottom-AABB.top)/(ClipperLib::cInt)M;  //è¡Œå•å…ƒçš„å¤§å°ï¼Œæ³¨æ„ï¼šclipperåº“bottom>top! yè½´å‘ä¸‹ï¼
+			ClipperLib::cInt rowUnit=(AABB.right-AABB.left)/(ClipperLib::cInt)N;   //åˆ—å•å…ƒçš„å¤§å°
 			for(int i=0;i!=M;++i)	
 			{
 				for(int j=0;j!=N;++j)
 				{
-					//¿ªÊ¼ËÄĞĞĞèÒªÂß¼­ÇåÎú£¬´ú±íÈ¡µ½ÈÎÒâÒ»¸öÇøÓòµÄ°üÎ§ºĞµÄÎ»ÖÃ×ø±ê
+					//å¼€å§‹å››è¡Œéœ€è¦é€»è¾‘æ¸…æ™°ï¼Œä»£è¡¨å–åˆ°ä»»æ„ä¸€ä¸ªåŒºåŸŸçš„åŒ…å›´ç›’çš„ä½ç½®åæ ‡
 					ClipperLib::cInt Left=AABB.left+(ClipperLib::cInt)j*rowUnit;
-					ClipperLib::cInt Top=AABB.bottom-(ClipperLib::cInt)i*lineUnit;   //top¸ÄÎªbottom!  yÖáÏòÏÂ£¡
+					ClipperLib::cInt Top=AABB.bottom-(ClipperLib::cInt)i*lineUnit;   //topæ”¹ä¸ºbottom!  yè½´å‘ä¸‹ï¼
 					ClipperLib::cInt Right=AABB.left+(ClipperLib::cInt)(j+1)*rowUnit;
-					ClipperLib::cInt Bottom=AABB.bottom-(ClipperLib::cInt)(i+1)*lineUnit;  //top¸ÄÎªbottom!
-					//ÏÂÃæĞèÒª×¢ÒâÖØµş
+					ClipperLib::cInt Bottom=AABB.bottom-(ClipperLib::cInt)(i+1)*lineUnit;  //topæ”¹ä¸ºbottom!
+					//ä¸‹é¢éœ€è¦æ³¨æ„é‡å 
 					if(i!=0)
                         Top+=overlap/SCALING_FACTOR;
 					if(j!=0)
@@ -3128,12 +3128,12 @@ void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::
                         Bottom-=overlap/SCALING_FACTOR;
 					if(j!=N-1)
                         Right+=overlap/SCALING_FACTOR;
-					//ÏÂÃæ¹¹Ôì²Ã¼ôĞ¡¾ØĞÎ
+					//ä¸‹é¢æ„é€ è£å‰ªå°çŸ©å½¢
 					ClipperLib::Path clipRectangle;
 					clipRectangle<<ClipperLib::IntPoint(Left,Top)<<ClipperLib::IntPoint(Left,Bottom)<<ClipperLib::IntPoint(Right,Bottom)<<ClipperLib::IntPoint(Right,Top)<<ClipperLib::IntPoint(Left,Top);
 					splitArea.AddPath(clipRectangle,ClipperLib::ptClip,true);					
 					ClipperLib::Paths intersectionResult;
-					splitArea.Execute(ClipperLib::ctIntersection, intersectionResult,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);  //Ö´ĞĞ²¼¶û½»					
+					splitArea.Execute(ClipperLib::ctIntersection, intersectionResult,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);  //æ‰§è¡Œå¸ƒå°”äº¤					
 					xd::outlines temOutlines;    					
 					for(int k=0;k!=intersectionResult.size();++k)
 					{
@@ -3142,15 +3142,15 @@ void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::
 						{
                             temOutline.push_back(xd::xdpoint(intersectionResult[k][l].X*SCALING_FACTOR,intersectionResult[k][l].Y*SCALING_FACTOR));
 						}
-                        temOutline.push_back(xd::xdpoint(intersectionResult[k][0].X*SCALING_FACTOR,intersectionResult[k][0].Y*SCALING_FACTOR)); //¼ÓÉÏ×îºóÒ»¸öµã·â±Õ
+                        temOutline.push_back(xd::xdpoint(intersectionResult[k][0].X*SCALING_FACTOR,intersectionResult[k][0].Y*SCALING_FACTOR)); //åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹å°é—­
 						temOutlines.push_back(temOutline);
 					}
 					theResult.push_back(temOutlines);
-					splitArea.Clear();  //½øĞĞÒ»´ÎÒªÇå¿Õ
-					splitArea.AddPaths(subjectPaths,ClipperLib::ptSubject,true);  //ÒªÔÙ¼ÓÉÏÖ÷¶à±ßĞÎ
+					splitArea.Clear();  //è¿›è¡Œä¸€æ¬¡è¦æ¸…ç©º
+					splitArea.AddPaths(subjectPaths,ClipperLib::ptSubject,true);  //è¦å†åŠ ä¸Šä¸»å¤šè¾¹å½¢
 				}
 			}
-			//µ½´ËÑ­»·M*N´Î£¬ÂÖÀª×éºÏ´æ·Åµ½theResultÀï
+			//åˆ°æ­¤å¾ªç¯M*Næ¬¡ï¼Œè½®å»“ç»„åˆå­˜æ”¾åˆ°theResulté‡Œ
 		}
 		
 	}
@@ -3159,10 +3159,10 @@ void SplitMNArea(outlines TheOutline,std::vector<xd::outlines> & theResult,std::
 
 int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std::vector<outlines> & dataOffsets, float width, int Length, int Width, int lunkuo, float overlap, float threshold)
 {
-	if(!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if(!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		//std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		//std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if(lunkuo!=0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -3189,7 +3189,7 @@ int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std:
 					{
                         temData.push_back(xd::xdpoint((float)solution[i][j].X*SCALING_FACTOR,(float)solution[i][j].Y*SCALING_FACTOR));
 					}
-                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -3212,17 +3212,17 @@ int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std:
 			}
 			splitArea.AddPaths(subjectPaths,ClipperLib::ptSubject,true);
 			ClipperLib::IntRect AABB=splitArea.GetBounds();			
-            //if(((AABB.bottom-AABB.top)<10/SCALING_FACTOR)||((AABB.right-AABB.left)<10/SCALING_FACTOR))  //Èç¹ûÍâ°üÎ§ºĞ³¤»ò¿íĞ¡ÓÚ10mm£¬Ôò²»»®·ÖÁË£¡´Ë´¦¿ÉÒÔĞŞ¸Ä
+            //if(((AABB.bottom-AABB.top)<10/SCALING_FACTOR)||((AABB.right-AABB.left)<10/SCALING_FACTOR))  //å¦‚æœå¤–åŒ…å›´ç›’é•¿æˆ–å®½å°äº10mmï¼Œåˆ™ä¸åˆ’åˆ†äº†ï¼æ­¤å¤„å¯ä»¥ä¿®æ”¹
 			//{
 			//	theResult.push_back(TheOutline);
 			//	return;
 			//}
 
-            ClipperLib::cInt lineUnit=Width/SCALING_FACTOR;  //ĞĞµ¥ÔªµÄ´óĞ¡£¬×¢Òâ£ºclipper¿âbottom>top! yÖáÏòÏÂ£¡
-            ClipperLib::cInt rowUnit=Length/SCALING_FACTOR;   //ÁĞµ¥ÔªµÄ´óĞ¡
+            ClipperLib::cInt lineUnit=Width/SCALING_FACTOR;  //è¡Œå•å…ƒçš„å¤§å°ï¼Œæ³¨æ„ï¼šclipperåº“bottom>top! yè½´å‘ä¸‹ï¼
+            ClipperLib::cInt rowUnit=Length/SCALING_FACTOR;   //åˆ—å•å…ƒçš„å¤§å°
 			int M=(AABB.bottom-AABB.top)/lineUnit;
 			int N=(AABB.right-AABB.left)/rowUnit;
-			//ÏÂÃæÈç¹ûÊ£ÓàÇøÓò´óÓÚ¸ø¶¨³¤¿íÒ»°ë£¬ÔòÔÙ·ÖÒ»´Î£¬ÕâÀïÒÔºó¿ÉÒÔ¸ù¾İĞèÒªĞŞ¸Ä¾àÀë
+			//ä¸‹é¢å¦‚æœå‰©ä½™åŒºåŸŸå¤§äºç»™å®šé•¿å®½ä¸€åŠï¼Œåˆ™å†åˆ†ä¸€æ¬¡ï¼Œè¿™é‡Œä»¥åå¯ä»¥æ ¹æ®éœ€è¦ä¿®æ”¹è·ç¦»
 			ClipperLib::cInt widthRemainder=(AABB.bottom-AABB.top)%lineUnit;
 			ClipperLib::cInt lengthRemainder=(AABB.right-AABB.left)%rowUnit;
 			/*if(widthRemainder>lineUnit/2||M==0)
@@ -3237,12 +3237,12 @@ int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std:
 			{
 				for(int j=0;j!=N;++j)
 				{
-					//¿ªÊ¼ËÄĞĞĞèÒªÂß¼­ÇåÎú£¬´ú±íÈ¡µ½ÈÎÒâÒ»¸öÇøÓòµÄ°üÎ§ºĞµÄÎ»ÖÃ×ø±ê
+					//å¼€å§‹å››è¡Œéœ€è¦é€»è¾‘æ¸…æ™°ï¼Œä»£è¡¨å–åˆ°ä»»æ„ä¸€ä¸ªåŒºåŸŸçš„åŒ…å›´ç›’çš„ä½ç½®åæ ‡
 					ClipperLib::cInt Left=AABB.left+(ClipperLib::cInt)j*rowUnit;
-					ClipperLib::cInt Top=AABB.bottom-(ClipperLib::cInt)i*lineUnit;   //top¸ÄÎªbottom!  yÖáÏòÏÂ£¡
+					ClipperLib::cInt Top=AABB.bottom-(ClipperLib::cInt)i*lineUnit;   //topæ”¹ä¸ºbottom!  yè½´å‘ä¸‹ï¼
 					ClipperLib::cInt Right=AABB.left+(ClipperLib::cInt)(j+1)*rowUnit;
-					ClipperLib::cInt Bottom=AABB.bottom-(ClipperLib::cInt)(i+1)*lineUnit;  //top¸ÄÎªbottom!
-					//ÏÂÃæĞèÒª×¢ÒâÖØµş
+					ClipperLib::cInt Bottom=AABB.bottom-(ClipperLib::cInt)(i+1)*lineUnit;  //topæ”¹ä¸ºbottom!
+					//ä¸‹é¢éœ€è¦æ³¨æ„é‡å 
 					if(i!=0)
                         Top+=overlap/SCALING_FACTOR;
 					if(j!=0)
@@ -3255,12 +3255,12 @@ int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std:
                         Right+=overlap/SCALING_FACTOR;
 					else
 						Right=AABB.right;
-					//ÏÂÃæ¹¹Ôì²Ã¼ôĞ¡¾ØĞÎ
+					//ä¸‹é¢æ„é€ è£å‰ªå°çŸ©å½¢
 					ClipperLib::Path clipRectangle;
 					clipRectangle<<ClipperLib::IntPoint(Left,Top)<<ClipperLib::IntPoint(Left,Bottom)<<ClipperLib::IntPoint(Right,Bottom)<<ClipperLib::IntPoint(Right,Top)<<ClipperLib::IntPoint(Left,Top);
 					splitArea.AddPath(clipRectangle,ClipperLib::ptClip,true);					
 					ClipperLib::Paths intersectionResult;
-					splitArea.Execute(ClipperLib::ctIntersection, intersectionResult,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);  //Ö´ĞĞ²¼¶û½»					
+					splitArea.Execute(ClipperLib::ctIntersection, intersectionResult,ClipperLib::pftEvenOdd,ClipperLib::pftEvenOdd);  //æ‰§è¡Œå¸ƒå°”äº¤					
 					xd::outlines temOutlines;    					
 					for(int k=0;k!=intersectionResult.size();++k)
 					{
@@ -3269,15 +3269,15 @@ int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std:
 						{
                             temOutline.push_back(xd::xdpoint(intersectionResult[k][l].X*SCALING_FACTOR,intersectionResult[k][l].Y*SCALING_FACTOR));
 						}
-                        temOutline.push_back(xd::xdpoint(intersectionResult[k][0].X*SCALING_FACTOR,intersectionResult[k][0].Y*SCALING_FACTOR)); //¼ÓÉÏ×îºóÒ»¸öµã·â±Õ
+                        temOutline.push_back(xd::xdpoint(intersectionResult[k][0].X*SCALING_FACTOR,intersectionResult[k][0].Y*SCALING_FACTOR)); //åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹å°é—­
 						temOutlines.push_back(temOutline);
 					}
 					theResult.push_back(temOutlines);
-					splitArea.Clear();  //½øĞĞÒ»´ÎÒªÇå¿Õ
-					splitArea.AddPaths(subjectPaths,ClipperLib::ptSubject,true);  //ÒªÔÙ¼ÓÉÏÖ÷¶à±ßĞÎ
+					splitArea.Clear();  //è¿›è¡Œä¸€æ¬¡è¦æ¸…ç©º
+					splitArea.AddPaths(subjectPaths,ClipperLib::ptSubject,true);  //è¦å†åŠ ä¸Šä¸»å¤šè¾¹å½¢
 				}
 			}
-			//µ½´ËÑ­»·M*N´Î£¬ÂÖÀª×éºÏ´æ·Åµ½theResultÀï
+			//åˆ°æ­¤å¾ªç¯M*Næ¬¡ï¼Œè½®å»“ç»„åˆå­˜æ”¾åˆ°theResulté‡Œ
 			return M;
 		}
 		return 0;
@@ -3287,10 +3287,10 @@ int SplitLWArea(outlines TheOutline, std::vector<xd::outlines> & theResult, std:
 
 void offsetReturnSingleRegion(outlines TheOutline,std::vector<xd::outlines> & theResult,std::vector<outlines> & dataOffsets,float width,int lunkuo)
 {
-	if(!TheOutline.empty())  //Ê×ÏÈ±ØĞë±£Ö¤ÓĞÊı¾İ
+	if(!TheOutline.empty())  //é¦–å…ˆå¿…é¡»ä¿è¯æœ‰æ•°æ®
 	{
-		//ĞèÒªÒ»´ÎÂÖÀªÆ«ÖÃÀ´Ê¹µÃÍâÂÖÀª±È½ÏÆ½»¬
-		//std::vector<outlines> dataOffsets;  //´æ´¢ËùÓĞÆ«ÖÃÂÖÀªµÄÊı¾İ
+		//éœ€è¦ä¸€æ¬¡è½®å»“åç½®æ¥ä½¿å¾—å¤–è½®å»“æ¯”è¾ƒå¹³æ»‘
+		//std::vector<outlines> dataOffsets;  //å­˜å‚¨æ‰€æœ‰åç½®è½®å»“çš„æ•°æ®
 		if(lunkuo!=0)
 		{
 			ClipperLib::ClipperOffset temO;
@@ -3317,7 +3317,7 @@ void offsetReturnSingleRegion(outlines TheOutline,std::vector<xd::outlines> & th
 					{
                         temData.push_back(xd::xdpoint((float)solution[i][j].X*SCALING_FACTOR,(float)solution[i][j].Y*SCALING_FACTOR));
 					}
-                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//¼ÓÉÏ×îºóÒ»¸öµã£¬±£Ö¤·â±Õ
+                    temData.push_back(xd::xdpoint((float)solution[i][0].X*SCALING_FACTOR,(float)solution[i][0].Y*SCALING_FACTOR));//åŠ ä¸Šæœ€åä¸€ä¸ªç‚¹ï¼Œä¿è¯å°é—­
 					dataOffset.push_back(temData);
 				}
 				dataOffsets.push_back(dataOffset);
@@ -3329,54 +3329,54 @@ void offsetReturnSingleRegion(outlines TheOutline,std::vector<xd::outlines> & th
 		{
 			ClipperLib::Clipper clipper;
 			clipper.Clear();    
-			//ÕâÀïÓÃ·¨ÖµµÃÑ§Ï°£¬½«clipperÀïµÄpaths±äÎªpolytreeµÄ·½·¨
+			//è¿™é‡Œç”¨æ³•å€¼å¾—å­¦ä¹ ï¼Œå°†clipperé‡Œçš„pathså˜ä¸ºpolytreeçš„æ–¹æ³•
 			ClipperLib::Paths input;
 			OutlinesToClipperPaths(TheOutline,&input);
 			clipper.AddPaths(input, ClipperLib::ptSubject, true);
 			ClipperLib::PolyTree polytree;
 			clipper.Execute(ClipperLib::ctUnion, polytree, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);  // offset results work with both EvenOdd and NonZero
-			//¿ªÊ¼½«ÂÖÀª°´ÕÕÇøÓò·Ö±ğ¸³Öµ¸ø½á¹û
+			//å¼€å§‹å°†è½®å»“æŒ‰ç…§åŒºåŸŸåˆ†åˆ«èµ‹å€¼ç»™ç»“æœ
 			theResult.clear();
 			for(int i=0;i!=polytree.ChildCount();++i)
-				AddOuterPolyNodeToResult(*polytree.Childs[i], theResult);   //Ê¹ÓÃµİ¹éº¯Êı±éÀú¶à²æÊ÷£¬Ê¹ÓÃµÄÊÇÇ°Ğò±éÀú¡£
+				AddOuterPolyNodeToResult(*polytree.Childs[i], theResult);   //ä½¿ç”¨é€’å½’å‡½æ•°éå†å¤šå‰æ ‘ï¼Œä½¿ç”¨çš„æ˜¯å‰åºéå†ã€‚
 		}
 	}
 }
 
 void offsetReturnSingleRegion(outlines TheOutline,std::vector<outlines> & theResult)
 {	
-	if(!TheOutline.empty()) //Ê×ÏÈ±£Ö¤ÓĞÊı¾İ
+	if(!TheOutline.empty()) //é¦–å…ˆä¿è¯æœ‰æ•°æ®
 	{
 		ClipperLib::Clipper clipper;
 		clipper.Clear();    
-		//ÕâÀïÓÃ·¨ÖµµÃÑ§Ï°£¬½«clipperÀïµÄpaths±äÎªpolytreeµÄ·½·¨
+		//è¿™é‡Œç”¨æ³•å€¼å¾—å­¦ä¹ ï¼Œå°†clipperé‡Œçš„pathså˜ä¸ºpolytreeçš„æ–¹æ³•
 		ClipperLib::Paths input;
 		OutlinesToClipperPaths(TheOutline,&input);
 		clipper.AddPaths(input, ClipperLib::ptSubject, true);
 		ClipperLib::PolyTree polytree;
 		clipper.Execute(ClipperLib::ctUnion, polytree, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);  // offset results work with both EvenOdd and NonZero
-		//¿ªÊ¼½«ÂÖÀª°´ÕÕÇøÓò·Ö±ğ¸³Öµ¸ø½á¹û
+		//å¼€å§‹å°†è½®å»“æŒ‰ç…§åŒºåŸŸåˆ†åˆ«èµ‹å€¼ç»™ç»“æœ
 		theResult.clear();
 		for(int i=0;i!=polytree.ChildCount();++i)
-			AddOuterPolyNodeToResult(*polytree.Childs[i], theResult);   //Ê¹ÓÃµİ¹éº¯Êı±éÀú¶à²æÊ÷£¬Ê¹ÓÃµÄÊÇÇ°Ğò±éÀú¡£
+			AddOuterPolyNodeToResult(*polytree.Childs[i], theResult);   //ä½¿ç”¨é€’å½’å‡½æ•°éå†å¤šå‰æ ‘ï¼Œä½¿ç”¨çš„æ˜¯å‰åºéå†ã€‚
 	}		
 }
 
 void AddOuterPolyNodeToResult(ClipperLib::PolyNode& polynode,std::vector<xd::outlines> & output)   
 {	
 	int lastSubscript=output.size();
-	output.resize(lastSubscript + 1);  //ÕâÒ»²½resizeºó¼´ÔÚºóÃæ¼ÓÉÏÒ»¸ö£¨´ø¶´£©¶à±ßĞÎ
-	output[lastSubscript].resize(1+polynode.ChildCount());   //ÕâÒ»²½ÖØÖÃÊ¹µÃ´ø¶´¶à±ßĞÎÒ»¹²ÓĞ¼¸¸öÂÖÀªµÄÊı
-	ClipperPathToOutline(polynode.Contour, & output[lastSubscript][0]);  //ÕâÀï¼ÓÉÏ¶à±ßĞÎµÄÂÖÀª	
-	if(output[lastSubscript][0][0]!=output[lastSubscript][0][output[lastSubscript][0].size()-1])  //ÕâÀïÎªÁËÊ¹µÃ¶à±ßĞÎ×îºóÒ»¸öµãµÈÓÚµÚÒ»¸öµã
+	output.resize(lastSubscript + 1);  //è¿™ä¸€æ­¥resizeåå³åœ¨åé¢åŠ ä¸Šä¸€ä¸ªï¼ˆå¸¦æ´ï¼‰å¤šè¾¹å½¢
+	output[lastSubscript].resize(1+polynode.ChildCount());   //è¿™ä¸€æ­¥é‡ç½®ä½¿å¾—å¸¦æ´å¤šè¾¹å½¢ä¸€å…±æœ‰å‡ ä¸ªè½®å»“çš„æ•°
+	ClipperPathToOutline(polynode.Contour, & output[lastSubscript][0]);  //è¿™é‡ŒåŠ ä¸Šå¤šè¾¹å½¢çš„è½®å»“	
+	if(output[lastSubscript][0][0]!=output[lastSubscript][0][output[lastSubscript][0].size()-1])  //è¿™é‡Œä¸ºäº†ä½¿å¾—å¤šè¾¹å½¢æœ€åä¸€ä¸ªç‚¹ç­‰äºç¬¬ä¸€ä¸ªç‚¹
 		output[lastSubscript][0].push_back(output[lastSubscript][0][0]);
 	for (int i = 0; i < polynode.ChildCount(); ++i)
 	{
-		ClipperPathToOutline(polynode.Childs[i]->Contour, & output[lastSubscript][1+i]);  //ÕâÀï¼ÓÉÏ¶à±ßĞÎ¿ÉÄÜ³öÏÖµÄn¸ö¶´
-		if(output[lastSubscript][1+i][0]!=output[lastSubscript][1+i][output[lastSubscript][1+i].size()-1]) //ÕâÀïÎªÁËÊ¹µÃ¶à±ßĞÎ×îºóÒ»¸öµãµÈÓÚµÚÒ»¸öµã
+		ClipperPathToOutline(polynode.Childs[i]->Contour, & output[lastSubscript][1+i]);  //è¿™é‡ŒåŠ ä¸Šå¤šè¾¹å½¢å¯èƒ½å‡ºç°çš„nä¸ªæ´
+		if(output[lastSubscript][1+i][0]!=output[lastSubscript][1+i][output[lastSubscript][1+i].size()-1]) //è¿™é‡Œä¸ºäº†ä½¿å¾—å¤šè¾¹å½¢æœ€åä¸€ä¸ªç‚¹ç­‰äºç¬¬ä¸€ä¸ªç‚¹
 			output[lastSubscript][1+i].push_back(output[lastSubscript][1+i][0]);
-		for (int j = 0; j < polynode.Childs[i]->ChildCount(); ++j)   //ÓĞ¼¸¸ö×Ó£¬¾Í»áÓĞ¼¸¸ö£¨´ø¶´£©¶à±ßĞÎ
-			AddOuterPolyNodeToResult(*polynode.Childs[i]->Childs[j], output);  //ÕâÒ»²½Ê¹ÓÃµİ¹é
+		for (int j = 0; j < polynode.Childs[i]->ChildCount(); ++j)   //æœ‰å‡ ä¸ªå­ï¼Œå°±ä¼šæœ‰å‡ ä¸ªï¼ˆå¸¦æ´ï¼‰å¤šè¾¹å½¢
+			AddOuterPolyNodeToResult(*polynode.Childs[i]->Childs[j], output);  //è¿™ä¸€æ­¥ä½¿ç”¨é€’å½’
 	}
 }
 

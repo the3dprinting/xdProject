@@ -20,42 +20,42 @@ class BoundingBoxBase
     PointClass max;
     bool defined;
 
-    BoundingBoxBase() : defined(false) {};   //³õÊ¼»¯¹¹Ôìº¯Êı£¬Ã»ÓĞ´«ÈëÊı¾İ£¬Òò´Ë±êÖ¾·ûdefinedÎª¼Ù£¡
-    BoundingBoxBase(const std::vector<PointClass> &points);  //´«ÈëÒ»ÏµÁĞµã£¬¹¹ÔìÍêºó¾Í¸ø×ÔÉíµÄmin¡¢maxÊıÖµÌí¼ÓÍê±Ï£¬Òò´ËdefinedÎªÕæ£¡
-    void merge(const PointClass &point);  //¼ÓÉÏÒ»¸öµã£¬²¢¸üĞÂminºÍmax£¬Èç¹û¿ªÊ¼Ã»ÓĞµã£¬Ôò°ÑminºÍmax¶¼ÉèÖÃÎªpoint
-    void merge(const std::vector<PointClass> &points);  //¼ÓÉÏpointsºó£¬¸üĞÂµÃµ½µÄminºÍmax£¬ÊµÏÖµ÷ÓÃÁËÏÂÃæµÄº¯Êı
-    void merge(const BoundingBoxBase<PointClass> &bb);  //¼ÓÉÏĞÂµÄbbºó£¬¸üĞÂminºÍmax
-    void scale(double factor);   //½«minºÍmax·Å´óÒ»¸öfactor±¶
-    PointClass size() const;   //·µ»Ø°üÎ§ºĞ×Ü³¤ºÍ¿í×é³ÉµÄPointClassÀà£¬¿ÏÊÇÒ»¸öµã
-    void translate(coordf_t x, coordf_t y);   //½«minºÍmaxÆ½ÒÆ(x,y)
-    void offset(coordf_t delta);  //minÆ½ÒÆ£¨-delta£¬-delta£©£¬maxÆ½ÒÆ£¨delta£¬delta£©¡£Ïàµ±ÓÚÆ«ÖÃÀ©´óÁËdelta
-    PointClass center() const;   //·µ»Ø°üÎ§ºĞµÄÖĞĞÄµãµÄPointClassÀà
+    BoundingBoxBase() : defined(false) {};   //åˆå§‹åŒ–æ„é€ å‡½æ•°ï¼Œæ²¡æœ‰ä¼ å…¥æ•°æ®ï¼Œå› æ­¤æ ‡å¿—ç¬¦definedä¸ºå‡ï¼
+    BoundingBoxBase(const std::vector<PointClass> &points);  //ä¼ å…¥ä¸€ç³»åˆ—ç‚¹ï¼Œæ„é€ å®Œåå°±ç»™è‡ªèº«çš„minã€maxæ•°å€¼æ·»åŠ å®Œæ¯•ï¼Œå› æ­¤definedä¸ºçœŸï¼
+    void merge(const PointClass &point);  //åŠ ä¸Šä¸€ä¸ªç‚¹ï¼Œå¹¶æ›´æ–°minå’Œmaxï¼Œå¦‚æœå¼€å§‹æ²¡æœ‰ç‚¹ï¼Œåˆ™æŠŠminå’Œmaxéƒ½è®¾ç½®ä¸ºpoint
+    void merge(const std::vector<PointClass> &points);  //åŠ ä¸Špointsåï¼Œæ›´æ–°å¾—åˆ°çš„minå’Œmaxï¼Œå®ç°è°ƒç”¨äº†ä¸‹é¢çš„å‡½æ•°
+    void merge(const BoundingBoxBase<PointClass> &bb);  //åŠ ä¸Šæ–°çš„bbåï¼Œæ›´æ–°minå’Œmax
+    void scale(double factor);   //å°†minå’Œmaxæ”¾å¤§ä¸€ä¸ªfactorå€
+    PointClass size() const;   //è¿”å›åŒ…å›´ç›’æ€»é•¿å’Œå®½ç»„æˆçš„PointClassç±»ï¼Œè‚¯æ˜¯ä¸€ä¸ªç‚¹
+    void translate(coordf_t x, coordf_t y);   //å°†minå’Œmaxå¹³ç§»(x,y)
+    void offset(coordf_t delta);  //minå¹³ç§»ï¼ˆ-deltaï¼Œ-deltaï¼‰ï¼Œmaxå¹³ç§»ï¼ˆdeltaï¼Œdeltaï¼‰ã€‚ç›¸å½“äºåç½®æ‰©å¤§äº†delta
+    PointClass center() const;   //è¿”å›åŒ…å›´ç›’çš„ä¸­å¿ƒç‚¹çš„PointClassç±»
 };
 
 template <class PointClass>
 class BoundingBox3Base : public BoundingBoxBase<PointClass>
 {
     public:
-    BoundingBox3Base() : BoundingBoxBase<PointClass>() {};    //Í¬BoundingBoxBase
-    BoundingBox3Base(const std::vector<PointClass> &points);  //¶àÁËÒ»¸özµÄÖµ
-    void merge(const PointClass &point);  //Í¬¶şÎ¬£¬¶àÁËz
-    void merge(const std::vector<PointClass> &points);  //Í¬¶şÎ¬£¬¶àÁËz
-    void merge(const BoundingBox3Base<PointClass> &bb);  //Í¬¶şÎ¬£¬¶àÁËz
-    PointClass size() const;    //·µ»Ø°üÎ§ºĞ×Ü³¤£¬¿í£¬¸ß×é³ÉµÄPointClassÀà£¬¿ÏÊÇÒ»¸öµã
-    void translate(coordf_t x, coordf_t y, coordf_t z);   //Í¬¶şÎ¬£¬¶àÁËz
-    void offset(coordf_t delta);  //Í¬¶şÎ¬£¬¶àÁËz
-    PointClass center() const;    //Í¬¶şÎ¬£¬¶àÁËz
+    BoundingBox3Base() : BoundingBoxBase<PointClass>() {};    //åŒBoundingBoxBase
+    BoundingBox3Base(const std::vector<PointClass> &points);  //å¤šäº†ä¸€ä¸ªzçš„å€¼
+    void merge(const PointClass &point);  //åŒäºŒç»´ï¼Œå¤šäº†z
+    void merge(const std::vector<PointClass> &points);  //åŒäºŒç»´ï¼Œå¤šäº†z
+    void merge(const BoundingBox3Base<PointClass> &bb);  //åŒäºŒç»´ï¼Œå¤šäº†z
+    PointClass size() const;    //è¿”å›åŒ…å›´ç›’æ€»é•¿ï¼Œå®½ï¼Œé«˜ç»„æˆçš„PointClassç±»ï¼Œè‚¯æ˜¯ä¸€ä¸ªç‚¹
+    void translate(coordf_t x, coordf_t y, coordf_t z);   //åŒäºŒç»´ï¼Œå¤šäº†z
+    void offset(coordf_t delta);  //åŒäºŒç»´ï¼Œå¤šäº†z
+    PointClass center() const;    //åŒäºŒç»´ï¼Œå¤šäº†z
 };
 
 class BoundingBox : public BoundingBoxBase<Point>
 {
     public:
-    void polygon(Polygon* polygon) const;   //½«°üÎ§ºĞµÄËÄ¸öµã¸³Öµ¸øpolygon
-    Polygon polygon() const;   //½«°üÎ§ºĞµÄËÄ¸öµã¸³Öµ¸øÒ»¸öpolygon£¬È»ºó·µ»Ø
+    void polygon(Polygon* polygon) const;   //å°†åŒ…å›´ç›’çš„å››ä¸ªç‚¹èµ‹å€¼ç»™polygon
+    Polygon polygon() const;   //å°†åŒ…å›´ç›’çš„å››ä¸ªç‚¹èµ‹å€¼ç»™ä¸€ä¸ªpolygonï¼Œç„¶åè¿”å›
 
     BoundingBox() : BoundingBoxBase<Point>() {};
     BoundingBox(const Points &points) : BoundingBoxBase<Point>(points) {};
-    BoundingBox(const Lines &lines);   //½«Ò»ÏµÁĞµÄlineµÄÁ½¸ö¶Ëµã×÷ÎªÊäÈëµãµÄ¹¹Ôìº¯Êı
+    BoundingBox(const Lines &lines);   //å°†ä¸€ç³»åˆ—çš„lineçš„ä¸¤ä¸ªç«¯ç‚¹ä½œä¸ºè¾“å…¥ç‚¹çš„æ„é€ å‡½æ•°
 };
 
 /*

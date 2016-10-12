@@ -94,7 +94,7 @@ stl_check_facets_exact(stl_file *stl) {
       stl_remove_facet(stl, i);
       i--;
       continue;
-	  //¶î£¬ËµÃ÷Ò»¸öÈı½ÇÃæÆ¬¾¹È»ÓĞÁ½µãÍêÈ«ÏàÍ¬£¬±ØĞëÉ¾³ı°¡£¡
+	  //é¢ï¼Œè¯´æ˜ä¸€ä¸ªä¸‰è§’é¢ç‰‡ç«Ÿç„¶æœ‰ä¸¤ç‚¹å®Œå…¨ç›¸åŒï¼Œå¿…é¡»åˆ é™¤å•Šï¼
     }
     for(j = 0; j < 3; j++) {
       edge.facet_number = i;
@@ -255,7 +255,7 @@ insert_hash_edge(stl_file *stl, stl_hash_edge edge,
 
 
 static int
-stl_get_hash_for_edge(int M, stl_hash_edge *edge) {  //É¢ÁĞº¯Êı£¬¼´¹şÏ£º¯Êı
+stl_get_hash_for_edge(int M, stl_hash_edge *edge) {  //æ•£åˆ—å‡½æ•°ï¼Œå³å“ˆå¸Œå‡½æ•°
   return ((edge->key[0] / 23 + edge->key[1] / 19 + edge->key[2] / 17
            + edge->key[3] /13  + edge->key[4] / 11 + edge->key[5] / 7 ) % M);
 }

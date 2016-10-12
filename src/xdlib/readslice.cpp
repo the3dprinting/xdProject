@@ -85,14 +85,14 @@ TriangleMesh::write_binary(char* output_file)
 }
 
 void
-TriangleMesh::repair() {   //Ì«°ôµÄÊ¹ÓÃstlÈı·½¿âµÄÀı×ÓÁË£¬ÖµµÃÑ§Ï°£¡
+TriangleMesh::repair() {   //å¤ªæ£’çš„ä½¿ç”¨stlä¸‰æ–¹åº“çš„ä¾‹å­äº†ï¼Œå€¼å¾—å­¦ä¹ ï¼
     if (this->repaired) return;
 
     // admesh fails when repairing empty meshes
     if (this->stl.stats.number_of_facets == 0) return;
 
     // checking exact
-    stl_check_facets_exact(&stl);   //ÕâÀïÕâ¸öº¯ÊıÏàµ±ÖØÒª£¬°ÑstlµÄÏàÁÚ±ßĞòÁĞ¼ÓÉÏÁË£¡
+    stl_check_facets_exact(&stl);   //è¿™é‡Œè¿™ä¸ªå‡½æ•°ç›¸å½“é‡è¦ï¼ŒæŠŠstlçš„ç›¸é‚»è¾¹åºåˆ—åŠ ä¸Šäº†ï¼
     stl.stats.facets_w_1_bad_edge = (stl.stats.connected_facets_2_edge - stl.stats.connected_facets_3_edge);
     stl.stats.facets_w_2_bad_edge = (stl.stats.connected_facets_1_edge - stl.stats.connected_facets_2_edge);
     stl.stats.facets_w_3_bad_edge = (stl.stats.number_of_facets - stl.stats.connected_facets_1_edge);
@@ -281,18 +281,18 @@ TriangleMesh::split() const
     if (!this->repaired) qDebug("split() requires repair()");
 
     // loop while we have remaining facets
-    while (1) {//ÕâÀïÒ»Ö±Ñ­»·µ½Ã»ÓĞÒ»¸öÈı½ÇÃæÆ¬ÎªÖ¹
+    while (1) {//è¿™é‡Œä¸€ç›´å¾ªç¯åˆ°æ²¡æœ‰ä¸€ä¸ªä¸‰è§’é¢ç‰‡ä¸ºæ­¢
         // get the first facet
         std::queue<int> facet_queue;
         std::deque<int> facets;
         for (int facet_idx = 0; facet_idx < this->stl.stats.number_of_facets; facet_idx++) {
-            if (seen_facets.find(facet_idx) == seen_facets.end()) {//×¢Òâfind()·½·¨¶Ô¼¯ºÏ½øĞĞ¼ìË÷£¬Èç¹ûÕÒµ½²éÕÒµÄµÄ¼üÖµ£¬Ôò·µ»Ø¸Ã¼üÖµµÄµü´úÆ÷Î»ÖÃ£»·ñÔò£¬·µ»Ø¼¯ºÏ×îºóÒ»¸öÔªËØºóÃæµÄÒ»¸öÎ»ÖÃ£¬¼´end()
+            if (seen_facets.find(facet_idx) == seen_facets.end()) {//æ³¨æ„find()æ–¹æ³•å¯¹é›†åˆè¿›è¡Œæ£€ç´¢ï¼Œå¦‚æœæ‰¾åˆ°æŸ¥æ‰¾çš„çš„é”®å€¼ï¼Œåˆ™è¿”å›è¯¥é”®å€¼çš„è¿­ä»£å™¨ä½ç½®ï¼›å¦åˆ™ï¼Œè¿”å›é›†åˆæœ€åä¸€ä¸ªå…ƒç´ åé¢çš„ä¸€ä¸ªä½ç½®ï¼Œå³end()
                 // if facet was not seen put it into queue and start searching
                 facet_queue.push(facet_idx);
                 break;
             }
         }
-        if (facet_queue.empty()) break;   //ÕâÀïËµÃ÷seen_facets×°ÂúÁË£¬¼´ËùÓĞÃæÆ¬¶¼±éÀú¹ıÁË£¬ËùÒÔÌø³öwhileÑ­»·¡£
+        if (facet_queue.empty()) break;   //è¿™é‡Œè¯´æ˜seen_facetsè£…æ»¡äº†ï¼Œå³æ‰€æœ‰é¢ç‰‡éƒ½éå†è¿‡äº†ï¼Œæ‰€ä»¥è·³å‡ºwhileå¾ªç¯ã€‚
 
         while (!facet_queue.empty()) {
             int facet_idx = facet_queue.front();
@@ -300,10 +300,10 @@ TriangleMesh::split() const
             if (seen_facets.find(facet_idx) != seen_facets.end()) continue;
             facets.push_back(facet_idx);
             for (int j = 0; j <= 2; j++) {
-                facet_queue.push(this->stl.neighbors_start[facet_idx].neighbor[j]);  //Ã¿´Î¼ÓÈëÕâ´ÎÑ¡Ôñ±ßµÄÏàÁÚÈıÌõ±ß£¬±ØÈ»ÄÜ±éÀúÍê´ÎÄ£ĞÍ
+                facet_queue.push(this->stl.neighbors_start[facet_idx].neighbor[j]);  //æ¯æ¬¡åŠ å…¥è¿™æ¬¡é€‰æ‹©è¾¹çš„ç›¸é‚»ä¸‰æ¡è¾¹ï¼Œå¿…ç„¶èƒ½éå†å®Œæ¬¡æ¨¡å‹
             }
-            seen_facets.insert(facet_idx);  //½«Ñ¡Ôñ¼ÓÈëµÄ±ß¼ÓÈë¼¯ºÏ£¬ÏÂ´ÎÑ­»·²»»áÔÙÊ¹ÓÃÕâ¸ö±ßÁË
-        }//×îÖÕÌø³öÑ­»·Ê±facetsÀïÃæ´æ×ÅÌô³öÀ´µÄÒ»¸öÄ£ĞÍµÄËùÓĞĞòÁĞºÅ£¬µ±È»¶´Ìô²»³öÀ´
+            seen_facets.insert(facet_idx);  //å°†é€‰æ‹©åŠ å…¥çš„è¾¹åŠ å…¥é›†åˆï¼Œä¸‹æ¬¡å¾ªç¯ä¸ä¼šå†ä½¿ç”¨è¿™ä¸ªè¾¹äº†
+        }//æœ€ç»ˆè·³å‡ºå¾ªç¯æ—¶facetsé‡Œé¢å­˜ç€æŒ‘å‡ºæ¥çš„ä¸€ä¸ªæ¨¡å‹çš„æ‰€æœ‰åºåˆ—å·ï¼Œå½“ç„¶æ´æŒ‘ä¸å‡ºæ¥
 
         TriangleMesh* mesh = new TriangleMesh;
         meshes.push_back(mesh);
@@ -311,12 +311,12 @@ TriangleMesh::split() const
         mesh->stl.stats.number_of_facets = facets.size();
         mesh->stl.stats.original_num_facets = mesh->stl.stats.number_of_facets;
         stl_clear_error(&mesh->stl);
-        stl_allocate(&mesh->stl);   //·ÖÅä´æ´¢¿Õ¼ä£¨¸ù¾İnumber_of_facetsºÍoriginal_num_facets£©£¬µÚÒ»´Î·ÖÅä£¬³õÊ¼»¯Õâ²¿·ÖÄÚ´æ
-        //ÏÂÃæ½²µÄÊÇÈçºÎÍùstl¿âÀïÃæ¼ÓÈëÒ»¸östlÎÄ¼şµÄ·½·¨£¡£¡ÖµµÃÑ§Ï°£¡£¡¼ÓÈëÊ±¼ÈÒª¼ÓÈë£¬»¹Òª¸üĞÂ×´Ì¬£¡
+        stl_allocate(&mesh->stl);   //åˆ†é…å­˜å‚¨ç©ºé—´ï¼ˆæ ¹æ®number_of_facetså’Œoriginal_num_facetsï¼‰ï¼Œç¬¬ä¸€æ¬¡åˆ†é…ï¼Œåˆå§‹åŒ–è¿™éƒ¨åˆ†å†…å­˜
+        //ä¸‹é¢è®²çš„æ˜¯å¦‚ä½•å¾€stlåº“é‡Œé¢åŠ å…¥ä¸€ä¸ªstlæ–‡ä»¶çš„æ–¹æ³•ï¼ï¼å€¼å¾—å­¦ä¹ ï¼ï¼åŠ å…¥æ—¶æ—¢è¦åŠ å…¥ï¼Œè¿˜è¦æ›´æ–°çŠ¶æ€ï¼
         int first = 1;
         for (std::deque<int>::const_iterator facet = facets.begin(); facet != facets.end(); facet++) {
             mesh->stl.facet_start[facet - facets.begin()] = this->stl.facet_start[*facet];
-            stl_facet_stats(&mesh->stl, this->stl.facet_start[*facet], first);  //first´ú±íÊÇ·ñÊÇ²åÈëµÄµÚÒ»Ìõ±ß
+            stl_facet_stats(&mesh->stl, this->stl.facet_start[*facet], first);  //firstä»£è¡¨æ˜¯å¦æ˜¯æ’å…¥çš„ç¬¬ä¸€æ¡è¾¹
             first = 0;
         }
     }
@@ -335,15 +335,15 @@ TriangleMesh::merge(const TriangleMesh &mesh)
     // update facet count and allocate more memory
     this->stl.stats.number_of_facets = number_of_facets + mesh.stl.stats.number_of_facets;
     this->stl.stats.original_num_facets = this->stl.stats.number_of_facets;
-    stl_reallocate(&this->stl);  //´ÓĞÂ·ÖÅä¸ü¶à´æ´¢¿Õ¼ä£¬ÕâÖÖ·ÖÅäµÄÄÚ´æÔ­À´ÓĞµÄ²¿·Ö»¹ÔÚ
+    stl_reallocate(&this->stl);  //ä»æ–°åˆ†é…æ›´å¤šå­˜å‚¨ç©ºé—´ï¼Œè¿™ç§åˆ†é…çš„å†…å­˜åŸæ¥æœ‰çš„éƒ¨åˆ†è¿˜åœ¨
 
-    // copy facets   ½«meshµÄÈı½ÇÃæÆ¬¼ÓÈë±¾Éí
+    // copy facets   å°†meshçš„ä¸‰è§’é¢ç‰‡åŠ å…¥æœ¬èº«
     for (int i = 0; i < mesh.stl.stats.number_of_facets; i++) {
         this->stl.facet_start[number_of_facets + i] = mesh.stl.facet_start[i];
     }
 
     // update size
-    stl_get_size(&this->stl);  //¸üĞÂstlÀïÃæµÄsizeÕâ¸ö½á¹¹Ìå£¬Êµ¼ÊÉÏ¾ÍÊÇÒ»¸ö£¨x,y,z£©
+    stl_get_size(&this->stl);  //æ›´æ–°stlé‡Œé¢çš„sizeè¿™ä¸ªç»“æ„ä½“ï¼Œå®é™…ä¸Šå°±æ˜¯ä¸€ä¸ªï¼ˆx,y,zï¼‰
 }
 
 /* this will return scaled ExPolygons */
@@ -399,8 +399,8 @@ TriangleMesh::bounding_box() const
 void
 TriangleMesh::require_shared_vertices()
 {
-    if (!this->repaired) this->repair();   //Ö´ĞĞÏÂÃæº¯ÊıÇ°±ØĞëµÄ£¡£¡£¡
-    if (this->stl.v_shared == NULL) stl_generate_shared_vertices(&(this->stl));   //Éú³É¹²Ïíµã£¬ÄÑÒÔÀí½â£¡
+    if (!this->repaired) this->repair();   //æ‰§è¡Œä¸‹é¢å‡½æ•°å‰å¿…é¡»çš„ï¼ï¼ï¼
+    if (this->stl.v_shared == NULL) stl_generate_shared_vertices(&(this->stl));   //ç”Ÿæˆå…±äº«ç‚¹ï¼Œéš¾ä»¥ç†è§£ï¼
 }
 
 void
@@ -439,7 +439,7 @@ TriangleMeshSlicer::slice(const std::vector<float> &z, std::vector<Polygons>* la
     for (int facet_idx = 0; facet_idx < this->mesh->stl.stats.number_of_facets; facet_idx++) {
         stl_facet* facet = &this->mesh->stl.facet_start[facet_idx];
 
-        // find facet extents   ÕÒµ½ÃæÆ¬z·½ÏòµÄ×î´óÖµºÍ×îĞ¡Öµ
+        // find facet extents   æ‰¾åˆ°é¢ç‰‡zæ–¹å‘çš„æœ€å¤§å€¼å’Œæœ€å°å€¼
         float min_z = fminf(facet->vertex[0].z, fminf(facet->vertex[1].z, facet->vertex[2].z));
         float max_z = fmaxf(facet->vertex[0].z, fmaxf(facet->vertex[1].z, facet->vertex[2].z));
 //      if(min_z==max_z)
@@ -452,10 +452,10 @@ TriangleMeshSlicer::slice(const std::vector<float> &z, std::vector<Polygons>* la
         printf("z: min = %.2f, max = %.2f\n", min_z, max_z);
         #endif
 
-        // find layer extents   ÕÒµ½z·½ÏòÇĞÆ¬µÄÃæÔÚ¸ÃÈı½ÇÃæÆ¬ÉÏµÄ·¶Î§Ö¸Õë
+        // find layer extents   æ‰¾åˆ°zæ–¹å‘åˆ‡ç‰‡çš„é¢åœ¨è¯¥ä¸‰è§’é¢ç‰‡ä¸Šçš„èŒƒå›´æŒ‡é’ˆ
         std::vector<float>::const_iterator min_layer, max_layer;
-        min_layer = std::lower_bound(z.begin(), z.end(), min_z); // first layer whose slice_z is >= min_z   lower_bound³¬¼¶ºÃµÄº¯Êı
-        //×¢Òâ£ºÏÂÃæÕâ¸öº¯ÊıÈç¹ûÊ¹ÓÃC++µ÷ÊÔÆ÷»á³öÏÖ´íÎó£¬g++Ã»ÊÂ£¬ºÜÆæ¹Ö£¡£¡
+        min_layer = std::lower_bound(z.begin(), z.end(), min_z); // first layer whose slice_z is >= min_z   lower_boundè¶…çº§å¥½çš„å‡½æ•°
+        //æ³¨æ„ï¼šä¸‹é¢è¿™ä¸ªå‡½æ•°å¦‚æœä½¿ç”¨C++è°ƒè¯•å™¨ä¼šå‡ºç°é”™è¯¯ï¼Œg++æ²¡äº‹ï¼Œå¾ˆå¥‡æ€ªï¼ï¼
         max_layer = std::upper_bound(z.begin() + (min_layer - z.begin()), z.end(), max_z) - 1; // last layer whose slice_z is <= max_z
         #ifdef SLIC3R_DEBUG
         printf("layers: min = %d, max = %d\n", (int)(min_layer - z.begin()), (int)(max_layer - z.begin()));
@@ -463,8 +463,8 @@ TriangleMeshSlicer::slice(const std::vector<float> &z, std::vector<Polygons>* la
 
         //printf("layers: min = %d, max = %d\n", (int)(min_layer - z.begin()), (int)(max_layer - z.begin()));
         for (std::vector<float>::const_iterator it = min_layer; it != max_layer + 1; ++it) {
-            std::vector<float>::size_type layer_idx = it - z.begin();  //size_type Ïàµ±ÓÚ unsigned intÀàĞÍÊ¹ÓÃsize_type Ö÷ÒªÊÇÎªÁËÊÊÓ¦²»Í¬µÄÆ½Ì¨intÀàĞÍ´óĞ¡»á¸ù¾İ²»Í¬Æ½Ì¨¶ø²»Í¬,ËùÒÔÓ¦¸ÃÊÇsize_type±ÈintºÃ£¡
-            this->slice_facet(*it / SCALING_FACTOR, *facet, facet_idx, min_z, max_z, &lines[layer_idx]);  //²Ã¼ôÒ»¸öÃæµÄº¯Êı£¬½á¹û·ÅÔÚ¶ÔÓ¦z½Ç±ê±àºÅµÄlinesÀï
+            std::vector<float>::size_type layer_idx = it - z.begin();  //size_type ç›¸å½“äº unsigned intç±»å‹ä½¿ç”¨size_type ä¸»è¦æ˜¯ä¸ºäº†é€‚åº”ä¸åŒçš„å¹³å°intç±»å‹å¤§å°ä¼šæ ¹æ®ä¸åŒå¹³å°è€Œä¸åŒ,æ‰€ä»¥åº”è¯¥æ˜¯size_typeæ¯”intå¥½ï¼
+            this->slice_facet(*it / SCALING_FACTOR, *facet, facet_idx, min_z, max_z, &lines[layer_idx]);  //è£å‰ªä¸€ä¸ªé¢çš„å‡½æ•°ï¼Œç»“æœæ”¾åœ¨å¯¹åº”zè§’æ ‡ç¼–å·çš„linesé‡Œ
         }
     }
 
@@ -486,7 +486,7 @@ void
 TriangleMeshSlicer::slice(const std::vector<float> &z, std::vector<ExPolygons>* layers)
 {
     std::vector<Polygons> layers_p;
-    this->slice(z, &layers_p);   //»¹ÊÇµ÷ÓÃÉÏÒ»¸öº¯ÊıÉú³ÉPolygons
+    this->slice(z, &layers_p);   //è¿˜æ˜¯è°ƒç”¨ä¸Šä¸€ä¸ªå‡½æ•°ç”ŸæˆPolygons
 
     layers->resize(z.size());
     for (std::vector<Polygons>::const_iterator loops = layers_p.begin(); loops != layers_p.end(); ++loops) {
@@ -521,7 +521,7 @@ TriangleMeshSlicer::slice_facet(float slice_z, const stl_facet &facet, const int
         int edge_id = this->facets_edges[facet_idx][j % 3];
         int a_id = this->mesh->stl.v_indices[facet_idx].vertex[j % 3];
         int b_id = this->mesh->stl.v_indices[facet_idx].vertex[(j+1) % 3];
-        stl_vertex* a = &this->v_scaled_shared[a_id];  //Õâ¾ä»°ËµÃ÷ÁËv_scaled_shared´æ·Å×ÅËùÓĞµã£¬¶øÇÒµØÖ··ÅÔÚv_indicesÀïÃæ£¡
+        stl_vertex* a = &this->v_scaled_shared[a_id];  //è¿™å¥è¯è¯´æ˜äº†v_scaled_sharedå­˜æ”¾ç€æ‰€æœ‰ç‚¹ï¼Œè€Œä¸”åœ°å€æ”¾åœ¨v_indicesé‡Œé¢ï¼
         stl_vertex* b = &this->v_scaled_shared[b_id];  //
 
         if (a->z == b->z && a->z == slice_z) {
@@ -663,7 +663,7 @@ TriangleMeshSlicer::make_loops(std::vector<IntersectionLine> &lines, Polygons* l
         if (line->a_id != -1) by_a_id[line->a_id].push_back(&(*line));
     }
 
-    CYCLE: while (1) {   //ÕâÀïÊÇÒ»¸ögotoÓï¾äµÄ¿ªÊ¼²¿·Ö
+    CYCLE: while (1) {   //è¿™é‡Œæ˜¯ä¸€ä¸ªgotoè¯­å¥çš„å¼€å§‹éƒ¨åˆ†
         // take first spare line and start a new loop
         IntersectionLine* first_line = NULL;
         for (IntersectionLines::iterator line = lines.begin(); line != lines.end(); ++line) {
@@ -1015,20 +1015,20 @@ TriangleMeshSlicer::cut(float z, TriangleMesh* upper, TriangleMesh* lower)
 TriangleMeshSlicer::TriangleMeshSlicer(TriangleMesh* _mesh) : mesh(_mesh), v_scaled_shared(NULL)
 {
     // build a table to map a facet_idx to its three edge indices
-    this->mesh->require_shared_vertices();  //µ÷ÓÃ´Ëº¯Êı¾Í´ú±íĞŞ¸´stlÎÄ¼şÁË
+    this->mesh->require_shared_vertices();  //è°ƒç”¨æ­¤å‡½æ•°å°±ä»£è¡¨ä¿®å¤stlæ–‡ä»¶äº†
     typedef std::pair<int,int>              t_edge;
-    typedef std::vector<t_edge>             t_edges;  // edge_idx => a_id,b_id       ±ßidµ½±ß
-    typedef std::map<t_edge,int>            t_edges_map;  // a_id,b_id => edge_idx   ±ßµ½±ßid
+    typedef std::vector<t_edge>             t_edges;  // edge_idx => a_id,b_id       è¾¹idåˆ°è¾¹
+    typedef std::map<t_edge,int>            t_edges_map;  // a_id,b_id => edge_idx   è¾¹åˆ°è¾¹id
 
     this->facets_edges.resize(this->mesh->stl.stats.number_of_facets);
 
     {
-        t_edges edges;   //±ßidµ½±ß
+        t_edges edges;   //è¾¹idåˆ°è¾¹
         // reserve() instad of resize() because otherwise we couldn't read .size() below to assign edge_idx
-        //ÈİÆ÷µ÷ÓÃresize()º¯Êıºó£¬ËùÓĞµÄ¿Õ¼ä¶¼ÒÑ¾­³õÊ¼»¯ÁË£¬ËùÒÔ¿ÉÒÔÖ±½Ó·ÃÎÊ¡£
-        //¶øreserve()º¯ÊıÔ¤·ÖÅä³öµÄ¿Õ¼äÃ»ÓĞ±»³õÊ¼»¯£¬ËùÒÔ²»¿É·ÃÎÊ¡£
+        //å®¹å™¨è°ƒç”¨resize()å‡½æ•°åï¼Œæ‰€æœ‰çš„ç©ºé—´éƒ½å·²ç»åˆå§‹åŒ–äº†ï¼Œæ‰€ä»¥å¯ä»¥ç›´æ¥è®¿é—®ã€‚
+        //è€Œreserve()å‡½æ•°é¢„åˆ†é…å‡ºçš„ç©ºé—´æ²¡æœ‰è¢«åˆå§‹åŒ–ï¼Œæ‰€ä»¥ä¸å¯è®¿é—®ã€‚
         edges.reserve(this->mesh->stl.stats.number_of_facets * 3);  // number of edges = number of facets * 3
-        t_edges_map edges_map;  //±ßµ½±ßid
+        t_edges_map edges_map;  //è¾¹åˆ°è¾¹id
         for (int facet_idx = 0; facet_idx < this->mesh->stl.stats.number_of_facets; facet_idx++) {
             this->facets_edges[facet_idx].resize(3);
             for (int i = 0; i <= 2; i++) {
@@ -1049,13 +1049,13 @@ TriangleMeshSlicer::TriangleMeshSlicer(TriangleMesh* _mesh) : mesh(_mesh), v_sca
                         edge_idx = my_edge->second;
                     } else {
                         // edge isn't listed in table, so we insert it
-                        edge_idx = edges.size();   //ÒòÎªedges´æ·Å²»ÖØ¸´µÄ±ß£¬Òò´Ë×îºó´óĞ¡¼´ÎªstlÎÄ¼şµÄ±ßµÄÊıÄ¿
+                        edge_idx = edges.size();   //å› ä¸ºedgeså­˜æ”¾ä¸é‡å¤çš„è¾¹ï¼Œå› æ­¤æœ€åå¤§å°å³ä¸ºstlæ–‡ä»¶çš„è¾¹çš„æ•°ç›®
                         edges.push_back(std::make_pair(a_id,b_id));
                         edges_map[ edges[edge_idx] ] = edge_idx;
                     }
                 }
-                this->facets_edges[facet_idx][i] = edge_idx;   //×îÖÕ×é³ÉÃæ£¨¶ÔÓ¦stlÊı¾İÖĞµÄÃæid£©±ß¶ÔÓ¦µÄidÖµ£¨Ä³Ğ©idÖµÖØ¸´£¬Ó¦¸Ã¶¼ÖØ¸´2´Î£©
-                                                               //µ«ÊÇ×îÖÕfacets_edges¶ÔÓ¦²éÑ¯µ½ÏàÍ¬µÄ±ß¶¼ÊÇÒ»¸öÈ·¶¨µÄ£¬ÏàµÈµÄÖµ
+                this->facets_edges[facet_idx][i] = edge_idx;   //æœ€ç»ˆç»„æˆé¢ï¼ˆå¯¹åº”stlæ•°æ®ä¸­çš„é¢idï¼‰è¾¹å¯¹åº”çš„idå€¼ï¼ˆæŸäº›idå€¼é‡å¤ï¼Œåº”è¯¥éƒ½é‡å¤2æ¬¡ï¼‰
+                                                               //ä½†æ˜¯æœ€ç»ˆfacets_edgeså¯¹åº”æŸ¥è¯¢åˆ°ç›¸åŒçš„è¾¹éƒ½æ˜¯ä¸€ä¸ªç¡®å®šçš„ï¼Œç›¸ç­‰çš„å€¼
                 #ifdef SLIC3R_DEBUG
                 printf("  [facet %d, edge %d] a_id = %d, b_id = %d   --> edge %d\n", facet_idx, i, a_id, b_id, edge_idx);
                 #endif

@@ -11,14 +11,14 @@ class SurfaceCollection
     public:
     Surfaces surfaces;
 
-    operator Polygons() const;  //ÀàĞÍ×ª»»º¯Êı£¬½«±¾ÉíµÄÒ»¶Ñsurface×ª»»ÎªPolygonsÀà
-    operator ExPolygons() const;   //ÀàĞÍ×ª»»º¯Êı£¬½«±¾ÉíµÄÒ»¶Ñsurface×ª»»ÎªExPolygonsÀà
-    void simplify(double tolerance);  //½«±¾ÉíÒ»¶ÑsurfaceÀïÃæµÄexpolygon°´ÕÕÏÒ¸ßÎó²îÎªtolerance¼ò»¯
-    void group(std::vector<SurfacesPtr> *retval);  //Í¨¹ı¹²ÓĞµÄÊôĞÔ½«surfaces·Ö×é
-    template <class T> bool any_internal_contains(const T &item) const;  //surfacesÀïÃæÊÇ·ñÓĞinternalÀàĞÍµÄsurface°üº¬item
-    template <class T> bool any_bottom_contains(const T &item) const;   //surfacesÀïÃæÊÇ·ñÓĞbottomÀàĞÍµÄsurface°üº¬item
-    SurfacesPtr filter_by_type(SurfaceType type);   //½«surfacesÀïÃæÊÇtypeÀàĞÍµÄÌôÑ¡³öÀ´·µ»Ø
-    void filter_by_type(SurfaceType type, Polygons* polygons);  //½«surfacesÀïÃæÊÇtypeÀàĞÍµÄÌôÑ¡³öÀ´·Åµ½polygonsLÀïÃæ
+    operator Polygons() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œå°†æœ¬èº«çš„ä¸€å †surfaceè½¬æ¢ä¸ºPolygonsç±»
+    operator ExPolygons() const;   //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œå°†æœ¬èº«çš„ä¸€å †surfaceè½¬æ¢ä¸ºExPolygonsç±»
+    void simplify(double tolerance);  //å°†æœ¬èº«ä¸€å †surfaceé‡Œé¢çš„expolygonæŒ‰ç…§å¼¦é«˜è¯¯å·®ä¸ºtoleranceç®€åŒ–
+    void group(std::vector<SurfacesPtr> *retval);  //é€šè¿‡å…±æœ‰çš„å±æ€§å°†surfacesåˆ†ç»„
+    template <class T> bool any_internal_contains(const T &item) const;  //surfacesé‡Œé¢æ˜¯å¦æœ‰internalç±»å‹çš„surfaceåŒ…å«item
+    template <class T> bool any_bottom_contains(const T &item) const;   //surfacesé‡Œé¢æ˜¯å¦æœ‰bottomç±»å‹çš„surfaceåŒ…å«item
+    SurfacesPtr filter_by_type(SurfaceType type);   //å°†surfacesé‡Œé¢æ˜¯typeç±»å‹çš„æŒ‘é€‰å‡ºæ¥è¿”å›
+    void filter_by_type(SurfaceType type, Polygons* polygons);  //å°†surfacesé‡Œé¢æ˜¯typeç±»å‹çš„æŒ‘é€‰å‡ºæ¥æ”¾åˆ°polygonsLé‡Œé¢
 };
 
 }

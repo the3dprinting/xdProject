@@ -8,18 +8,18 @@
 using boost::polygon::voronoi_builder;
 using boost::polygon::voronoi_diagram;
 
-namespace xd { namespace Geometry {  //´Ë´¦ÓÖ¿ª±ÙÒ»¸öÃüÃû¿Õ¼ä£¬¹À¼ÆÓĞÒ»Ğ©È«¾Öº¯ÊıÔÚÀïÃæ
+namespace xd { namespace Geometry {  //æ­¤å¤„åˆå¼€è¾Ÿä¸€ä¸ªå‘½åç©ºé—´ï¼Œä¼°è®¡æœ‰ä¸€äº›å…¨å±€å‡½æ•°åœ¨é‡Œé¢
 
-Polygon convex_hull(Points points);   //Éú³ÉÀëÉ¢µãµÄÍ¹°ü
-Polygon convex_hull(const Polygons &polygons);   //Éú³É¶à¸ö¶à±ßĞÎµÄ×ÜµÄÍ¹°ü
-void chained_path(const Points &points, std::vector<Points::size_type> &retval, Point start_near); //´Óstart_nearµã¿ªÊ¼£¬ÒÀ´ÎÑ°ÕÒpointsÖĞ¾àÀëÇ°Ò»¸öµã×î½üµÄµãÔÚpoints½Ç±êÖµ£¬¼ÇÂ¼ÔÚretvalÖĞ
-void chained_path(const Points &points, std::vector<Points::size_type> &retval); //Í¬ÉÏ£¬Ö»²»¹ıµÚÒ»¸öµãÊ±points.front()
-template<class T> void chained_path_items(Points &points, T &items, T &retval);   //retval·µ»Ø½«pointsÅÅĞòºó½Ç±ê¶ÔÓ¦itemsµÄÖµ£¬²»Àí½â£¿
-bool directions_parallel(double angle1, double angle2, double max_diff = 0);  //·µ»ØÁ½¸ö½Ç¶ÈÖ®²îÊÇ·ñÔÚÎó²îÔÊĞíµÄ·¶Î§ÄÚÎª0¶È»ò180¶È£¬¼´Æ½ĞĞ
-template<class T> bool contains(const std::vector<T> &vector, const Point &point);  //·µ»ØTÀàĞÍ×é³ÉµÄvectorÊÇ·ñ°üº¬point£¬TÍÆ²âÎªpolygonµÈ
-double rad2deg(double angle);  //»¡¶È×ª»»Îª½Ç¶È·µ»Ø
-double rad2deg_dir(double angle);  //·µ»ØºÍ´«Èë»¡¶È´¹Ö±µÄ»¡¶ÈµÄ½Ç¶ÈÖµ
-double deg2rad(double angle);  //½Ç¶È×ª»»Îª»¡¶È·µ»Ø
+Polygon convex_hull(Points points);   //ç”Ÿæˆç¦»æ•£ç‚¹çš„å‡¸åŒ…
+Polygon convex_hull(const Polygons &polygons);   //ç”Ÿæˆå¤šä¸ªå¤šè¾¹å½¢çš„æ€»çš„å‡¸åŒ…
+void chained_path(const Points &points, std::vector<Points::size_type> &retval, Point start_near); //ä»start_nearç‚¹å¼€å§‹ï¼Œä¾æ¬¡å¯»æ‰¾pointsä¸­è·ç¦»å‰ä¸€ä¸ªç‚¹æœ€è¿‘çš„ç‚¹åœ¨pointsè§’æ ‡å€¼ï¼Œè®°å½•åœ¨retvalä¸­
+void chained_path(const Points &points, std::vector<Points::size_type> &retval); //åŒä¸Šï¼Œåªä¸è¿‡ç¬¬ä¸€ä¸ªç‚¹æ—¶points.front()
+template<class T> void chained_path_items(Points &points, T &items, T &retval);   //retvalè¿”å›å°†pointsæ’åºåè§’æ ‡å¯¹åº”itemsçš„å€¼ï¼Œä¸ç†è§£ï¼Ÿ
+bool directions_parallel(double angle1, double angle2, double max_diff = 0);  //è¿”å›ä¸¤ä¸ªè§’åº¦ä¹‹å·®æ˜¯å¦åœ¨è¯¯å·®å…è®¸çš„èŒƒå›´å†…ä¸º0åº¦æˆ–180åº¦ï¼Œå³å¹³è¡Œ
+template<class T> bool contains(const std::vector<T> &vector, const Point &point);  //è¿”å›Tç±»å‹ç»„æˆçš„vectoræ˜¯å¦åŒ…å«pointï¼ŒTæ¨æµ‹ä¸ºpolygonç­‰
+double rad2deg(double angle);  //å¼§åº¦è½¬æ¢ä¸ºè§’åº¦è¿”å›
+double rad2deg_dir(double angle);  //è¿”å›å’Œä¼ å…¥å¼§åº¦å‚ç›´çš„å¼§åº¦çš„è§’åº¦å€¼
+double deg2rad(double angle);  //è§’åº¦è½¬æ¢ä¸ºå¼§åº¦è¿”å›
 void simplify_polygons(const Polygons &polygons, double tolerance, Polygons* retval);
 
 class ArrangeItem {

@@ -16,7 +16,7 @@ class BridgeDetector {
     double resolution;
     double angle;
 
-    BridgeDetector(const ExPolygon &_expolygon, const ExPolygonCollection &_lower_slices, coord_t _extrusion_width);//½«_expolygonºÍ_lower_slicesÇó²¼¶û½»ÔËËã£¬´æ´¢µ½_edges(¶à)ºÍ_anchors(ÉÙ)Àï
+    BridgeDetector(const ExPolygon &_expolygon, const ExPolygonCollection &_lower_slices, coord_t _extrusion_width);//å°†_expolygonå’Œ_lower_slicesæ±‚å¸ƒå°”äº¤è¿ç®—ï¼Œå­˜å‚¨åˆ°_edges(å¤š)å’Œ_anchors(å°‘)é‡Œ
     bool detect_angle();
     void coverage(Polygons* coverage) const;
     void coverage(double angle, Polygons* coverage) const;

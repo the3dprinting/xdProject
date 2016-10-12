@@ -36,7 +36,7 @@ BoundingBox3Base<PointClass>::BoundingBox3Base(const std::vector<PointClass> &po
 }
 template BoundingBox3Base<Pointf3>::BoundingBox3Base(const std::vector<Pointf3> &points);
 
-BoundingBox::BoundingBox(const Lines &lines)   //Èç¹û´«ÈëµÄÊÇÏß¶Î£¬Ôò¼ÆËãËùÓĞÏß¶Î¶ËµãµÄÂÖÀª°üÎ§ºĞ
+BoundingBox::BoundingBox(const Lines &lines)   //å¦‚æœä¼ å…¥çš„æ˜¯çº¿æ®µï¼Œåˆ™è®¡ç®—æ‰€æœ‰çº¿æ®µç«¯ç‚¹çš„è½®å»“åŒ…å›´ç›’
 {
     Points points;
     for (Lines::const_iterator line = lines.begin(); line != lines.end(); ++line) {

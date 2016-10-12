@@ -19,42 +19,42 @@ typedef std::vector<TriangleMesh*> TriangleMeshPtrs;
 class TriangleMesh
 {
     public:
-    TriangleMesh();  //²»´«²ÎÊı¹¹Ôìº¯Êı£¬Ä¬ÈÏÃ»ÓĞĞŞ¸´£¬³õÊ¼»¯±¾ÉíµÄstl
-    TriangleMesh(const TriangleMesh &other);   //´«ÈëÒ»¸öTriangleMeshÀàĞÍ£¬°ÑotherÀïÃæµÄstl¸´ÖÆµ½±¾Éístl½øÀ´¡£
-    TriangleMesh& operator= (TriangleMesh other);   //ÁíÒ»¸öTriangleMeshÀïµÄstl¸³Öµ¸ø±¾ÉíµÄstl
-    void swap(TriangleMesh &other);  //ºÍÁíÒ»¸öTriangleMeshÀïµÄstl½»»»£¨ÒòÎª´«ÈëÒıÓÃ£©¡£
+    TriangleMesh();  //ä¸ä¼ å‚æ•°æ„é€ å‡½æ•°ï¼Œé»˜è®¤æ²¡æœ‰ä¿®å¤ï¼Œåˆå§‹åŒ–æœ¬èº«çš„stl
+    TriangleMesh(const TriangleMesh &other);   //ä¼ å…¥ä¸€ä¸ªTriangleMeshç±»å‹ï¼ŒæŠŠotheré‡Œé¢çš„stlå¤åˆ¶åˆ°æœ¬èº«stlè¿›æ¥ã€‚
+    TriangleMesh& operator= (TriangleMesh other);   //å¦ä¸€ä¸ªTriangleMeshé‡Œçš„stlèµ‹å€¼ç»™æœ¬èº«çš„stl
+    void swap(TriangleMesh &other);  //å’Œå¦ä¸€ä¸ªTriangleMeshé‡Œçš„stläº¤æ¢ï¼ˆå› ä¸ºä¼ å…¥å¼•ç”¨ï¼‰ã€‚
     ~TriangleMesh();
-    void ReadSTLFile(char* input_file);    //¶ÁÈ¡sltÎÄ¼ş£¬nice£¬µ÷ÓÃÁËµÚÈı·½¿â£¡
-    void write_ascii(char* output_file);   //¶ÁÈ¡sltÎÄ¼ş£¬nice£¬µ÷ÓÃÁËµÚÈı·½¿â£¡Ğ´³öascii¸ñÊ½µÄÎÄ¼ş
-    void write_binary(char* output_file);  //¶ÁÈ¡sltÎÄ¼ş£¬nice£¬µ÷ÓÃÁËµÚÈı·½¿â£¡Ğ´³Ébinary¸ñÊ½µÄÎÄ¼ş
-    void repair();   //Èç¹ûstlÃ»ÓĞĞŞ¸´£¬ÔòĞŞ¸´Ò»ÏÂ£¬Í¬Ê±µ÷ÓÃÁËstl_check_facets_exactº¯Êı£¡ËüÔö¼ÓÁËneighbors list£¬ÊÇ½øĞĞthis->require_shared_verticesµÄÇ°Ìá£¡¡ú×¢Òâ£ºÌ«°ôµÄÊ¹ÓÃstlÈı·½¿âµÄÀı×ÓÁË£¬ÖµµÃÑ§Ï°£¡
-    void WriteOBJFile(char* output_file);   //Ğ´³ÉOBJ¸ñÊ½µÄÎÄ¼ş
-    void scale(float factor);    //·ÅËõ£¬²¢ÅÅ³ıÎŞĞ§¹²Ïíµã
-    void scale(const Pointf3 &versor);   //x y z ·½Ïò±ÈÀıÒò×Ó²»Í¬µÄ·ÅËõ£¬²¢ÅÅ³ıÎŞĞ§¹²Ïíµã
-    void translate(float x, float y, float z);   //Æ½ÒÆ(x,y,z)¾àÀë£¬£¬²¢ÅÅ³ıÎŞĞ§¹²Ïíµã
-    void rotate(float angle, const Axis &axis);  //ÈÆÄ³¸öÖáĞı×ªÒ»¸ö½Ç¶È
-    void rotate_x(float angle);   //ÈÆxÖáĞı×ªÒ»¸ö½Ç¶È
-    void rotate_y(float angle);   //ÈÆyÖáĞı×ªÒ»¸ö½Ç¶È
-    void rotate_z(float angle);   //ÈÆzÖáĞı×ªÒ»¸ö½Ç¶È
-    void flip(const Axis &axis);  //ÈÆ±¾ÉíÄ³¸öÖáĞı×ª
-    void flip_x();   //ÈÆ±¾ÉíxÖáĞı×ª
-    void flip_y();   //ÈÆ±¾ÉíyÖáĞı×ª
-    void flip_z();   //ÈÆ±¾ÉízÖáĞı×ª
-    void align_to_origin();   //±¾ÉíÒÆ¶¯µ½Ô­µã
-    void rotate(double angle, Point* center);   //ÈÆcenterµãĞı×ªangle½Ç¶È
-    TriangleMeshPtrs split() const;   //·µ»ØÒ»¶Ñmeshs£¬Èç¹ûÎÒÃ»²Â´íµÄ»°£¬Ò»¸östlµÄ¶´ºÍÍâ±ß½çÒ²·Ö¿ªÁË£¡
-    void merge(const TriangleMesh &mesh);   //½«meshºÏ²¢µ½±¾ÉíµÄstlÊı¾İÀï£¬Í¬Ê±¸üĞÂÀïÃæµÄsize
-    ExPolygons horizontal_projection() const;   //ÇóµÃË®Æ½ÃæÉÏµÄÓ³ÉäÆ½Ãæ£¬Í¨¹ı²¼¶û²¢ÇóµÃ
-    Polygon convex_hull();   //¿´ÁËÕâ¸öÊµÏÖ¹ı³ÌÍÆ²â¹²ÏíµãÊÇ²»ÔÚÈı½ÇÃæÆ¬µÄ¿Õ¼ä×ªÕÛµã£¡£¡
-    BoundingBoxf3 bounding_box() const;    //·µ»Ø¿Õ¼äÈıÎ¬°üÎ§ºĞ
-    void reset_repair_stats();  //´ÓĞÂÉè¶¨ĞŞ¸´×´Ì¬£¬ĞèÒªĞŞ¸´µÄÄÚÈİµÄÊıÄ¿¶¼ÎªÁã
-    bool needed_repair() const;    //·µ»ØÊÇ·ñĞèÒªĞŞ¸´£¬trueĞèÒªĞŞ¸´
-    size_t facets_count() const;   //·µ»ØÃæÆ¬µÄÊıÁ¿
-    stl_file stl;    //Õâ¸öÊı¾İ½á¹¹ÔÚstl.hÀïÃæ¶¨Òå£¬Ò»¸östruct½á¹¹£¬°üÀ¨ÎÄ¼şÖ¸Õë£¬±ß£¬ÃæµÈĞÅÏ¢
-    bool repaired;  //ÊÇ·ñĞŞ¸´¹ıµÄ±êÖ¾
+    void ReadSTLFile(char* input_file);    //è¯»å–sltæ–‡ä»¶ï¼Œniceï¼Œè°ƒç”¨äº†ç¬¬ä¸‰æ–¹åº“ï¼
+    void write_ascii(char* output_file);   //è¯»å–sltæ–‡ä»¶ï¼Œniceï¼Œè°ƒç”¨äº†ç¬¬ä¸‰æ–¹åº“ï¼å†™å‡ºasciiæ ¼å¼çš„æ–‡ä»¶
+    void write_binary(char* output_file);  //è¯»å–sltæ–‡ä»¶ï¼Œniceï¼Œè°ƒç”¨äº†ç¬¬ä¸‰æ–¹åº“ï¼å†™æˆbinaryæ ¼å¼çš„æ–‡ä»¶
+    void repair();   //å¦‚æœstlæ²¡æœ‰ä¿®å¤ï¼Œåˆ™ä¿®å¤ä¸€ä¸‹ï¼ŒåŒæ—¶è°ƒç”¨äº†stl_check_facets_exactå‡½æ•°ï¼å®ƒå¢åŠ äº†neighbors listï¼Œæ˜¯è¿›è¡Œthis->require_shared_verticesçš„å‰æï¼â†’æ³¨æ„ï¼šå¤ªæ£’çš„ä½¿ç”¨stlä¸‰æ–¹åº“çš„ä¾‹å­äº†ï¼Œå€¼å¾—å­¦ä¹ ï¼
+    void WriteOBJFile(char* output_file);   //å†™æˆOBJæ ¼å¼çš„æ–‡ä»¶
+    void scale(float factor);    //æ”¾ç¼©ï¼Œå¹¶æ’é™¤æ— æ•ˆå…±äº«ç‚¹
+    void scale(const Pointf3 &versor);   //x y z æ–¹å‘æ¯”ä¾‹å› å­ä¸åŒçš„æ”¾ç¼©ï¼Œå¹¶æ’é™¤æ— æ•ˆå…±äº«ç‚¹
+    void translate(float x, float y, float z);   //å¹³ç§»(x,y,z)è·ç¦»ï¼Œï¼Œå¹¶æ’é™¤æ— æ•ˆå…±äº«ç‚¹
+    void rotate(float angle, const Axis &axis);  //ç»•æŸä¸ªè½´æ—‹è½¬ä¸€ä¸ªè§’åº¦
+    void rotate_x(float angle);   //ç»•xè½´æ—‹è½¬ä¸€ä¸ªè§’åº¦
+    void rotate_y(float angle);   //ç»•yè½´æ—‹è½¬ä¸€ä¸ªè§’åº¦
+    void rotate_z(float angle);   //ç»•zè½´æ—‹è½¬ä¸€ä¸ªè§’åº¦
+    void flip(const Axis &axis);  //ç»•æœ¬èº«æŸä¸ªè½´æ—‹è½¬
+    void flip_x();   //ç»•æœ¬èº«xè½´æ—‹è½¬
+    void flip_y();   //ç»•æœ¬èº«yè½´æ—‹è½¬
+    void flip_z();   //ç»•æœ¬èº«zè½´æ—‹è½¬
+    void align_to_origin();   //æœ¬èº«ç§»åŠ¨åˆ°åŸç‚¹
+    void rotate(double angle, Point* center);   //ç»•centerç‚¹æ—‹è½¬angleè§’åº¦
+    TriangleMeshPtrs split() const;   //è¿”å›ä¸€å †meshsï¼Œå¦‚æœæˆ‘æ²¡çŒœé”™çš„è¯ï¼Œä¸€ä¸ªstlçš„æ´å’Œå¤–è¾¹ç•Œä¹Ÿåˆ†å¼€äº†ï¼
+    void merge(const TriangleMesh &mesh);   //å°†meshåˆå¹¶åˆ°æœ¬èº«çš„stlæ•°æ®é‡Œï¼ŒåŒæ—¶æ›´æ–°é‡Œé¢çš„size
+    ExPolygons horizontal_projection() const;   //æ±‚å¾—æ°´å¹³é¢ä¸Šçš„æ˜ å°„å¹³é¢ï¼Œé€šè¿‡å¸ƒå°”å¹¶æ±‚å¾—
+    Polygon convex_hull();   //çœ‹äº†è¿™ä¸ªå®ç°è¿‡ç¨‹æ¨æµ‹å…±äº«ç‚¹æ˜¯ä¸åœ¨ä¸‰è§’é¢ç‰‡çš„ç©ºé—´è½¬æŠ˜ç‚¹ï¼ï¼
+    BoundingBoxf3 bounding_box() const;    //è¿”å›ç©ºé—´ä¸‰ç»´åŒ…å›´ç›’
+    void reset_repair_stats();  //ä»æ–°è®¾å®šä¿®å¤çŠ¶æ€ï¼Œéœ€è¦ä¿®å¤çš„å†…å®¹çš„æ•°ç›®éƒ½ä¸ºé›¶
+    bool needed_repair() const;    //è¿”å›æ˜¯å¦éœ€è¦ä¿®å¤ï¼Œtrueéœ€è¦ä¿®å¤
+    size_t facets_count() const;   //è¿”å›é¢ç‰‡çš„æ•°é‡
+    stl_file stl;    //è¿™ä¸ªæ•°æ®ç»“æ„åœ¨stl.hé‡Œé¢å®šä¹‰ï¼Œä¸€ä¸ªstructç»“æ„ï¼ŒåŒ…æ‹¬æ–‡ä»¶æŒ‡é’ˆï¼Œè¾¹ï¼Œé¢ç­‰ä¿¡æ¯
+    bool repaired;  //æ˜¯å¦ä¿®å¤è¿‡çš„æ ‡å¿—
 
     private:
-    void require_shared_vertices();  //´ó¸ÅÒâË¼ÊÇÔÚstlÀïÃæÔö¼ÓÁË¹²ÏíµãµÄÄÚÈİºÍË÷Òı£¬²»¶®£¡
+    void require_shared_vertices();  //å¤§æ¦‚æ„æ€æ˜¯åœ¨stlé‡Œé¢å¢åŠ äº†å…±äº«ç‚¹çš„å†…å®¹å’Œç´¢å¼•ï¼Œä¸æ‡‚ï¼
     friend class TriangleMeshSlicer;
 };
 
@@ -86,24 +86,24 @@ class TriangleMeshSlicer
 {
     public:
     TriangleMesh* mesh;
-    TriangleMeshSlicer(TriangleMesh* _mesh);  //¹¹Ôìº¯Êı£¬½«v_scaled_sharedºÍfacets_edges×°Âú
-    ~TriangleMeshSlicer();  //ÊÍ·Åv_scaled_shared
-    void slice(const std::vector<float> &z, std::vector<Polygons>* layers);  //¸ù¾İ´«ÈëµÄÒ»ÏµÁĞzÖµÇĞÆ¬£¬»Øµ½layers
-    void slice(const std::vector<float> &z, std::vector<ExPolygons>* layers);  //¸ù¾İ´«ÈëµÄÒ»ÏµÁĞzÖµÇĞÆ¬£¬»Øµ½layers
+    TriangleMeshSlicer(TriangleMesh* _mesh);  //æ„é€ å‡½æ•°ï¼Œå°†v_scaled_sharedå’Œfacets_edgesè£…æ»¡
+    ~TriangleMeshSlicer();  //é‡Šæ”¾v_scaled_shared
+    void slice(const std::vector<float> &z, std::vector<Polygons>* layers);  //æ ¹æ®ä¼ å…¥çš„ä¸€ç³»åˆ—zå€¼åˆ‡ç‰‡ï¼Œå›åˆ°layers
+    void slice(const std::vector<float> &z, std::vector<ExPolygons>* layers);  //æ ¹æ®ä¼ å…¥çš„ä¸€ç³»åˆ—zå€¼åˆ‡ç‰‡ï¼Œå›åˆ°layers
     void slice_facet(float slice_z, const stl_facet &facet, const int &facet_idx, const float &min_z, const float &max_z, std::vector<IntersectionLine>* lines) const;
-    void cut(float z, TriangleMesh* upper, TriangleMesh* lower);   //½«stl·Ö³ÉÁ½¸ö£¬·Ö±ğ´æ·ÅÔÚÁ½¸öTriangleMeshÀàÀïÃæ
+    void cut(float z, TriangleMesh* upper, TriangleMesh* lower);   //å°†stlåˆ†æˆä¸¤ä¸ªï¼Œåˆ†åˆ«å­˜æ”¾åœ¨ä¸¤ä¸ªTriangleMeshç±»é‡Œé¢
 
     private:
     typedef std::vector< std::vector<int> > t_facets_edges;
-    t_facets_edges facets_edges; //×îÖÕ×é³ÉÃæ£¨¶ÔÓ¦stlÊı¾İÖĞµÄÃæid£©±ß¶ÔÓ¦µÄidÖµ£¨Ä³Ğ©idÖµÖØ¸´£¬Ó¦¸Ã¶¼ÖØ¸´2´Î£©
-    stl_vertex* v_scaled_shared; //¿ËÂ¡stlÊı¾İÖĞµÄ¹²Ïíµã£¬¹²Ïíµã¾¿¾¹ÊÇÊ²Ã´£¿£¡
-    void make_loops(std::vector<IntersectionLine> &lines, Polygons* loops);   //°Ñlines×é³ÉÑ­»·µÄ·â±Õ¶à±ßĞÎ£¬·Åµ½loopÀïÃæ
+    t_facets_edges facets_edges; //æœ€ç»ˆç»„æˆé¢ï¼ˆå¯¹åº”stlæ•°æ®ä¸­çš„é¢idï¼‰è¾¹å¯¹åº”çš„idå€¼ï¼ˆæŸäº›idå€¼é‡å¤ï¼Œåº”è¯¥éƒ½é‡å¤2æ¬¡ï¼‰
+    stl_vertex* v_scaled_shared; //å…‹éš†stlæ•°æ®ä¸­çš„å…±äº«ç‚¹ï¼Œå…±äº«ç‚¹ç©¶ç«Ÿæ˜¯ä»€ä¹ˆï¼Ÿï¼
+    void make_loops(std::vector<IntersectionLine> &lines, Polygons* loops);   //æŠŠlinesç»„æˆå¾ªç¯çš„å°é—­å¤šè¾¹å½¢ï¼Œæ”¾åˆ°loopé‡Œé¢
     void make_expolygons(const Polygons &loops, ExPolygons* slices);   //
     void make_expolygons_simple(std::vector<IntersectionLine> &lines, ExPolygons* slices);
     void make_expolygons(std::vector<IntersectionLine> &lines, ExPolygons* slices);
 };
 
-}  //½áÊøxdÃüÃû¿Õ¼ä
+}  //ç»“æŸxdå‘½åç©ºé—´
 
 #endif // READSLICE_H
 

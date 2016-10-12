@@ -73,7 +73,7 @@ Point::nearest_point_index(const Points &points) const
     PointConstPtrs p;
     p.reserve(points.size());
     for (Points::const_iterator it = points.begin(); it != points.end(); ++it)
-        p.push_back(&*it);    //ÕâÀï²»Àí½â£¬ÎªÊ²Ã´²»Ö±½ÓÓÃit£¿
+        p.push_back(&*it);    //è¿™é‡Œä¸ç†è§£ï¼Œä¸ºä»€ä¹ˆä¸ç›´æ¥ç”¨itï¼Ÿ
     return this->nearest_point_index(p);
 }
 
@@ -81,7 +81,7 @@ int
 Point::nearest_point_index(const PointConstPtrs &points) const
 {
     int idx = -1;
-    double distance = -1;  // Ë«¾«¶È£¬ÒòÎªµ¥¾«¶ÈÏŞÖÆÔÚ2147483647 ÔÚÄ³Ğ©Æ½Ì¨ÉÏ²»¹»ÓÃ
+    double distance = -1;  // åŒç²¾åº¦ï¼Œå› ä¸ºå•ç²¾åº¦é™åˆ¶åœ¨2147483647 åœ¨æŸäº›å¹³å°ä¸Šä¸å¤Ÿç”¨
 
     for (PointConstPtrs::const_iterator it = points.begin(); it != points.end(); ++it) {
         /* If the X distance of the candidate is > than the total distance of the
@@ -178,8 +178,8 @@ Point::distance_to(const Line &line) const
     // Consider the line extending the segment, parameterized as line.a + t (line.b - line.a).
     // We find projection of this point onto the line.
     // It falls where t = [(this-line.a) . (line.b-line.a)] / |line.b-line.a|^2
-    //¼ÆËãÊ±ÉèlineÉÏÒ»µãcÂú×ã(a¡úc):(c¡úb)=t:1-t(µÈÊ½×ó±ßÊÇÊ¸Á¿±È£¬ÒòÎªÖµ¿ÏÊÇ¸ºµÄ)£¬Ôòcµã×ø±êÊÇ(a.x+t*dx,a.y+t*dy)
-    //this¡úc¡¤a¡úb=0£¬½âµÃtµÄÖµ¡£ºÜÃ÷ÏÔ£¬t<0ÔòÏß¶ÎÉÏaµ½thisµã×î¶Ì£¬t>0ÔòÊÇbµ½thisµã×î¶Ì¡£
+    //è®¡ç®—æ—¶è®¾lineä¸Šä¸€ç‚¹cæ»¡è¶³(aâ†’c):(câ†’b)=t:1-t(ç­‰å¼å·¦è¾¹æ˜¯çŸ¢é‡æ¯”ï¼Œå› ä¸ºå€¼è‚¯æ˜¯è´Ÿçš„)ï¼Œåˆ™cç‚¹åæ ‡æ˜¯(a.x+t*dx,a.y+t*dy)
+    //thisâ†’cÂ·aâ†’b=0ï¼Œè§£å¾—tçš„å€¼ã€‚å¾ˆæ˜æ˜¾ï¼Œt<0åˆ™çº¿æ®µä¸Šaåˆ°thisç‚¹æœ€çŸ­ï¼Œt>0åˆ™æ˜¯båˆ°thisç‚¹æœ€çŸ­ã€‚
     const double t = ((this->x - line.a.x) * dx + (this->y - line.a.y) * dy) / l2;
     if (t < 0.0)      return this->distance_to(line.a);  // beyond the 'a' end of the segment
     else if (t > 1.0) return this->distance_to(line.b);  // beyond the 'b' end of the segment
@@ -197,7 +197,7 @@ Point::perp_distance_to(const Line &line) const
 
     double n = (double)(line.b.x - line.a.x) * (double)(line.a.y - this->y)
         - (double)(line.a.x - this->x) * (double)(line.b.y - line.a.y);
-    //thisµãµ½ÓÖab×é³ÉµÄÏßµÄµÄ´¹Ö±¾àÀë=ÏòÁ¿a¡úthis²æ³ËÏòÁ¿a¡úbÔÙ³ıÒÔÏòÁ¿a¡úbµÄÄ£¡£
+    //thisç‚¹åˆ°åˆabç»„æˆçš„çº¿çš„çš„å‚ç›´è·ç¦»=å‘é‡aâ†’thiså‰ä¹˜å‘é‡aâ†’bå†é™¤ä»¥å‘é‡aâ†’bçš„æ¨¡ã€‚
     return std::abs(n) / line.length();
 }
 

@@ -33,7 +33,7 @@ Polygon::operator[](Points::size_type idx) const
 Point
 Polygon::last_point() const
 {
-    return this->points.front();  // ���ڶ������˵���һ������ڵ�һ����
+    return this->points.front();  // 对于多边形来说最后一个点等于第一个点
 }
 
 Lines
@@ -65,10 +65,10 @@ Polyline
 Polygon::split_at_index(int index) const
 {
     Polyline polyline;
-    polyline.points.reserve(this->points.size() + 1);   //ע�⣬���صĶ���һ���㣡
+    polyline.points.reserve(this->points.size() + 1);   //注意，返回的多了一个点！
     for (Points::const_iterator it = this->points.begin() + index; it != this->points.end(); ++it)
         polyline.points.push_back(*it);
-    for (Points::const_iterator it = this->points.begin(); it != this->points.begin() + index + 1; ++it)  //ע�⣬index�ĵ��ּ�����һ��
+    for (Points::const_iterator it = this->points.begin(); it != this->points.begin() + index + 1; ++it)  //注意，index的点又加上了一个
         polyline.points.push_back(*it);
     return polyline;
 }
@@ -161,7 +161,7 @@ Polygon::simplify(double tolerance) const
 
     Polygons pp;
     pp.push_back(p);
-    simplify_polygons(pp, &pp);  //��װclipper��ĺ���
+    simplify_polygons(pp, &pp);  //封装clipper里的函数
     return pp;
 }
 
@@ -185,11 +185,11 @@ Polygon::triangulate_convex(Polygons* polygons) const
         p.points.push_back(*it);
 
         // this should be replaced with a more efficient call to a merge_collinear_segments() method
-        if (p.area() > 0) polygons->push_back(p);  //��������ʱ�����вŻ���룬����ԭ�����Ӧ����ʱ��
+        if (p.area() > 0) polygons->push_back(p);  //三角形逆时针排列才会加入，所以原多边形应该逆时针
     }
 }
 
-// ���ģ�Ҳ������
+// 质心，也是型心
 Point
 Polygon::centroid() const
 {

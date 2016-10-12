@@ -12,21 +12,21 @@ typedef std::vector<Polyline> Polylines;
 
 class Polyline : public MultiPoint {
     public:
-    operator Polylines() const;  //ÀàĞÍ×ª»»º¯Êı£¬½«Polyline×ª»»ÎªPolylinesÀàĞÍ
-    operator Line() const;  //ÀàĞÍ×ª»»º¯Êı£¬½«Polyline×ª»»ÎªLineÀàĞÍ
-    Point last_point() const;   //ÊµÏÖ¸¸ÀàĞéº¯Êı£¬·µ»Ø±¾ÉíPointsÖĞµÄ×îºóÒ»¸öµã
-    Point leftmost_point() const;  //·µ»ØPointsÖĞx×ø±ê×îĞ¡µÄµã£¬¼´×î×ó±ßµÄµã
-    Lines lines() const;  //½«PointsÖĞµÄµãÃ¿Á½¸öÒ»×é´æµ½LinesÀï£¬±ÈÈç5¸öµãµÄPolyline¿ÉÒÔÉú³É4¸ùÏß¶Î
-    void clip_end(double distance);  //´Ó×îºóÒ»¸öµã¼õÈ¥distance¾àÀëµÄÏß¶Î£¬Èç¹ûdistance´óÓÚ×ÜÏß¶Î³¤¶È£¬ÔòPointsÎª¿Õ
-    void clip_start(double distance);  //Í¬ÉÏ£¬Ö»²»¹ı´ÓÇ°Ãæ¼õÈ¥distance¾àÀë
-    void extend_end(double distance);  //½áÎ²Ïß¶ÎÑÓ³¤distanceµÄ¾àÀë£¬ÑÓ³¤·½Ïò¾ÍÊÇ×îºóÒ»¸úÏß¶ÎµÄ·½Ïò¡£
-    void extend_start(double distance);  //Í¬ÉÏ£¬¿ªÍ·Ïß¶ÎÑÓ³¤
-    Points equally_spaced_points(double distance) const;  //Ã¿¸ô¾ùÔÈµÄ¾àÀëÈ¡Ò»¸öµã£¬¾àÀëÖ¸PointsÏß¶ÎÖ®ºÍ£¨ÓĞµÚÒ»¸öµã£¬Î´±ØÓĞ×îºóÒ»¸öµã£¡Ö»ÓĞµ±ËùÓĞµãµÄ¾àÀëÖ®ºÍµÈÓÚdistanceµÄÕûÊı±¶Ê±²ÅÓĞ×îºóÒ»¸öµã *ÓĞÊ±¼äÔÙ¿´£¡£¡£©
-    void simplify(double tolerance);  //»¯¼ò¶àÏß¶Î£¬Ö»ÒªÎó²îÏÒ¸ßĞ¡ÓÚtolerance¼´¿É¡£Ê¹ÓÃÁË¸¸ÀàµÄ_douglas_peuckerº¯ÊıÊµÏÖ
-    template <class T> void simplify_by_visibility(const T &area);/* This method simplifies all *lines* contained in the supplied area */ //½«´æÔÚÓÚarea£¨ÍÆ²âarea¿ÉÄÜ²»Ö¹Ò»¿é£©ÖĞµÄËùÓĞµãÉ¾³ı£¡
-    void split_at(const Point &point, Polyline* p1, Polyline* p2) const;  //°ÑPoints´Ópointµ½Æä×î½üµÄµã·Ö¿ª³ÉÁ½¸öPolyline£¬µÚÒ»¸ö×îºóÒ»¸öµãÊÇpoint£»µÚ¶ş¸öµÚÒ»¸öµãÊÇpoint
-    bool is_straight() const;  //Èç¹ûpolylineÖĞËùÓĞÏß¶ÎÖĞÓĞÒ»¸öºÍÓÉµÚÒ»¸öµãºÍµÚ¶ş¸öµã×é³ÉµÄÏß¶ÎÆ½ĞĞ£¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
-    std::string wkt() const;  //LINESTRING((x1 y1,x2 y2,...,xn,yn))µÄ×Ö·û´®ĞÎÊ½·µ»Ø
+    operator Polylines() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œå°†Polylineè½¬æ¢ä¸ºPolylinesç±»å‹
+    operator Line() const;  //ç±»å‹è½¬æ¢å‡½æ•°ï¼Œå°†Polylineè½¬æ¢ä¸ºLineç±»å‹
+    Point last_point() const;   //å®ç°çˆ¶ç±»è™šå‡½æ•°ï¼Œè¿”å›æœ¬èº«Pointsä¸­çš„æœ€åä¸€ä¸ªç‚¹
+    Point leftmost_point() const;  //è¿”å›Pointsä¸­xåæ ‡æœ€å°çš„ç‚¹ï¼Œå³æœ€å·¦è¾¹çš„ç‚¹
+    Lines lines() const;  //å°†Pointsä¸­çš„ç‚¹æ¯ä¸¤ä¸ªä¸€ç»„å­˜åˆ°Linesé‡Œï¼Œæ¯”å¦‚5ä¸ªç‚¹çš„Polylineå¯ä»¥ç”Ÿæˆ4æ ¹çº¿æ®µ
+    void clip_end(double distance);  //ä»æœ€åä¸€ä¸ªç‚¹å‡å»distanceè·ç¦»çš„çº¿æ®µï¼Œå¦‚æœdistanceå¤§äºæ€»çº¿æ®µé•¿åº¦ï¼Œåˆ™Pointsä¸ºç©º
+    void clip_start(double distance);  //åŒä¸Šï¼Œåªä¸è¿‡ä»å‰é¢å‡å»distanceè·ç¦»
+    void extend_end(double distance);  //ç»“å°¾çº¿æ®µå»¶é•¿distanceçš„è·ç¦»ï¼Œå»¶é•¿æ–¹å‘å°±æ˜¯æœ€åä¸€è·Ÿçº¿æ®µçš„æ–¹å‘ã€‚
+    void extend_start(double distance);  //åŒä¸Šï¼Œå¼€å¤´çº¿æ®µå»¶é•¿
+    Points equally_spaced_points(double distance) const;  //æ¯éš”å‡åŒ€çš„è·ç¦»å–ä¸€ä¸ªç‚¹ï¼Œè·ç¦»æŒ‡Pointsçº¿æ®µä¹‹å’Œï¼ˆæœ‰ç¬¬ä¸€ä¸ªç‚¹ï¼Œæœªå¿…æœ‰æœ€åä¸€ä¸ªç‚¹ï¼åªæœ‰å½“æ‰€æœ‰ç‚¹çš„è·ç¦»ä¹‹å’Œç­‰äºdistanceçš„æ•´æ•°å€æ—¶æ‰æœ‰æœ€åä¸€ä¸ªç‚¹ *æœ‰æ—¶é—´å†çœ‹ï¼ï¼ï¼‰
+    void simplify(double tolerance);  //åŒ–ç®€å¤šçº¿æ®µï¼Œåªè¦è¯¯å·®å¼¦é«˜å°äºtoleranceå³å¯ã€‚ä½¿ç”¨äº†çˆ¶ç±»çš„_douglas_peuckerå‡½æ•°å®ç°
+    template <class T> void simplify_by_visibility(const T &area);/* This method simplifies all *lines* contained in the supplied area */ //å°†å­˜åœ¨äºareaï¼ˆæ¨æµ‹areaå¯èƒ½ä¸æ­¢ä¸€å—ï¼‰ä¸­çš„æ‰€æœ‰ç‚¹åˆ é™¤ï¼
+    void split_at(const Point &point, Polyline* p1, Polyline* p2) const;  //æŠŠPointsä»pointåˆ°å…¶æœ€è¿‘çš„ç‚¹åˆ†å¼€æˆä¸¤ä¸ªPolylineï¼Œç¬¬ä¸€ä¸ªæœ€åä¸€ä¸ªç‚¹æ˜¯pointï¼›ç¬¬äºŒä¸ªç¬¬ä¸€ä¸ªç‚¹æ˜¯point
+    bool is_straight() const;  //å¦‚æœpolylineä¸­æ‰€æœ‰çº¿æ®µä¸­æœ‰ä¸€ä¸ªå’Œç”±ç¬¬ä¸€ä¸ªç‚¹å’Œç¬¬äºŒä¸ªç‚¹ç»„æˆçš„çº¿æ®µå¹³è¡Œï¼Œåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+    std::string wkt() const;  //LINESTRING((x1 y1,x2 y2,...,xn,yn))çš„å­—ç¬¦ä¸²å½¢å¼è¿”å›
 
 };
 

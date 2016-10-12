@@ -117,11 +117,11 @@ Polyline::equally_spaced_points(double distance) const
             continue;
         }
 
-        double take = segment_length - (len - distance);  // how much we take of this segment ĞèÒªÈ¡µÃµÄÕâÒ»¶ÎÏß¶ÎµÄ³¤¶È
+        double take = segment_length - (len - distance);  // how much we take of this segment éœ€è¦å–å¾—çš„è¿™ä¸€æ®µçº¿æ®µçš„é•¿åº¦
         Line segment(*(it-1), *it);
         points.push_back(segment.point_at(take));
         it--;
-        len = -take;  //ÒòÎªit--ÁË£¬ËùÒÔÏÂÒ»´ÎµÄlenµÄ³¤¶ÈÒ»¿ªÊ¼¾Í¸ºÁËtake³¤¶ÈµÄ¾àÀë¡£
+        len = -take;  //å› ä¸ºit--äº†ï¼Œæ‰€ä»¥ä¸‹ä¸€æ¬¡çš„lençš„é•¿åº¦ä¸€å¼€å§‹å°±è´Ÿäº†takeé•¿åº¦çš„è·ç¦»ã€‚
     }
     return points;
 }
@@ -141,8 +141,8 @@ Polyline::simplify_by_visibility(const T &area)
 
     // find first point in area
     size_t s = 0;
-    while (s < pp.size() && !area.contains(pp[s])) {  //×¢Òâ£ºExpolygonÀàÀïÃæÓĞ³ÉÔ±º¯Êıcontains£¡£¡
-        ++s;                                           //ËäÈ»polygonÒ²ÓĞcontains£¬µ«ÊÇÖ»ÓĞµã£¬Ã»ÓĞÏß¶ÎµÄÖØÔØº¯Êı£¬¸ù¾İÏÂÃæÓÃµ½Ïß¶ÎÍÆ²âÓ¦¸ÃÊÇExpolygon
+    while (s < pp.size() && !area.contains(pp[s])) {  //æ³¨æ„ï¼šExpolygonç±»é‡Œé¢æœ‰æˆå‘˜å‡½æ•°containsï¼ï¼
+        ++s;                                           //è™½ç„¶polygonä¹Ÿæœ‰containsï¼Œä½†æ˜¯åªæœ‰ç‚¹ï¼Œæ²¡æœ‰çº¿æ®µçš„é‡è½½å‡½æ•°ï¼Œæ ¹æ®ä¸‹é¢ç”¨åˆ°çº¿æ®µæ¨æµ‹åº”è¯¥æ˜¯Expolygon
     }
 
     // find last point in area
@@ -175,7 +175,7 @@ Polyline::simplify_by_visibility(const T &area)
                 pp.erase(pp.begin() + s + 1, pp.begin() + e);
 
                 // repeat recursively until no further simplification is possible
-                return this->simplify_by_visibility(area);   //ÔÚÕâÀïreturnÊÇÒòÎªÈç¹ûÒÑ¾­É¾³ıÁË¼¸¸öµã£¬²»ÄÜÔÙ½øĞĞforÑ­»·ÁË£¬ÏëÒª¼ÌĞøÉ¾³ı£¬±ØĞëÓÃµİ¹é×öruturnÖµÁË¡£
+                return this->simplify_by_visibility(area);   //åœ¨è¿™é‡Œreturnæ˜¯å› ä¸ºå¦‚æœå·²ç»åˆ é™¤äº†å‡ ä¸ªç‚¹ï¼Œä¸èƒ½å†è¿›è¡Œforå¾ªç¯äº†ï¼Œæƒ³è¦ç»§ç»­åˆ é™¤ï¼Œå¿…é¡»ç”¨é€’å½’åšruturnå€¼äº†ã€‚
             }
         }
     }
@@ -206,7 +206,7 @@ Polyline::split_at(const Point &point, Polyline* p1, Polyline* p2) const
     // create first half
     p1->points.clear();
     for (Lines::const_iterator line = lines.begin(); line != lines.begin() + line_idx + 1; ++line) {
-        if (!line->a.coincides_with(p)) p1->points.push_back(line->a);  //ÕâÀïµÄif±íÃ÷£ºÈç¹ûpointµãµ½polylineµÄÏß¶Î¼¯ºÏÖĞ×î½üµÄµã¸ÕºÃÊÇpolylineÀïµÄÒ»¸ö¶Ëµã£¬ÔòÉáÈ¥ÁËÕâ¸ö¶Ëµã£¡
+        if (!line->a.coincides_with(p)) p1->points.push_back(line->a);  //è¿™é‡Œçš„ifè¡¨æ˜ï¼šå¦‚æœpointç‚¹åˆ°polylineçš„çº¿æ®µé›†åˆä¸­æœ€è¿‘çš„ç‚¹åˆšå¥½æ˜¯polylineé‡Œçš„ä¸€ä¸ªç«¯ç‚¹ï¼Œåˆ™èˆå»äº†è¿™ä¸ªç«¯ç‚¹ï¼
     }
     // we add point instead of p because they might differ because of numerical issues
     // and caller might want to rely on point belonging to result polylines

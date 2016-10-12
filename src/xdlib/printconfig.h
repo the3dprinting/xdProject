@@ -7,24 +7,24 @@
 
 namespace xd {
 
-enum GCodeFlavor {//G´úÂë·ç¸ñ
+enum GCodeFlavor {//Gä»£ç é£æ ¼
     gcfRepRap, gcfTeacup, gcfMakerWare, gcfSailfish, gcfMach3, gcfMachinekit, gcfNoExtrusion,
 };
 
-enum InfillPattern {//Ìî³äÄ£Ê½
+enum InfillPattern {//å¡«å……æ¨¡å¼
     ipRectilinear, ipLine, ipConcentric, ipHoneycomb, ip3DHoneycomb,
     ipHilbertCurve, ipArchimedeanChords, ipOctagramSpiral,
 };
 
-enum SupportMaterialPattern {  //Ö§³ÅÌî³äÄ£Ê½
+enum SupportMaterialPattern {  //æ”¯æ’‘å¡«å……æ¨¡å¼
     smpRectilinear, smpRectilinearGrid, smpHoneycomb, smpPillars,
 };
 
-enum SeamPosition {  //½ÓºÏÎ»ÖÃ
+enum SeamPosition {  //æ¥åˆä½ç½®
     spRandom, spNearest, spAligned
 };
 
-template<> inline t_config_enum_values ConfigOptionEnum<GCodeFlavor>::get_enum_values() {  //¾²Ì¬º¯Êı£¬¸ù¾İ´«ÈëµÄGCodeFlavor·µ»Ø×é³ÉµÄmap
+template<> inline t_config_enum_values ConfigOptionEnum<GCodeFlavor>::get_enum_values() {  //é™æ€å‡½æ•°ï¼Œæ ¹æ®ä¼ å…¥çš„GCodeFlavorè¿”å›ç»„æˆçš„map
     t_config_enum_values keys_map;
     keys_map["reprap"]          = gcfRepRap;
     keys_map["teacup"]          = gcfTeacup;
@@ -36,7 +36,7 @@ template<> inline t_config_enum_values ConfigOptionEnum<GCodeFlavor>::get_enum_v
     return keys_map;
 }
 
-template<> inline t_config_enum_values ConfigOptionEnum<InfillPattern>::get_enum_values() {  //¾²Ì¬º¯Êı£¬¸ù¾İ´«ÈëµÄInfillPattern·µ»Ø×é³ÉµÄmap
+template<> inline t_config_enum_values ConfigOptionEnum<InfillPattern>::get_enum_values() {  //é™æ€å‡½æ•°ï¼Œæ ¹æ®ä¼ å…¥çš„InfillPatternè¿”å›ç»„æˆçš„map
     t_config_enum_values keys_map;
     keys_map["rectilinear"]         = ipRectilinear;
     keys_map["line"]                = ipLine;
@@ -49,7 +49,7 @@ template<> inline t_config_enum_values ConfigOptionEnum<InfillPattern>::get_enum
     return keys_map;
 }
 
-template<> inline t_config_enum_values ConfigOptionEnum<SupportMaterialPattern>::get_enum_values() {  //¾²Ì¬º¯Êı£¬¸ù¾İ´«ÈëµÄSupportMaterialPattern·µ»Ø×é³ÉµÄmap
+template<> inline t_config_enum_values ConfigOptionEnum<SupportMaterialPattern>::get_enum_values() {  //é™æ€å‡½æ•°ï¼Œæ ¹æ®ä¼ å…¥çš„SupportMaterialPatternè¿”å›ç»„æˆçš„map
     t_config_enum_values keys_map;
     keys_map["rectilinear"]         = smpRectilinear;
     keys_map["rectilinear-grid"]    = smpRectilinearGrid;
@@ -58,7 +58,7 @@ template<> inline t_config_enum_values ConfigOptionEnum<SupportMaterialPattern>:
     return keys_map;
 }
 
-template<> inline t_config_enum_values ConfigOptionEnum<SeamPosition>::get_enum_values() { //¾²Ì¬º¯Êı£¬¸ù¾İ´«ÈëµÄSeamPosition·µ»Ø×é³ÉµÄmap
+template<> inline t_config_enum_values ConfigOptionEnum<SeamPosition>::get_enum_values() { //é™æ€å‡½æ•°ï¼Œæ ¹æ®ä¼ å…¥çš„SeamPositionè¿”å›ç»„æˆçš„map
     t_config_enum_values keys_map;
     keys_map["random"]              = spRandom;
     keys_map["nearest"]             = spNearest;
@@ -66,12 +66,12 @@ template<> inline t_config_enum_values ConfigOptionEnum<SeamPosition>::get_enum_
     return keys_map;
 }
 
-class PrintConfigDef   //´òÓ¡ÅäÖÃ¶¨Òå
+class PrintConfigDef   //æ‰“å°é…ç½®å®šä¹‰
 {
     public:
     static t_optiondef_map def;
 
-    static t_optiondef_map build_def();  //ÕâÊÇ×î³¤µÄÒ»¸öº¯ÊıÁË£¡ÆäÊµÀïÃæÈ«ÊÇstring¡úConfigOptionDefµÄmap£¬È»ºó·µ»ØÕâ¸ömap¡­¡­
+    static t_optiondef_map build_def();  //è¿™æ˜¯æœ€é•¿çš„ä¸€ä¸ªå‡½æ•°äº†ï¼å…¶å®é‡Œé¢å…¨æ˜¯stringâ†’ConfigOptionDefçš„mapï¼Œç„¶åè¿”å›è¿™ä¸ªmapâ€¦â€¦
 };
 
 class DynamicPrintConfig : public DynamicConfig
@@ -81,10 +81,10 @@ class DynamicPrintConfig : public DynamicConfig
         this->def = &PrintConfigDef::def;
     };
 
-    void normalize();   //Ê¹±ê×¼»¯
+    void normalize();   //ä½¿æ ‡å‡†åŒ–
 };
 
-class StaticPrintConfig : public virtual StaticConfig   //¾²Ì¬´òÓ¡ÅäÖÃ£¬ÉèÖÃËùÓĞ´òÓ¡Ä¬ÈÏ²ÎÊı£¡
+class StaticPrintConfig : public virtual StaticConfig   //é™æ€æ‰“å°é…ç½®ï¼Œè®¾ç½®æ‰€æœ‰æ‰“å°é»˜è®¤å‚æ•°ï¼
 {
     public:
     StaticPrintConfig() {

@@ -71,15 +71,15 @@ typedef struct {
 
 typedef struct stl_hash_edge {
   unsigned       key[6];
-  int            facet_number;  //¶ÔÓ¦ÃæµÄË÷ÒıºÅ
-  int            which_edge;   //±ßµÄË÷ÒıºÅ
+  int            facet_number;  //å¯¹åº”é¢çš„ç´¢å¼•å·
+  int            which_edge;   //è¾¹çš„ç´¢å¼•å·
   struct stl_hash_edge  *next;
 } stl_hash_edge;
 
 typedef struct {
-  int   neighbor[3];  //¼ÇÂ¼ÏàÁÚÈı½ÇÃæÆ¬µÄË÷ÒıÖµ
-  char  which_vertex_not[3];   //Õæ²»ÈİÒ×£¡Õâ¸ö´ú±í
-} stl_neighbors; //Õâ¸öÊÇ¼ÓÈëÒ»¸öÃæÆ¬µÄÈı¸öÏàÁÚÃæÆ¬µÄË÷ÒıÖµ
+  int   neighbor[3];  //è®°å½•ç›¸é‚»ä¸‰è§’é¢ç‰‡çš„ç´¢å¼•å€¼
+  char  which_vertex_not[3];   //çœŸä¸å®¹æ˜“ï¼è¿™ä¸ªä»£è¡¨
+} stl_neighbors; //è¿™ä¸ªæ˜¯åŠ å…¥ä¸€ä¸ªé¢ç‰‡çš„ä¸‰ä¸ªç›¸é‚»é¢ç‰‡çš„ç´¢å¼•å€¼
 
 typedef struct {
   int   vertex[3];
@@ -121,21 +121,21 @@ typedef struct {
 } stl_stats;
 
 typedef struct {
-  FILE          *fp;   //ÎÄ¼şÖ¸ÕëÀàĞÍ
-  stl_facet     *facet_start;   //´æ·ÅËùÓĞÃæ
-  stl_edge      *edge_start;   //´æ·ÅËùÓĞ±ß
-  stl_hash_edge **heads;  //´æ·ÅËùÓĞ±ß£¬¹şÏ£·½Ê½
+  FILE          *fp;   //æ–‡ä»¶æŒ‡é’ˆç±»å‹
+  stl_facet     *facet_start;   //å­˜æ”¾æ‰€æœ‰é¢
+  stl_edge      *edge_start;   //å­˜æ”¾æ‰€æœ‰è¾¹
+  stl_hash_edge **heads;  //å­˜æ”¾æ‰€æœ‰è¾¹ï¼Œå“ˆå¸Œæ–¹å¼
   stl_hash_edge *tail;
-  int           M;  //¹şÏ£º¯ÊıµÄÄ³¸ö²ÎÊı
-  stl_neighbors *neighbors_start;  //´æ·ÅËùÓĞÏàÁÚÃæÆ¬µÄË÷ÒıÖµ
-  v_indices_struct *v_indices;  //´æ·ÅµãµÄË÷Òı
-  stl_vertex    *v_shared;  //´æ·ÅËùÓĞ¹²Ïíµã
-  stl_stats     stats;   //´æ·ÅËùÓĞ×´Ì¬Êı¾İ
+  int           M;  //å“ˆå¸Œå‡½æ•°çš„æŸä¸ªå‚æ•°
+  stl_neighbors *neighbors_start;  //å­˜æ”¾æ‰€æœ‰ç›¸é‚»é¢ç‰‡çš„ç´¢å¼•å€¼
+  v_indices_struct *v_indices;  //å­˜æ”¾ç‚¹çš„ç´¢å¼•
+  stl_vertex    *v_shared;  //å­˜æ”¾æ‰€æœ‰å…±äº«ç‚¹
+  stl_stats     stats;   //å­˜æ”¾æ‰€æœ‰çŠ¶æ€æ•°æ®
   char          error;
 } stl_file;
 
 
-extern void stl_open(stl_file *stl, char *file);   //ÔÚstlinit.cÎÄ¼şÀïÃæÓĞ¶ÁÈ¡stlÎÄ¼şµÄÊµÏÖ¹ı³Ì£¬¿ÉÒÔÅĞ¶¨¸ñÊ½binary»¹ÊÇASCII£¬ÓĞĞËÈ¤¿ÉÒÔ¶Á¶Á£¡
+extern void stl_open(stl_file *stl, char *file);   //åœ¨stlinit.cæ–‡ä»¶é‡Œé¢æœ‰è¯»å–stlæ–‡ä»¶çš„å®ç°è¿‡ç¨‹ï¼Œå¯ä»¥åˆ¤å®šæ ¼å¼binaryè¿˜æ˜¯ASCIIï¼Œæœ‰å…´è¶£å¯ä»¥è¯»è¯»ï¼
 extern void stl_close(stl_file *stl);    //
 extern void stl_stats_out(stl_file *stl, FILE *file, char *input_file);   //
 extern void stl_print_edges(stl_file *stl, FILE *file);    //

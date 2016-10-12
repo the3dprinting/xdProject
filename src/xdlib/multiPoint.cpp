@@ -71,9 +71,9 @@ int
 MultiPoint::find_point(const Point &point) const
 {
     for (Points::const_iterator it = this->points.begin(); it != this->points.end(); ++it) {
-        if (it->coincides_with(point)) return it - this->points.begin();  //ÕâÀï±ØÐë¼õÈ¥this->points.begin()²ÅÄÜ·µ»ØÎªintÀàÐÍ
+        if (it->coincides_with(point)) return it - this->points.begin();  //è¿™é‡Œå¿…é¡»å‡åŽ»this->points.begin()æ‰èƒ½è¿”å›žä¸ºintç±»åž‹
     }
-    return -1;  // Ã»ÕÒµ½µÄ»°
+    return -1;  // æ²¡æ‰¾åˆ°çš„è¯
 }
 
 bool
@@ -119,14 +119,14 @@ MultiPoint::append(const Points::const_iterator &begin, const Points::const_iter
 }
 
 Points
-MultiPoint::_douglas_peucker(const Points &points, const double tolerance)  //µäÐÍµÄµÝ¹é·¨½â¾öÎÊÌâ£¬ÊÊºÏÑ§Ï°£¡
-{   //Õâ¸öº¯ÊýÊµ¼ÊÖ»ÓÃÁË´æÔÚµÄµã£¬ËùÓÐÏÒ¸ß¾ÍÊÇÆäÖÐ¾àÀëÏÒ×î½üµÄµã
+MultiPoint::_douglas_peucker(const Points &points, const double tolerance)  //å…¸åž‹çš„é€’å½’æ³•è§£å†³é—®é¢˜ï¼Œé€‚åˆå­¦ä¹ ï¼
+{   //è¿™ä¸ªå‡½æ•°å®žé™…åªç”¨äº†å­˜åœ¨çš„ç‚¹ï¼Œæ‰€æœ‰å¼¦é«˜å°±æ˜¯å…¶ä¸­è·ç¦»å¼¦æœ€è¿‘çš„ç‚¹
     Points results;
     double dmax = 0;
     size_t index = 0;
     Line full(points.front(), points.back());
     for (Points::const_iterator it = points.begin() + 1; it != points.end(); ++it) {
-        // Ê¹ÓÃ×î¶Ì¾àÀë£¬·Ç´¹Ö±¾àÀë
+        // ä½¿ç”¨æœ€çŸ­è·ç¦»ï¼Œéžåž‚ç›´è·ç¦»
         double d = it->distance_to(full);
         if (d > dmax) {
             index = it - points.begin();
@@ -137,14 +137,14 @@ MultiPoint::_douglas_peucker(const Points &points, const double tolerance)  //µä
         Points dp0;
         dp0.reserve(index + 1);
         dp0.insert(dp0.end(), points.begin(), points.begin() + index + 1);
-        Points dp1 = MultiPoint::_douglas_peucker(dp0, tolerance);  //µÝ¹éÓÃ·¨£¬´Ó³¬¹ýÎó²îµÄµã·Ö¿ª
+        Points dp1 = MultiPoint::_douglas_peucker(dp0, tolerance);  //é€’å½’ç”¨æ³•ï¼Œä»Žè¶…è¿‡è¯¯å·®çš„ç‚¹åˆ†å¼€
         results.reserve(results.size() + dp1.size() - 1);
         results.insert(results.end(), dp1.begin(), dp1.end() - 1);
 
         dp0.clear();
         dp0.reserve(points.size() - index + 1);
         dp0.insert(dp0.end(), points.begin() + index, points.end());
-        dp1 = MultiPoint::_douglas_peucker(dp0, tolerance);   //µÝ¹éÓÃ·¨£¬´Ó³¬¹ýÎó²îµÄµã·Ö¿ª
+        dp1 = MultiPoint::_douglas_peucker(dp0, tolerance);   //é€’å½’ç”¨æ³•ï¼Œä»Žè¶…è¿‡è¯¯å·®çš„ç‚¹åˆ†å¼€
         results.reserve(results.size() + dp1.size());
         results.insert(results.end(), dp1.begin(), dp1.end());
     } else {
