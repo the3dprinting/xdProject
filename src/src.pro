@@ -45,10 +45,6 @@ HEADERS += \
     xjrp/xjpolygon.h \
     xjrp/xjslcmodel.h
 
-
-
-
-
 SOURCES += \
     admesh/connect.c \
     admesh/normals.c \
@@ -90,6 +86,6 @@ SOURCES += \
 
 
 
-INCLUDEPATH += $$PWD
+#INCLUDEPATH += $$PWD
 
-DEPENDPATH += $$INCLUDEPATH
+#DEPENDPATH += $$INCLUDEPATH

@@ -9,28 +9,28 @@ dockwidget::dockwidget(QWidget *parent)
     : QDockWidget(parent)
 {
 
-    setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::DockWidgetMovable);  //¿ÉÒÆ¶¯¡¢¿ÉÓÐÏÂ»¬À¸
-    setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea); //ÔÊÐíÒÆ¶¯µÄÇøÓò
-    //ÓÃÀ´ÇÐÆ¬µÄLineEdit
+    setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::DockWidgetMovable);  //å¯ç§»åŠ¨ã€å¯æœ‰ä¸‹æ»‘æ 
+    setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea); //å…è®¸ç§»åŠ¨çš„åŒºåŸŸ
+    //ç”¨æ¥åˆ‡ç‰‡çš„LineEdit
     SliceThicknessEdit = new QLineEdit(tr("0.2"));
     SliceThicknessLabel = new QLabel(tr("Slice Thickness:"));
     SliceThicknessLabel->setBuddy(SliceThicknessEdit);
     SliceThicknessButton = new QPushButton(tr("slice"));
-    //ÓÃÀ´ÏÔÊ¾²ãµÄSpinBox
+    //ç”¨æ¥æ˜¾ç¤ºå±‚çš„SpinBox
     LayerNum = new QSpinBox;
     LayerNum->setRange(0,0);
-    LayerNum->setSpecialValueText(tr("0 (No Model)"));  //±ä»¯µÄÐÅºÅºÍ²ÛµÄconnectÔÚ¸¸ÀàÊµÏÖ
+    LayerNum->setSpecialValueText(tr("0 (No Model)"));  //å˜åŒ–çš„ä¿¡å·å’Œæ§½çš„connectåœ¨çˆ¶ç±»å®žçŽ°
     LayerNumLabel = new QLabel(tr("Layer Number:"));
     LayerNumLabel->setBuddy(LayerNum);
-    //ÓÃÀ´ÏÔÊ¾µ½ÖÐÐÄµÄ°´Å¥
+    //ç”¨æ¥æ˜¾ç¤ºåˆ°ä¸­å¿ƒçš„æŒ‰é’®
     centerButton = new QPushButton(tr("center"));
-    //ÏÂÃæÎª²âÊÔÓÃ°´Å¥
+    //ä¸‹é¢ä¸ºæµ‹è¯•ç”¨æŒ‰é’®
     triangulateButton = new QPushButton(tr("triangulate"));
     triangulate_ppButton = new QPushButton(tr("triangulate_pp"));
     triangulate_p2tButton = new QPushButton(tr("triangulate_p2t"));
     medialAxisButton = new QPushButton(tr("medialAxis"));
-    //ÏÂÃæ²¼¾Ö
-    QWidget * dockWidgetContents = new QWidget(this);   //dockwidget±ØÐëÉèÖÃ¶à¸öÏîÄ¿ÔÚÒ»¸öwidgetÉÏ£¬²»ÄÜÖ±½Ó¼ÓÉÏlayout
+    //ä¸‹é¢å¸ƒå±€
+    QWidget * dockWidgetContents = new QWidget(this);   //dockwidgetå¿…é¡»è®¾ç½®å¤šä¸ªé¡¹ç›®åœ¨ä¸€ä¸ªwidgetä¸Šï¼Œä¸èƒ½ç›´æŽ¥åŠ ä¸Šlayout
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(SliceThicknessLabel,0,0);
     mainLayout->addWidget(SliceThicknessEdit,0,1);

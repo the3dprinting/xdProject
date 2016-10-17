@@ -9,7 +9,7 @@ Window::Window()
     drawArea = new draw;
     model = new XJRP::SLCModel;
     triangleMesh = new xd::TriangleMesh;
-    //ÓÃÀ´ÏÔÊ¾²ãµÄSpinBox
+    //ç”¨æ¥æ˜¾ç¤ºå±‚çš„SpinBox
     LayerNum = new QSpinBox;
     LayerNum->setRange(0,0);
     LayerNum->setSpecialValueText(tr("0 (No Model)"));
@@ -17,14 +17,14 @@ Window::Window()
             this, SLOT(LayerChanged()));
     LayerNumLabel = new QLabel(tr("Layer Number:"));
     LayerNumLabel->setBuddy(LayerNum);
-    //ÓÃÀ´ÉèÖÃÌî³äÄ£Ê½µÄcombobox
+    //ç”¨æ¥è®¾ç½®å¡«å……æ¨¡å¼çš„combobox
     infillPatternLabel = new QLabel(tr("Infill Pattern:"));
     infillPatternComboBox = new QComboBox;
     infillPatternComboBox->addItem(tr("line"));
     infillPatternComboBox->addItem(tr("skin_core"));
     connect(infillPatternComboBox,SIGNAL(currentIndexChanged(int)),
             this,SLOT(infillPatternChanged(int)));
-    //ÓÃÀ´ÉèÖÃ²ÎÊıµÄLineEdit
+    //ç”¨æ¥è®¾ç½®å‚æ•°çš„LineEdit
     interval_numEdit = new QLineEdit(tr("2"));
     interval_numLabel = new QLabel(tr("Interval Number:"));
     interval_numLabel->setBuddy(interval_numEdit);
@@ -52,7 +52,7 @@ Window::Window()
     contourSpaceEdit = new QLineEdit(tr("0.1"));
     thickness = new QLabel("thickness:");
     thicknessEdit = new QLineEdit(tr("0.1"));
-    //°´Å¥
+    //æŒ‰é’®
     open = new QPushButton(tr("&open"));
     save = new QPushButton(tr("&save"));
     clear = new QPushButton(tr("&clear"));
@@ -74,7 +74,7 @@ Window::Window()
             this,SLOT(openSTLTrigger()));
     connect(slice,SIGNAL(clicked()),
     this,SLOT(sliceTrigger()));
-    //²¼¾Ö
+    //å¸ƒå±€
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(drawArea, 0, 0, 1, 16);
     mainLayout->addWidget(open,2, 0);
@@ -90,7 +90,7 @@ Window::Window()
     mainLayout->addWidget(thicknessEdit,2,12);
     mainLayout->addWidget(thickness,2,13);
     mainLayout->addWidget(slice,2,14);
-    //µÚ3ĞĞ
+    //ç¬¬3è¡Œ
     mainLayout->addWidget(contourNumLabel,3,0);
     mainLayout->addWidget(contourNumEdit,3,1);
     mainLayout->addWidget(contourSpaceLabel,3,2);
@@ -107,7 +107,7 @@ Window::Window()
     mainLayout->addWidget(LaserPowerEdit,3,13);
     mainLayout->addWidget(ScanSpeedLabel,3,14);
     mainLayout->addWidget(ScanSpeedEdit,3,15);
-    //ÊÔÊÔ·ÅÔÚµÚÈıĞĞ£¡
+    //è¯•è¯•æ”¾åœ¨ç¬¬ä¸‰è¡Œï¼
     mainLayout->addWidget(interval_numLabel,3,0);
     mainLayout->addWidget(interval_numEdit,3,1);
     setLayout(mainLayout);
@@ -128,6 +128,8 @@ Window::~Window()
         this->triangleMesh = NULL;
     }
 }
+
+
 
 void Window::LayerChanged()
 {
@@ -166,7 +168,7 @@ void Window::openSTLTrigger()
     strcpy(FN,fileName.c_str());
     this->triangleMesh->ReadSTLFile(FN);
     qDebug()<<"facet Number is:" <<triangleMesh->facets_count()<<'\n'
-            <<"needed repair£º"<<triangleMesh->needed_repair();
+            <<"needed repairï¼š"<<triangleMesh->needed_repair();
 }
 
 void Window::sliceTrigger()
@@ -184,8 +186,8 @@ void Window::sliceTrigger()
     for(float deltaZ = bottom + sliceThinkness ; deltaZ < top ; deltaZ+=sliceThinkness)
         z.push_back(deltaZ);
     qDebug()<<"facet Number is:" <<slicer.mesh->facets_count()<<'\n'
-            <<"needed repair£º"<<slicer.mesh->needed_repair();
-    std::vector<xd::ExPolygons>* layers = new std::vector<xd::ExPolygons>;  //Ò»¶¨ÒªnewÒ»ÏÂ£¬ÕâÑùÏÂÃæ²ÅÄÜÓÃ£¡
+            <<"needed repairï¼š"<<slicer.mesh->needed_repair();
+    std::vector<xd::ExPolygons>* layers = new std::vector<xd::ExPolygons>;  //ä¸€å®šè¦newä¸€ä¸‹ï¼Œè¿™æ ·ä¸‹é¢æ‰èƒ½ç”¨ï¼
     slicer.slice(z,layers);
     QMessageBox::information(NULL, "remind", "slice finished", QMessageBox::Yes, QMessageBox::Yes);
     this->model->readxdlib(z,layers);

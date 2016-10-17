@@ -33,7 +33,7 @@ private slots:
     void layerNumChanged(int i);
 
 signals:
-    void changeLayerNumRange(int n);  //ÓÃÀ´¸Ä±ädockwidget²ãÊı·¶Î§µÄĞÅºÅ
+    void changeLayerNumRange(int n);  //ç”¨æ¥æ”¹å˜dockwidgetå±‚æ•°èŒƒå›´çš„ä¿¡å·
 
 
 private:

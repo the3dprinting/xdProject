@@ -2,7 +2,7 @@
 #include "xdlib/boundingBox.h"
 #include <QPainter>
 
-void _drawMultiPoint(QPainter *p, const xd::MultiPoint & MP)   //»­Layer
+void _drawMultiPoint(QPainter *p, const xd::MultiPoint & MP)   //ç”»Layer
 {
     xd::Lines lines=MP.lines();
     for(int i=0;i!=lines.size();++i)
@@ -47,7 +47,7 @@ void _drawPolygons(QPainter *p, const xd::Polygons & PG)
     }
 }
 
-//¿ªÊ¼ÀàµÄ¶¨Òå************************************************//
+//å¼€å§‹ç±»çš„å®šä¹‰************************************************//
 expolygonitem::expolygonitem(xd::ExPolygons * e)
 {
     exPolygonToDraw = e;

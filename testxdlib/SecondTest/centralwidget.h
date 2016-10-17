@@ -14,10 +14,10 @@ class centralwidget : public QGraphicsView
 public:
 
     centralwidget(QWidget *parent = 0);
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //¶¨Òå±¾ÉíwidgetµÄ×îĞ¡³ß´ç
-    QSize sizeHint() const Q_DECL_OVERRIDE;   //·µ»Ø±¾ÉíwidgetµÄÍÆ¼öÖµ
-    xd::ExPolygons * polygonsToDraw;   //¹²ÓĞÎªÁËÈÃÖ÷´°¿Ú·ÃÎÊ
-    qreal Scale; //·ÅËõÏµÊıÔİÊ±·ÅÕâÀï
+    QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //å®šä¹‰æœ¬èº«widgetçš„æœ€å°å°ºå¯¸
+    QSize sizeHint() const Q_DECL_OVERRIDE;   //è¿”å›æœ¬èº«widgetçš„æ¨èå€¼
+    xd::ExPolygons * polygonsToDraw;   //å…±æœ‰ä¸ºäº†è®©ä¸»çª—å£è®¿é—®
+    qreal Scale; //æ”¾ç¼©ç³»æ•°æš‚æ—¶æ”¾è¿™é‡Œ
 
     std::vector<xd::Polylines> * medialAxisToDraw;
     std::vector<xd::Polygons> * trToDraw;

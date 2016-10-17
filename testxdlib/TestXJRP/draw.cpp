@@ -11,7 +11,7 @@ void _drawArrow(QPainter *p, const QPointF & A, const QPointF & B)
     QPointF temB(std::sqrt(std::pow((A.x()-B.x()), 2) + std::pow(A.y()-B.y(), 2)),0);
     p->save();
     p->setPen (QPen (Qt::darkYellow));
-    //Ïë²»Í¨£¬ÒªÏÈÆ½ÒÆĞı×ª£¡
+    //æƒ³ä¸é€šï¼Œè¦å…ˆå¹³ç§»æ—‹è½¬ï¼
     p->translate(A);
     p->rotate(qRadiansToDegrees(std::atan2(B.y()-A.y(),B.x()-A.x())));
 
@@ -37,21 +37,21 @@ void _drawAxis(QPainter *p)
     p->drawPoint(QPointF(0,0));
 }
 
-void _drawPolygon(QPainter *p, const QPolygonF &polygon)  //»­QPolygonF
+void _drawPolygon(QPainter *p, const QPolygonF &polygon)  //ç”»QPolygonF
 {
     //temp
     p->drawPolygon(polygon);
     QPointF A=polygon.operator [](polygon.size()-2);
     QPointF B=polygon.operator [](polygon.size()-1);
     _drawArrow(p,A,B);
-    //ÏÂÃæÊÇÇ¿µ÷ÆğµãµÄ±êÖ¾
+    //ä¸‹é¢æ˜¯å¼ºè°ƒèµ·ç‚¹çš„æ ‡å¿—
     QPen pen(Qt::darkYellow);
     pen.setWidth(4);
     p->setPen(pen);
     p->drawPoint(polygon.front());
 }
 
-void _drawLayer(QPainter *p, const XJRP::Layer & L,qreal scale)   //»­Layer
+void _drawLayer(QPainter *p, const XJRP::Layer & L,qreal scale)   //ç”»Layer
 {
     for(int i=0;i!=L.size();++i)
     {
@@ -72,6 +72,7 @@ void _drawLayer(QPainter *p, const XJRP::Layer & L,qreal scale)   //»­Layer
         {
             qp.append (QPointF (point.x () * scale, point.y () * scale));
         }
+
         _drawPolygon(p,qp);
         if(i<L.size()-1)
         {
@@ -91,6 +92,7 @@ draw::draw(QWidget *parent)
 //    moveY=this->height()/2*devicePixelRatio();
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
+
 }
 
 QSize draw::minimumSizeHint() const
@@ -116,6 +118,7 @@ void draw::setLayer(const XJRP::Layer &L)
     update();
 }
 
+
 void draw::setModel(const XJRP::SLCModel &M)
 {
     this->Model=M;
@@ -131,7 +134,7 @@ void draw::paintEvent(QPaintEvent * /* event */)
     painter.setPen(pen);
     painter.setBrush(brush);
     painter.translate(moveX,moveY);
-    painter.rotate(-90);  //×ø±êÆÁÄ»·­×ª
+    painter.rotate(-90);  //åæ ‡å±å¹•ç¿»è½¬
     _drawAxis(&painter);
     _drawLayer(&painter, layer, scale);
 

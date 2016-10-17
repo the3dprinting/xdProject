@@ -124,18 +124,28 @@ void centralwidget::centering()
 
 void centralwidget::paintEvent(QPaintEvent * /* event */)
 {
-    QPainter painter(this);
+    QPainter painter;
     /*
     int side = qMin(width(), height());
     int x = (width() - side / 2);
     int y = (height() - side / 2);
     painter.setViewport(x, y, side, side);  //将屏幕坐标系和物理坐标系对应
     */
+    painter.begin(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    paint(painter);
+    painter.end();
+}
+
+//! [paint function]
+void centralwidget::paint(QPainter &painter)
+{
+//![paint picture]
     painter.setPen(pen);
     painter.setBrush(brush);
     painter.translate(moveX,moveY);
     //painter.rotate(-90);  //坐标屏幕翻转
-    _drawAxis(&painter);
+    //_drawAxis(&painter);
     for(xd::ExPolygons::const_iterator i=this->polygonsToDraw->begin() ; i!=this->polygonsToDraw->end() ; ++i)
     {
         _drawExPolygon(&painter,*i,this->scale);
@@ -147,8 +157,10 @@ void centralwidget::paintEvent(QPaintEvent * /* event */)
     for(std::vector<xd::Polygons>::const_iterator i=this->trToDraw->begin() ; i!=this->trToDraw->end() ; ++i)
     {
         _drawPolygons(&painter,*i,this->scale);
-    }   
+    }
+//![paint picture]
 }
+//! [paint function]
 
 void centralwidget::wheelEvent(QWheelEvent *e)
 {

@@ -12,16 +12,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setMinimumSize(720,540);
     this->cw = new centralwidget(this);
-    this->triangleMesh = new xd::TriangleMesh;   //ÕâÀï±ØÐëÏÈÒªÉùÃ÷£¬·ñÔòºóÃæº¯Êý²»ÄÜÊ¹ÓÃËü£¡
+    this->triangleMesh = new xd::TriangleMesh;   //è¿™é‡Œå¿…é¡»å…ˆè¦å£°æ˜Žï¼Œå¦åˆ™åŽé¢å‡½æ•°ä¸èƒ½ä½¿ç”¨å®ƒï¼
     this->layers = new std::vector<xd::ExPolygons>;
     this->dw = new dockwidget(this);
     addDockWidget(Qt::LeftDockWidgetArea,dw);
     setCentralWidget(cw);
-    connect((QObject*)dw->SliceThicknessButton,SIGNAL(clicked()),this,SLOT(on_sliceButton_clicked()));  //Õâ¸öÐèÒªÇ¿ÖÆ×ª»»
+    connect((QObject*)dw->SliceThicknessButton,SIGNAL(clicked()),this,SLOT(on_sliceButton_clicked()));  //è¿™ä¸ªéœ€è¦å¼ºåˆ¶è½¬æ¢
     connect(this,SIGNAL(changeLayerNumRange(int)),dw,SLOT(setLayerRange(int)));
     connect((QObject*)dw->LayerNum,SIGNAL(valueChanged(int)),this,SLOT(layerNumChanged(int)));
     connect((QObject*)this->dw->triangulate_p2tButton,SIGNAL(clicked()),this->cw,SLOT(generate_triangulate_p2t()));
-    this->triangleMesh = new xd::TriangleMesh;   //ÕâÀï±ØÐëÏÈÒªÉùÃ÷£¬·ñÔòºóÃæº¯Êý²»ÄÜÊ¹ÓÃËü£¡
+    this->triangleMesh = new xd::TriangleMesh;   //è¿™é‡Œå¿…é¡»å…ˆè¦å£°æ˜Žï¼Œå¦åˆ™åŽé¢å‡½æ•°ä¸èƒ½ä½¿ç”¨å®ƒï¼
     this->layers = new std::vector<xd::ExPolygons>;
 }
 
@@ -43,7 +43,7 @@ void MainWindow::on_actionOpen_triggered()
     strcpy(FN,fileName.c_str());
     this->triangleMesh->ReadSTLFile(FN);
     qDebug()<<"facet Number is:" <<triangleMesh->facets_count()<<'\n'
-            <<"needed repair£º"<<triangleMesh->needed_repair();
+            <<"needed repairï¼š"<<triangleMesh->needed_repair();
     //delete []FN;
 }
 
@@ -62,7 +62,7 @@ void MainWindow::on_sliceButton_clicked()
     for(float deltaZ = bottom + sliceThinkness ; deltaZ < top ; deltaZ+=sliceThinkness)
         z.push_back(deltaZ);
     qDebug()<<"facet Number is:" <<slicer.mesh->facets_count()<<'\n'
-            <<"needed repair£º"<<slicer.mesh->needed_repair();
+            <<"needed repairï¼š"<<slicer.mesh->needed_repair();
     this->layers->clear();
     slicer.slice(z,this->layers);
     QMessageBox::information(NULL, "remind", "slice finished", QMessageBox::Yes, QMessageBox::Yes);

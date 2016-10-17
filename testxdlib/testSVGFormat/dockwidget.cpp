@@ -25,10 +25,10 @@ dockwidget::dockwidget(QWidget *parent)
     //用来显示到中心的按钮
     centerButton = new QPushButton(tr("center"));
     //下面为测试用按钮
-    triangulateButton = new QPushButton(tr("triangulate"));
-    triangulate_ppButton = new QPushButton(tr("triangulate_pp"));
-    triangulate_p2tButton = new QPushButton(tr("triangulate_p2t"));
-    medialAxisButton = new QPushButton(tr("medialAxis"));
+//    triangulateButton = new QPushButton(tr("triangulate"));
+//    triangulate_ppButton = new QPushButton(tr("triangulate_pp"));
+//    triangulate_p2tButton = new QPushButton(tr("triangulate_p2t"));
+//    medialAxisButton = new QPushButton(tr("medialAxis"));
     //下面布局
     QWidget * dockWidgetContents = new QWidget(this);   //dockwidget必须设置多个项目在一个widget上，不能直接加上layout
     QGridLayout *mainLayout = new QGridLayout;
@@ -38,10 +38,10 @@ dockwidget::dockwidget(QWidget *parent)
     mainLayout->addWidget(centerButton,2,0);
     mainLayout->addWidget(LayerNumLabel,3,0);
     mainLayout->addWidget(LayerNum,3,1);
-    mainLayout->addWidget(triangulateButton,4,0);
-    mainLayout->addWidget(triangulate_ppButton,4,1);
-    mainLayout->addWidget(triangulate_p2tButton,5,0);
-    mainLayout->addWidget(medialAxisButton,5,1);
+//    mainLayout->addWidget(triangulateButton,4,0);
+//    mainLayout->addWidget(triangulate_ppButton,4,1);
+//    mainLayout->addWidget(triangulate_p2tButton,5,0);
+//    mainLayout->addWidget(medialAxisButton,5,1);
     dockWidgetContents->setLayout(mainLayout);
     setWidget(dockWidgetContents);
 }

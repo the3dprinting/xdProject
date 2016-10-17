@@ -3,7 +3,8 @@ TEMPLATE = subdirs
 SUBDIRS += \
     FirstTest \
     SecondTest \
-    testXJRP
+    testXJRP  \
+    testSVGFormat
 
 #INCLUDEPATH += $$PWD/../src
 

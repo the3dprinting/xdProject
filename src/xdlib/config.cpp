@@ -113,7 +113,7 @@ ConfigBase::setenv_()
         for (size_t i = 0; i < envname.size(); ++i)
             envname[i] = (envname[i] <= 'z' && envname[i] >= 'a') ? envname[i]-('a'-'A') : envname[i];
 
-        //setenv(envname.c_str(), this->serialize(*it).c_str(), 1);  //Õâ¸öº¯Êı²»ÖªµÀÎªÉ¶Ã»ÓĞÕÒ´ò£¬ÔİÊ±É¾³ı£¡²»Àí½â£¡£¡£¡
+        //setenv(envname.c_str(), this->serialize(*it).c_str(), 1);  //è¿™ä¸ªå‡½æ•°ä¸çŸ¥é“ä¸ºå•¥æ²¡æœ‰æ‰¾æ‰“ï¼Œæš‚æ—¶åˆ é™¤ï¼ä¸ç†è§£ï¼ï¼ï¼
     }
 }
 

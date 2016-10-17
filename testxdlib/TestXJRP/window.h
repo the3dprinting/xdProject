@@ -65,7 +65,7 @@ private:
     QPushButton *clear;
     QPushButton *infill;
     QPushButton *centering;
-    //slt文件功能
+    //slt鏂囦欢鍔熻兘
     QPushButton *openSTL;
     QPushButton *slice;
     QLabel *thickness;

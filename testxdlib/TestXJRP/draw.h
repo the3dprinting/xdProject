@@ -15,8 +15,8 @@ class draw : public QWidget
 public:
 
     draw(QWidget *parent = 0);
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //¶¨Òå±¾ÉíwidgetµÄ×îĞ¡³ß´ç
-    QSize sizeHint() const Q_DECL_OVERRIDE;   //·µ»Ø±¾ÉíwidgetµÄÍÆ¼öÖµ
+    QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //å®šä¹‰æœ¬èº«widgetçš„æœ€å°å°ºå¯¸
+    QSize sizeHint() const Q_DECL_OVERRIDE;   //è¿”å›æœ¬èº«widgetçš„æ¨èå€¼
     void setModel(const XJRP::SLCModel & M);
     void setLayer(const XJRP::Layer & L);
 public slots:

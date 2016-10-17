@@ -18,7 +18,7 @@ public:
     centralwidget(QWidget *parent = 0);
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;   //定义本身widget的最小尺寸
     QSize sizeHint() const Q_DECL_OVERRIDE;   //返回本身widget的推荐值
-
+    void paint(QPainter &painter);
 
 public slots:
 
@@ -36,9 +36,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
 
 private:
-    xd::ExPolygons * polygonsToDraw;
-    std::vector<xd::Polylines> * medialAxisToDraw;
-    std::vector<xd::Polygons> * trToDraw;
+    xd::ExPolygons * polygonsToDraw;    //需要画的多边形的数据
+    std::vector<xd::Polylines> * medialAxisToDraw;    //需要画的中轴线的数据
+    std::vector<xd::Polygons> * trToDraw;   //
 
     QPointF lastPos;
     qreal moveX;

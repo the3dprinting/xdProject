@@ -8,12 +8,12 @@
 #include "xdlib/constdefine.h"
 #include "expolygonitem.h"
 
-void _drawArrow(QPainter *p, const QPointF & A, const QPointF & B)  //¸ù¾Ý´«ÈëÏß¶ÎµÄ¶Ëµã»­¼ýÍ·
+void _drawArrow(QPainter *p, const QPointF & A, const QPointF & B)  //æ ¹æ®ä¼ å…¥çº¿æ®µçš„ç«¯ç‚¹ç”»ç®­å¤´
 {
     QPointF temB(std::sqrt(std::pow((A.x()-B.x()), 2) + std::pow(A.y()-B.y(), 2)),0);
     p->save();
     p->setPen (QPen (Qt::darkYellow));
-    //Ïë²»Í¨£¬ÒªÏÈÆ½ÒÆÐý×ª£¡
+    //æƒ³ä¸é€šï¼Œè¦å…ˆå¹³ç§»æ—‹è½¬ï¼
     p->translate(A);
     p->rotate(qRadiansToDegrees(std::atan2(B.y()-A.y(),B.x()-A.x())));
 
@@ -22,7 +22,7 @@ void _drawArrow(QPainter *p, const QPointF & A, const QPointF & B)  //¸ù¾Ý´«ÈëÏß
     p->restore();
 }
 
-void _drawAxis(QPainter *p)   //»­×ø±êÖá
+void _drawAxis(QPainter *p)   //ç”»åæ ‡è½´
 {
     QPointF xNegative(-100,0);
     QPointF xPositive(100,0);
@@ -39,21 +39,21 @@ void _drawAxis(QPainter *p)   //»­×ø±êÖá
     p->drawPoint(QPointF(0,0));
 }
 
-void _drawPolygon(QPainter *p, const QPolygonF &polygon)  //»­QPolygonF
+void _drawPolygon(QPainter *p, const QPolygonF &polygon)  //ç”»QPolygonF
 {
     //temp
     p->drawPolygon(polygon);
     QPointF A=polygon.operator [](polygon.size()-2);
     QPointF B=polygon.operator [](polygon.size()-1);
     _drawArrow(p,A,B);
-    //ÏÂÃæÊÇÇ¿µ÷ÆðµãµÄ±êÖ¾
+    //ä¸‹é¢æ˜¯å¼ºè°ƒèµ·ç‚¹çš„æ ‡å¿—
     QPen pen(Qt::darkYellow);
     pen.setWidth(4);
     p->setPen(pen);
     p->drawPoint(polygon.front());
 }
 
-void _drawMultiPoint(QPainter *p, const xd::MultiPoint & MP,qreal scale)   //»­Layer
+void _drawMultiPoint(QPainter *p, const xd::MultiPoint & MP,qreal scale)   //ç”»Layer
 {
     xd::Lines lines=MP.lines();
     for(int i=0;i!=lines.size();++i)
@@ -91,7 +91,7 @@ void _drawPolygons(QPainter *p, const xd::Polygons & PG,qreal scale)
         _drawMultiPoint(p,*i,scale);
     }
 }
-//¿ªÊ¼ÀàµÄ¶¨Òå************************************************//
+//å¼€å§‹ç±»çš„å®šä¹‰************************************************//
 centralwidget::centralwidget(QWidget *parent)
     : QGraphicsView(parent)
 {
@@ -112,7 +112,7 @@ centralwidget::centralwidget(QWidget *parent)
 
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
-    this->Scale = 1; //¿ªÊ¼ÏµÊýÎª1
+    this->Scale = 1; //å¼€å§‹ç³»æ•°ä¸º1
 }
 
 QSize centralwidget::minimumSizeHint() const
@@ -159,7 +159,7 @@ void centralwidget::mouseMoveEvent(QMouseEvent *e)
     lastPos = e->pos();
 }
 
-//²Ûº¯ÊýµÄÊµÏÖ
+//æ§½å‡½æ•°çš„å®žçŽ°
 void centralwidget::generate_media_axis()
 {
     if(this->polygonsToDraw->empty())
@@ -211,7 +211,7 @@ void centralwidget::generate_triangulate()
     this->medialAxisToDraw->clear();
     for(xd::ExPolygons::const_iterator i=this->polygonsToDraw->begin() ; i!=this->polygonsToDraw->end() ; ++i)
     {
-        xd::Polygons  tp;   //Ì«Ææ¹ÖÁË£¬ÕâÀï²»ÄÜÓÃ  *tp  £¡£¡£¡
+        xd::Polygons  tp;   //å¤ªå¥‡æ€ªäº†ï¼Œè¿™é‡Œä¸èƒ½ç”¨  *tp  ï¼ï¼ï¼
         i->triangulate(&tp);
         this->trToDraw->push_back(tp);
     }

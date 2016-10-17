@@ -4,7 +4,7 @@ SUBDIRS += \
     src \
     testxdlib
 
-INCLUDEPATH += $$PWD/src
+#INCLUDEPATH += $$PWD/src
 
-DEPENDPATH += $$INCLUDEPATH
+#DEPENDPATH += $$INCLUDEPATH
 

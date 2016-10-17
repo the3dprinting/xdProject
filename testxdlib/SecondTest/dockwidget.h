@@ -20,16 +20,16 @@ public:
 
     dockwidget(QWidget *parent = 0);
 
-    QPushButton *SliceThicknessButton;   //ÐèÒª¹«ÓÐ£¬ÎªÁËÈÃÖ÷´°¿ÚÊ¹ÓÃ
-    QPushButton *centerButton;           //ÐèÒª¹«ÓÐ£¬ÎªÁËÈÃÖ÷´°¿ÚÊ¹ÓÃ
+    QPushButton *SliceThicknessButton;   //éœ€è¦å…¬æœ‰ï¼Œä¸ºäº†è®©ä¸»çª—å£ä½¿ç”¨
+    QPushButton *centerButton;           //éœ€è¦å…¬æœ‰ï¼Œä¸ºäº†è®©ä¸»çª—å£ä½¿ç”¨
     QPushButton *medialAxisButton;
     QPushButton *trapezoidsButton;
     QPushButton *trapezoids2Button;
     QPushButton *triangulateButton;
     QPushButton *triangulate_ppButton;
     QPushButton *triangulate_p2tButton;
-    QLineEdit *SliceThicknessEdit;       //ÐèÒª¹«ÓÐ£¬ÎªÁËÈÃÖ÷´°¿ÚÊ¹ÓÃ
-    QSpinBox *LayerNum;                  //ÐèÒª¹«ÓÐ£¬ÎªÁËÈÃÖ÷´°¿ÚÊ¹ÓÃ
+    QLineEdit *SliceThicknessEdit;       //éœ€è¦å…¬æœ‰ï¼Œä¸ºäº†è®©ä¸»çª—å£ä½¿ç”¨
+    QSpinBox *LayerNum;                  //éœ€è¦å…¬æœ‰ï¼Œä¸ºäº†è®©ä¸»çª—å£ä½¿ç”¨
 
 public slots:
 
